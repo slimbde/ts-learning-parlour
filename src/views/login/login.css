@@ -1,0 +1,50 @@
+.login-card {
+  display: flex;
+  flex-direction: column;
+  float: right;
+  margin-right: 1rem;
+  width: 300px;
+  height: 150px;
+  background-color: white;
+  box-shadow: 0 5px 5px lightgray;
+  border: 1px solid lightgray;
+  border-top: unset;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: .95rem;
+  color: black;
+  line-height: 2rem;
+}
+
+.login-input-group {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  justify-content: space-between;
+  width: 250px;
+  height: 130px;
+  margin: auto;
+}
+
+.login-input-group input {
+  padding: 0.3rem;
+  margin-bottom: 0.2rem;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+}
+
+.login-input-group a {
+  text-decoration: none;
+  color: gray;
+  cursor: pointer;
+}
+
+.login-input-group a:hover {
+  color: black;
+  text-shadow: 0 0 5px gray;
+}
+
+.login-input-group button {
+  margin-top: 0.3rem;
+}

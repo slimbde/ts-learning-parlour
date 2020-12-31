@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="./src" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="login.css">
+  <title>Learning parlour</title>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-container">
+      <div class="login-wrapper">
+        <a href="/#" onclick="constructLogin()">Login</a>
+        <i class="material-icons-outlined">login</i>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="menu-wrapper">
+      <div class="menu-line" id="menu-home">
+        <i class="material-icons">search</i>
+        <a href="/#" onclick="constructMain()">Home</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">run_circle</i>
+        <a href="#">Training</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">collections_bookmark</i>
+        <a href="#">Total</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">today</i>
+        <a href="#">Today</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">extension</i>
+        <a href="#">Generals</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">g_translate</i>
+        <a href="#">Gerunds</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">style</i>
+        <a href="#">Phrases</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">set_meal</i>
+        <a href="#">Idioms</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">question_answer</i>
+        <a href="#">Phrasals</a>
+      </div>
+    </div>
+    <div class="main-field">
+      <div class="login-card">
+        <div class="login-input-group">
+          <div>Specify your credentials below:</div>
+          <input type="text" name="" placeholder="login" id="login">
+          <input type="password" placeholder="password" name="" id="password">
+          <a onclick="constructor.invoke('loginAction')">Register</a>
+          <button type="submit" class="btn">Log in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
