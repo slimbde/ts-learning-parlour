@@ -3,7 +3,7 @@ import { IDbHandler } from "./models/IDbHandler"
 import { MySQLHandler } from "./models/MySQLHandler"
 import { IConstructor } from "./views/IConstructor"
 import { LoginConstructor } from "./views/login/LoginConstructor"
-import { HomeConstructor } from "./views/main/HomeConstructor"
+import { HomeConstructor } from "./views/home/HomeConstructor"
 
 
 interface ExtendedWindow extends Window {

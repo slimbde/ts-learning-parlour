@@ -1,0 +1,56 @@
+.summary {
+  width: 100%;
+  color: red;
+  font-size: .7rem;
+  text-transform: uppercase;
+  margin: 0.2rem 1rem .5rem 2rem;
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
+}
+
+.answer-wrapper {
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+  height: inherit;
+  padding: 5px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.answer-entry {
+  display: flex;
+  flex-flow: column nowrap;
+  font-size: .9rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  background-color: rgba(176, 196, 222, 0.075);
+  box-shadow: 0 0 4px rgba(176, 196, 222, 0.603);
+}
+
+.answer-entry .definition {
+  display: flex;
+  flex-flow: row wrap;
+  font-size: 1.1rem;
+  background-color: white;
+  padding: .3rem .5rem;
+  border-radius: 4px;
+  color: rgb(58, 109, 151);
+}
+
+.answer-entry .example {
+  background-color: white;
+  padding: .2rem .5rem;
+}
+
+.answer-entry div {
+  padding-right: 1rem;
+}
+
+.answer-entry .addDate {
+  /*border-top: 1px solid lightgray;*/
+  padding: 0.2rem .5rem;
+  color: gray;
+  font-size: .7rem;
+}

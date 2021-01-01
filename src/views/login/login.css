@@ -4,7 +4,7 @@
   float: right;
   margin-right: 1rem;
   width: 300px;
-  height: 150px;
+  height: 180px;
   background-color: white;
   box-shadow: 0 5px 5px lightgray;
   border: 1px solid lightgray;
@@ -34,17 +34,33 @@
   border-radius: 3px;
 }
 
-.login-input-group a {
+.login-input-group span {
+  color: red;
+  font-size: small;
+  line-height: 1rem;
+  padding-left: 0.3rem;
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
+}
+
+.input-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 0.3rem;
+}
+
+.input-footer a {
   text-decoration: none;
   color: gray;
   cursor: pointer;
 }
 
-.login-input-group a:hover {
+.input-footer a:hover {
   color: black;
   text-shadow: 0 0 5px gray;
 }
 
-.login-input-group button {
+.input-footer button {
   margin-top: 0.3rem;
 }

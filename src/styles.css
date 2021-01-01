@@ -1,5 +1,6 @@
 @import "~normalize.css";
 @import "./views/login/login.css";
+@import "./views/home/search.css";
 @font-face {
   font-family: "Roboto";
   src: url("./assets/fonts/Roboto-Regular.ttf") format("truetype");
@@ -9,6 +10,16 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: whitesmoke;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.411);
 }
 
 body {
@@ -182,7 +193,7 @@ body {
 
 .input-group {
   display: flex;
-  width: 100%;
+  width: 99%;
 }
 
 .input-group input {
@@ -207,25 +218,4 @@ body {
   cursor: pointer;
   background-color: rgba(211, 211, 211, 0.685);
   text-shadow: 0 0 4px gray;
-}
-
-/****************************************************** SUMMARY */
-
-.summary {
-  width: 100%;
-  color: red;
-  font-size: .7rem;
-  text-transform: uppercase;
-  margin-left: 1rem;
-  margin-top: 0.2rem;
-}
-
-/******************************************************* ANSWER */
-
-.answer-wrapper {
-  display: flex;
-  width: 90%;
-  flex-direction: column;
-  background-color: aliceblue;
-  height: inherit;
 }

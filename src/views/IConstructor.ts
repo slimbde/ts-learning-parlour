@@ -9,7 +9,7 @@ export abstract class TConstructor implements IConstructor {
 
   protected abstract highlightMenu(): void
 
-  protected deselectMenu() {
+  protected deselectMenu(): void {
     const menu = document.querySelector(".menu-wrapper").children
     for (let ch of menu) {
       for (let subCh of ch.children)

@@ -20,8 +20,16 @@ export class LoginConstructor extends TConstructor {
     btn.addEventListener("click", _ => this.loginActionAsync())
 
     const a = document.createElement("a")
-    a.addEventListener("click", _ => this.registerAction())
+    a.addEventListener("click", _ => this.registerActionAsync())
     a.textContent = "Register"
+
+    const inputFooter = document.createElement("div")
+    inputFooter.className = "input-footer"
+    inputFooter.append(a)
+    inputFooter.append(btn)
+
+    const span = document.createElement("span")
+    span.textContent = "notice"
 
     const password = document.createElement("input")
     password.id = "password"
@@ -43,8 +51,8 @@ export class LoginConstructor extends TConstructor {
     group.append(text)
     group.append(login)
     group.append(password)
-    group.append(a)
-    group.append(btn)
+    group.append(span)
+    group.append(inputFooter)
 
     const card = document.createElement("div")
     card.className = "login-card"
@@ -75,7 +83,7 @@ export class LoginConstructor extends TConstructor {
       !ch.classList.contains("active") && ch.classList.add("active")
   }
 
-  private async registerAction(): Promise<void> {
+  private async registerActionAsync(): Promise<void> {
     alert("register action")
   }
 
@@ -90,7 +98,10 @@ export class LoginConstructor extends TConstructor {
         LoginConstructor.applyCredentialsAsync(userName)
       } catch (error) {
         password.value = ""
-        alert(error)
+        const loginTip = (document.querySelector(".login-input-group span") as HTMLSpanElement)
+        loginTip.textContent = error
+        loginTip.style.opacity = "1"
+        setTimeout(_ => loginTip.style.opacity = "0", 2000)
       }
     }
   }
