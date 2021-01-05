@@ -27,10 +27,11 @@
   </div>
   <div class="container">
     <div class="menu-wrapper">
-      <div class="menu-line" id="menu-home" onclick="toggleMenu()">
+      <div class="menu-line" id="menu-home" onclick="toggleMenu(); render('home')">
         <i class="material-icons">search</i>
-        <a href="/#" onclick="render('home')">Home</a>
+        <a href="/#">Home</a>
       </div>
+      <!--
       <div class="menu-line" id="menu-training">
         <i class="material-icons-outlined">run_circle</i>
         <a href="/#" onclick="render('training')">Training</a>
@@ -42,11 +43,12 @@
       <div class="menu-line" id="menu-today">
         <i class="material-icons-outlined">today</i>
         <a href="/#" onclick="render('today')">Today</a>
+      </div>-->
+      <div class="menu-line" id="menu-generals" onclick="toggleMenu(); render('generals')">
+        <i class=" material-icons-outlined">extension</i>
+        <a href="/#">Generals</a>
       </div>
-      <div class="menu-line" id="menu-generals">
-        <i class="material-icons-outlined">extension</i>
-        <a href="/#" onclick="render('generals')">Generals</a>
-      </div>
+      <!--
       <div class="menu-line" id="menu-gerunds">
         <i class="material-icons-outlined">g_translate</i>
         <a href="/#" onclick="render('gerunds')">Gerunds</a>
@@ -62,7 +64,7 @@
       <div class="menu-line" id="menu-phrasals">
         <i class="material-icons-outlined">question_answer</i>
         <a href="/#" onclick="render('phrasals')">Phrasals</a>
-      </div>
+      </div>-->
     </div>
     <div class="main-field" onclick="hideMenu()"></div>
   </div>

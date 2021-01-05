@@ -124,6 +124,7 @@ a:hover, i:hover {
   display: inline-block;
   font-weight: 600;
   color: gray;
+  cursor: pointer;
 }
 
 .login-wrapper {
@@ -212,7 +213,7 @@ a:hover, i:hover {
 
 @media only screen and (max-width: 500px) {
   .menu-wrapper {
-    position: absolute;
+    position: fixed;
     background-color: rgba(232, 235, 240, 0.918);
     left: -150px;
   }

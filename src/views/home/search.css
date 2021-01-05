@@ -68,6 +68,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 800px;
   width: 98%;
 }
 
@@ -115,6 +116,7 @@
 
 .answer-wrapper {
   display: flex;
+  max-width: 800px;
   width: 99%;
   flex-direction: column;
   height: inherit;

@@ -38,6 +38,8 @@
 
 .progress-info div {
   margin-right: 1rem;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .progress-info .pass {
@@ -48,7 +50,6 @@
   background-image: url("../assets/loading.gif");
   background-size: contain;
   background-repeat: no-repeat;
-  min-height: 20px;
   min-width: 40px;
   opacity: 1;
   transition: opacity .3s ease-in-out;
@@ -140,4 +141,22 @@
   border-top: unset;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+
+@media only screen and (max-width: 500px) {
+  .training-wrapper {
+    font-size: .9rem;
+  }
+  .training-title {
+    font-size: 1.4rem;
+  }
+  .training-task {
+    font-size: .7rem;
+  }
+  .progress-info {
+    font-size: .7rem;
+  }
+  .progress-info div {
+    margin-right: .5rem;
+  }
 }
