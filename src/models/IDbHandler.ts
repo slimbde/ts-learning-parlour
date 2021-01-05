@@ -22,4 +22,18 @@ export interface IDbHandler {
    * @returns TLearnable structure
    */
   searchWordsAsync(particle: string): Promise<TLearnable[]>
+
+  /**
+   * retrieves not solved generals list from the database
+   * @param id person id
+   * @returns TLearnable structure
+   */
+  getGeneralsForAsync(id: string): Promise<TLearnable[]>
+
+  /**
+   * sets as solved a notion for a user
+   * @param id user id
+   * @param notionId notion id
+   */
+  scoreGeneralsForAsync(id: string, notionId: string): Promise<void>
 }

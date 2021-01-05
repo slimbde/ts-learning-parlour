@@ -15,6 +15,10 @@
 <body>
   <div class="header">
     <div class="header-container">
+      <div class="menu-link" onclick="toggleMenu()">
+        <div class="menu-btn"><i class="material-icons-outlined">menu</i></div>
+        <div class="location">Location</div>
+      </div>
       <div class="login-wrapper">
         <a href="/#" onclick="render('login')" title="Войти в учетную запись">Login</a>
         <i class="material-icons-outlined">login</i>
@@ -23,44 +27,44 @@
   </div>
   <div class="container">
     <div class="menu-wrapper">
-      <div class="menu-line" id="menu-home">
+      <div class="menu-line" id="menu-home" onclick="toggleMenu()">
         <i class="material-icons">search</i>
         <a href="/#" onclick="render('home')">Home</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-training">
         <i class="material-icons-outlined">run_circle</i>
-        <a href="#">Training</a>
+        <a href="/#" onclick="render('training')">Training</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-total">
         <i class="material-icons-outlined">collections_bookmark</i>
-        <a href="#">Total</a>
+        <a href="/#" onclick="render('total')">Total</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-today">
         <i class="material-icons-outlined">today</i>
-        <a href="#">Today</a>
+        <a href="/#" onclick="render('today')">Today</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-generals">
         <i class="material-icons-outlined">extension</i>
-        <a href="#">Generals</a>
+        <a href="/#" onclick="render('generals')">Generals</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-gerunds">
         <i class="material-icons-outlined">g_translate</i>
-        <a href="#">Gerunds</a>
+        <a href="/#" onclick="render('gerunds')">Gerunds</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-phrases">
         <i class="material-icons-outlined">style</i>
-        <a href="#">Phrases</a>
+        <a href="/#" onclick="render('phrases')">Phrases</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-idioms">
         <i class="material-icons-outlined">set_meal</i>
-        <a href="#">Idioms</a>
+        <a href="/#" onclick="render('idioms')">Idioms</a>
       </div>
-      <div class="menu-line">
+      <div class="menu-line" id="menu-phrasals">
         <i class="material-icons-outlined">question_answer</i>
-        <a href="#">Phrasals</a>
+        <a href="/#" onclick="render('phrasals')">Phrasals</a>
       </div>
     </div>
-    <div class="main-field"></div>
+    <div class="main-field" onclick="hideMenu()"></div>
   </div>
 
 </body>

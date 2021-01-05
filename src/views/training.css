@@ -1,0 +1,143 @@
+.training-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: white;
+  height: 90vh;
+  border-radius: 5px;
+  margin: 1rem;
+  align-items: center;
+  box-shadow: 0 0 5px lightgray;
+}
+
+.training-title {
+  font-size: 2rem;
+  font-weight: 100;
+  text-transform: uppercase;
+  align-self: flex-end;
+  padding: 1rem;
+  padding-bottom: unset;
+  color: lightgray;
+}
+
+.training-task {
+  font-weight: 300;
+  font-size: small;
+  text-transform: uppercase;
+  color: lightgray;
+  align-self: flex-end;
+  padding-right: 1rem;
+  margin-bottom: 2rem;
+}
+
+.progress-info {
+  display: flex;
+  font-weight: 500;
+  color: gray;
+  margin-left: .5rem;
+}
+
+.progress-info div {
+  margin-right: 1rem;
+}
+
+.progress-info .pass {
+  margin-left: auto;
+}
+
+#hint {
+  background-image: url("../assets/loading.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-height: 20px;
+  min-width: 40px;
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
+}
+
+.training-field-wrapper {
+  display: flex;
+  padding: 0 1rem;
+  height: 74vh;
+  width: 100%;
+  max-width: 700px;
+}
+
+.training-field {
+  width: 100%;
+  height: 100%;
+}
+
+.training-field-title {
+  display: flex;
+  height: 1.7rem;
+  color: white;
+  font-weight: 500;
+  vertical-align: baseline;
+}
+
+.title-left {
+  padding: 0.2rem .5rem;
+  flex-basis: 70%;
+  background-color: rgba(70, 131, 180, 0.89);
+}
+
+.title-right {
+  padding: 0.2rem .5rem;
+  flex-basis: 30%;
+  background-color: rgba(67, 93, 119, 0.829);
+}
+
+.training-field-workspace {
+  border: 1px solid rgba(211, 211, 211, 0.466);
+  border-top: unset;
+  border-bottom: unset;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.training-field-issue {
+  padding: 1rem;
+  text-align: center;
+}
+
+.training-field-input {
+  display: flex;
+  text-align: center;
+  padding: 1rem;
+}
+
+.training-field-input button {
+  flex-grow: 0;
+  font-size: 1rem;
+  padding: .4rem 1rem;
+}
+
+.training-field-answer {
+  font-weight: 500;
+  text-align: center;
+  padding: 1rem;
+  padding-top: 0;
+  border-bottom: 1px solid rgba(211, 211, 211, 0.466);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  line-height: 1.3rem;
+}
+
+.training-field-answer .issue {
+  color: steelblue;
+}
+
+.training-field-answer .answer {
+  color: rgb(240, 100, 100);
+}
+
+.training-field-example {
+  color: steelblue;
+  font-weight: 500;
+  background-color: rgba(70, 131, 180, 0.027);
+  padding: 1rem;
+  border: 1px solid rgba(211, 211, 211, 0.479);
+  border-top: unset;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}

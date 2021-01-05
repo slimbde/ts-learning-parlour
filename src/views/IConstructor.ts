@@ -4,6 +4,9 @@ export interface IConstructor {
 }
 
 
+
+
+
 export abstract class TConstructor implements IConstructor {
   abstract render(): void
 

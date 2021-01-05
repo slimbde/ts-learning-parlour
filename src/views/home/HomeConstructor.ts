@@ -7,6 +7,7 @@ export class HomeConstructor extends TConstructor {
 
   render(): void {
     const main = document.querySelector(".main-field")
+    document.querySelector(".location").textContent = "home"
 
     const title = this.constructTitle()
     const input = this.constructInputField()
@@ -25,6 +26,12 @@ export class HomeConstructor extends TConstructor {
     this.highlightMenu()
   }
 
+  protected passOver(): void {
+    throw new Error("Method not implemented.");
+  }
+  protected handleSubmit(): void {
+    throw new Error("Method not implemented.");
+  }
 
   protected highlightMenu(): void {
     super.deselectMenu()
@@ -78,10 +85,14 @@ export class HomeConstructor extends TConstructor {
     summary.className = "summary"
     summary.textContent = "Result"
 
+    const loading = document.createElement("div")
+    loading.className = "loading"
+
     const inputWrapper = document.createElement("div")
     inputWrapper.className = "input-wrapper"
     inputWrapper.append(inputGroup)
     inputWrapper.append(summary)
+    inputWrapper.append(loading)
 
     return inputWrapper
   }
@@ -95,64 +106,71 @@ export class HomeConstructor extends TConstructor {
 
   private search(): void {
     const input = (document.querySelector(".input-group input") as HTMLInputElement)
-    const answerWrapper = (document.querySelector(".answer-wrapper") as HTMLDivElement)
-    const summary = (document.querySelector(".summary") as HTMLDivElement)
 
-    this.db.searchWordsAsync(input.value)
-      .then(words => {
+    if (input.value.trim() !== "") {
+      const answerWrapper = (document.querySelector(".answer-wrapper") as HTMLDivElement)
+      const summary = (document.querySelector(".summary") as HTMLDivElement)
+      const loading = (document.querySelector(".loading") as HTMLDivElement)
+      answerWrapper.textContent = ""
+      loading.style.display = "flex"
+      summary.style.display = "none"
+      const inputVal = input.value.trim().toLowerCase()
 
-        answerWrapper.textContent = ""
-        summary.textContent = `entries: ${words.length}`
-        summary.style.opacity === "" && setTimeout(_ => summary.style.opacity = "1", 0)
+      this.db.searchWordsAsync(inputVal)
+        .then(words => {
+          summary.textContent = `entries: ${words.length}`
 
-        words.forEach(word => {
-          const entry = document.createElement("div")
-          entry.className = "answer-entry"
+          words.forEach(word => {
+            const entry = document.createElement("div")
+            entry.className = "answer-entry"
 
-          const notion = document.createElement("div")
-          notion.className = "notion"
-          notion.innerHTML = word.notion.includes(input.value)
-            ? `<b>${word.notion.split(input.value)[0]}<font color="red">${input.value}</font>${word.notion.split(input.value)[1]}</b>`
-            : word.notion
+            const notion = document.createElement("div")
+            notion.className = "notion"
+            notion.innerHTML = word.notion.includes(inputVal)
+              ? `<b>${word.notion.split(inputVal)[0]}<font color="red">${inputVal}</font>${word.notion.split(inputVal)[1]}</b>`
+              : word.notion
 
-          const ipa = document.createElement("div")
-          ipa.className = "ipa"
-          ipa.textContent = word.ipa
+            const ipa = document.createElement("div")
+            ipa.className = "ipa"
+            ipa.textContent = word.ipa
 
-          const meaning = document.createElement("div")
-          meaning.className = "meaning"
-          meaning.innerHTML = word.meaning.includes(input.value)
-            ? `<b>${word.meaning.split(input.value)[0]}<font color="red">${input.value}</font>${word.meaning.split(input.value)[1]}</b>`
-            : word.meaning
+            const meaning = document.createElement("div")
+            meaning.className = "meaning"
+            meaning.innerHTML = word.meaning.includes(inputVal)
+              ? `<b>${word.meaning.split(inputVal)[0]}<font color="red">${inputVal}</font>${word.meaning.split(inputVal)[1]}</b>`
+              : word.meaning
 
-          const definition = document.createElement("div")
-          definition.className = "definition"
-          definition.append(notion)
-          definition.append(ipa)
-          definition.append(meaning)
+            const definition = document.createElement("div")
+            definition.className = "definition"
+            definition.append(notion)
+            definition.append(ipa)
+            definition.append(meaning)
 
-          const example = document.createElement("div")
-          example.className = "example"
-          example.textContent = word.example
+            const example = document.createElement("div")
+            example.className = "example"
+            example.textContent = word.example
 
-          const addDate = document.createElement("div")
-          addDate.className = "addDate"
-          addDate.textContent = word.addDate
+            const addDate = document.createElement("div")
+            addDate.className = "addDate"
+            addDate.textContent = word.addDate
 
-          entry.append(definition)
-          entry.append(example)
-          entry.append(addDate)
-          answerWrapper.append(entry)
+            entry.append(definition)
+            entry.append(example)
+            entry.append(addDate)
+            answerWrapper.append(entry)
+          })
         })
-      })
-      .catch(_ => {
-        answerWrapper.textContent = ""
-        summary.textContent = `entries: 0`
-      })
-      .finally(() => {
-        input.placeholder = input.value
-        input.value = ""
-      })
+        .catch((error: Error) => {
+          summary.textContent = `entries: ${error.message}`
+        })
+        .finally(() => {
+          loading.style.display = "none"
+          summary.style.display = "flex"
+          input.placeholder = inputVal
+          input.value = ""
+        })
+    }
+
   }
 
 }

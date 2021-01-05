@@ -1,21 +1,129 @@
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  height: 90vh;
+  margin: .8rem 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 5px lightgray;
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  color: rgba(128, 128, 128, 0.712);
+}
+
+.title-content div {
+  font-size: small;
+  padding-left: 0.1rem;
+  font-weight: 300;
+}
+
+.title-content h1 {
+  text-transform: uppercase;
+  color: rgba(88, 120, 146, 0.829);
+  font-weight: 300;
+  margin: 0;
+}
+
+.logo {
+  background-image: url("../../assets/logo.png");
+  background-size: cover;
+  height: 70px;
+  width: 70px;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+@media only screen and (max-width: 630px) {
+  .logo {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .search-wrapper {
+    font-size: .9rem;
+    padding: .5rem;
+  }
+  .title-wrapper {
+    padding-bottom: 1rem;
+    align-self: flex-start;
+    margin-left: .4rem;
+  }
+  .title-content h1 {
+    font-size: 1.4rem;
+  }
+}
+
+/****************************************************** INPUT-WRAPPER */
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 98%;
+}
+
+.input-group {
+  display: flex;
+  width: 99%;
+}
+
+.input-group button {
+  flex-grow: 0;
+  border: 1px solid lightgray;
+  padding: 0 1.5rem;
+  border-radius: 4px;
+  color: gray;
+}
+
+.input-wrapper button:hover {
+  color: black;
+  cursor: pointer;
+  background-color: rgba(211, 211, 211, 0.685);
+  text-shadow: 0 0 4px gray;
+}
+
 .summary {
   width: 100%;
   color: red;
   font-size: .7rem;
   text-transform: uppercase;
   margin: 0.2rem 1rem .5rem 2rem;
-  opacity: 0;
-  transition: opacity .5s ease-in-out;
+  display: none;
 }
+
+.loading {
+  width: 40px;
+  height: 20px;
+  background-image: url("../../assets/loading.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: none;
+  align-self: flex-start;
+  margin-left: .5rem;
+}
+
+/******************************************************* ANSWER-WRAPPER */
 
 .answer-wrapper {
   display: flex;
-  width: 90%;
+  width: 99%;
   flex-direction: column;
   height: inherit;
   padding: 5px;
   overflow-y: auto;
-  max-height: 60vh;
+}
+
+.answer-wrapper:hover::-webkit-scrollbar {
+  width: 10px;
 }
 
 .answer-entry {
@@ -32,9 +140,9 @@
 .answer-entry .definition {
   display: flex;
   flex-flow: row wrap;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background-color: white;
-  padding: .3rem .5rem;
+  padding: .3rem .5rem 0 .5rem;
   border-radius: 4px;
   color: rgb(58, 109, 151);
 }

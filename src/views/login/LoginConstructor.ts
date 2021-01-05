@@ -4,15 +4,24 @@ import { IDbHandler } from "../../models/IDbHandler";
 import { MySQLHandler } from "../../models/MySQLHandler";
 
 export class LoginConstructor extends TConstructor {
+
   private static loginAnchor = (document.querySelector(".login-wrapper a") as HTMLAnchorElement)
   private static loginImage = (document.querySelector(".login-wrapper i") as HTMLElement)
+  private static referrer: string
   private db: IDbHandler = new MySQLHandler()
+
+  constructor(referrer?: string) {
+    super()
+    !!referrer && (LoginConstructor.referrer = referrer)
+  }
+
 
   async render(): Promise<void> {
     if (await this.db.checkAuthStateAsync() !== "")
       return
 
     const main = document.querySelector(".main-field") as HTMLElement
+    document.querySelector(".location").textContent = "login"
 
     const btn = document.createElement("button")
     btn.className = "btn"
@@ -30,6 +39,9 @@ export class LoginConstructor extends TConstructor {
 
     const span = document.createElement("span")
     span.textContent = "notice"
+
+    const loading = document.createElement("div")
+    loading.className = "loading"
 
     const password = document.createElement("input")
     password.id = "password"
@@ -52,6 +64,7 @@ export class LoginConstructor extends TConstructor {
     group.append(login)
     group.append(password)
     group.append(span)
+    group.append(loading)
     group.append(inputFooter)
 
     const card = document.createElement("div")
@@ -72,7 +85,9 @@ export class LoginConstructor extends TConstructor {
     LoginConstructor.loginImage.style.transform = "scale(1,1)"
     LoginConstructor.loginImage.addEventListener("click", _ => this.logOut())
 
-    window.render("home")
+    !!this.referrer
+      ? window.render(this.referrer)
+      : window.render("home")
   }
 
   protected highlightMenu(): void {
@@ -91,6 +106,12 @@ export class LoginConstructor extends TConstructor {
     const login = (document.getElementById("login") as HTMLInputElement)
     const password = (document.getElementById("password") as HTMLInputElement)
 
+    const loginTip = (document.querySelector(".login-input-group span") as HTMLSpanElement)
+    const loading = (document.querySelector(".login-input-group .loading") as HTMLDivElement)
+
+    loginTip.style.display = "none"
+    loading.style.display = "block"
+
     if (login.value && password.value) {
       try {
         await this.db.authenticateAsync(login.value, password.value)
@@ -98,12 +119,14 @@ export class LoginConstructor extends TConstructor {
         LoginConstructor.applyCredentialsAsync(userName)
       } catch (error) {
         password.value = ""
-        const loginTip = (document.querySelector(".login-input-group span") as HTMLSpanElement)
         loginTip.textContent = error
-        loginTip.style.opacity = "1"
-        setTimeout(_ => loginTip.style.opacity = "0", 2000)
+        setTimeout(_ => loginTip.style.opacity = "1", 50)
+        setTimeout(_ => loginTip.style.opacity = "0", 3000)
       }
     }
+
+    loading.style.display = "none"
+    loginTip.style.display = "block"
   }
 
   private static logOut(): void {
@@ -112,6 +135,14 @@ export class LoginConstructor extends TConstructor {
     this.loginAnchor.title = "Войти в учетную запись"
 
     this.loginImage.style.transform = "scale(-1,-1)"
+  }
+
+
+  protected passOver(): void {
+    throw new Error("Method not implemented.");
+  }
+  protected handleSubmit(): void {
+    throw new Error("Method not implemented.");
   }
 
 }
