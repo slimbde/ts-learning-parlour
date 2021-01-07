@@ -3,36 +3,23 @@ import { TConstructor } from "../IConstructor";
 import { IDbHandler } from "../../models/IDbHandler";
 import { MySQLHandler } from "../../models/MySQLHandler";
 
-export class LoginConstructor extends TConstructor {
-
-  private static loginAnchor = (document.querySelector(".login-wrapper a") as HTMLAnchorElement)
-  private static loginImage = (document.querySelector(".login-wrapper i") as HTMLElement)
-  private static referrer: string
+export class RegisterConstructor extends TConstructor {
   private db: IDbHandler = new MySQLHandler()
 
-  constructor(referrer?: string) {
-    super()
-    !!referrer && (LoginConstructor.referrer = referrer)
-  }
-
-
-  async render(): Promise<void> {
-    if (await this.db.checkAuthStateAsync() !== "")
-      return
-
-    document.querySelector(".location").textContent = "login"
-    const loginAnchor = document.querySelector(".login-wrapper a")
-    loginAnchor.textContent = "login"
-    loginAnchor.addEventListener("click", _ => window.render("login"))
+  render(): void {
+    document.querySelector(".location").textContent = "register"
+    const register = document.querySelector(".login-wrapper a")
+    register.textContent = "register"
+    register.addEventListener("click", _ => window.render("register"))
 
     const btn = document.createElement("button")
     btn.className = "btn"
-    btn.textContent = "Log in"
-    btn.addEventListener("click", _ => this.loginActionAsync())
+    btn.textContent = "Register"
+    btn.addEventListener("click", _ => this.registerActionAsync())
 
     const a = document.createElement("a")
-    a.addEventListener("click", _ => this.registerActionAsync())
-    a.textContent = "Register"
+    a.addEventListener("click", _ => this.loginActionAsync())
+    a.textContent = "Log in"
 
     const inputFooter = document.createElement("div")
     inputFooter.className = "input-footer"
@@ -49,13 +36,13 @@ export class LoginConstructor extends TConstructor {
     password.id = "password"
     password.type = "password"
     password.placeholder = "password"
-    password.addEventListener("keydown", e => e.key === "Enter" && this.loginActionAsync())
+    password.addEventListener("keydown", e => e.key === "Enter" && this.registerActionAsync())
 
     const login = document.createElement("input")
     login.id = "login"
     login.type = "text"
     login.placeholder = "login"
-    login.addEventListener("keydown", e => e.key === "Enter" && this.loginActionAsync())
+    login.addEventListener("keydown", e => e.key === "Enter" && this.registerActionAsync())
 
     const text = document.createElement("div")
     text.textContent = "Specify your credentials below:"
@@ -81,18 +68,6 @@ export class LoginConstructor extends TConstructor {
     login.focus()
   }
 
-  static async applyCredentialsAsync(userName: string): Promise<void> {
-    LoginConstructor.loginAnchor.textContent = userName
-
-    LoginConstructor.loginImage.title = "Выйти из учетной записи"
-    LoginConstructor.loginImage.style.transform = "scale(1,1)"
-    LoginConstructor.loginImage.addEventListener("click", _ => this.logOut())
-
-    !!this.referrer
-      ? window.render(this.referrer)
-      : window.render("home")
-  }
-
   protected highlightMenu(): void {
     super.deselectMenu()
 
@@ -102,10 +77,6 @@ export class LoginConstructor extends TConstructor {
   }
 
   private async registerActionAsync(): Promise<void> {
-    window.render("register")
-  }
-
-  private async loginActionAsync(): Promise<void> {
     const login = (document.getElementById("login") as HTMLInputElement)
     const password = (document.getElementById("password") as HTMLInputElement)
 
@@ -117,6 +88,7 @@ export class LoginConstructor extends TConstructor {
 
     if (login.value && password.value) {
       try {
+        await this.db.registerAsync(login.value, password.value)
         await this.db.authenticateAsync(login.value, password.value)
         await this.db.checkAuthStateAsync()
       } catch (error) {
@@ -131,20 +103,7 @@ export class LoginConstructor extends TConstructor {
     loginTip.style.display = "block"
   }
 
-  private static logOut(): void {
-    localStorage.removeItem("user")
-    this.loginAnchor.textContent = "login"
-    this.loginAnchor.title = "Войти в учетную запись"
-
-    this.loginImage.style.transform = "scale(-1,-1)"
+  private async loginActionAsync(): Promise<void> {
+    window.render("login")
   }
-
-
-  protected passOver(): void {
-    throw new Error("Method not implemented.");
-  }
-  protected handleSubmit(): void {
-    throw new Error("Method not implemented.");
-  }
-
 }

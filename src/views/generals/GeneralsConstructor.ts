@@ -24,27 +24,15 @@ export class GeneralsConstructor extends TTrainingConstructor {
       })
   }
 
-  protected highlightMenu(): void {
-    super.deselectMenu()
-
-    const menuGenerals = document.querySelector("#menu-generals").children
-    for (let ch of menuGenerals)
-      !ch.classList.contains("active") && ch.classList.add("active")
-  }
 
   passOver(): void {
-    throw new Error("Method not implemented.");
+    this.score()
+    setTimeout(_ => this.applyNewNotionAsync(), 300)
   }
 
   handleSubmit(): void {
-    if (this.input.value === this.currentNotion.solution) {
-      ++this.correct
-      this.input.placeholder = ""
-
-      this.blink(true)
-
-      this.setHandler.scoreAsync(this.currentNotion.id.toString())
-    }
+    if (this.input.value === this.currentNotion.solution)
+      this.score()
     else {
       ++this.wrong
       this.setHandler.enqueue(this.currentNotion)
@@ -56,6 +44,14 @@ export class GeneralsConstructor extends TTrainingConstructor {
     setTimeout(_ => this.applyNewNotionAsync(), 300)
   }
 
+
+  protected highlightMenu(): void {
+    super.deselectMenu()
+
+    const menuGenerals = document.querySelector("#menu-generals").children
+    for (let ch of menuGenerals)
+      !ch.classList.contains("active") && ch.classList.add("active")
+  }
 
   private async applyNewNotionAsync(): Promise<void> {
     this.previousNotion = !!this.currentNotion ? Object.assign(this.currentNotion, {}) : null
@@ -111,5 +107,14 @@ export class GeneralsConstructor extends TTrainingConstructor {
         }, 300)
       }, 300)
     }, correct ? 1000 : 300)
+  }
+
+  private score(): void {
+    ++this.correct
+    this.input.placeholder = ""
+
+    this.blink(true)
+
+    this.setHandler.scoreAsync(this.currentNotion.id.toString())
   }
 }

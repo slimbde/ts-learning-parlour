@@ -1,5 +1,8 @@
 
 export interface IConstructor {
+  /**
+   * renders a view
+   */
   render(): void
 }
 

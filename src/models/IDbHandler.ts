@@ -17,6 +17,14 @@ export interface IDbHandler {
   checkAuthStateAsync(): Promise<string>
 
   /**
+   * performs a new user registration
+   * @param login new user login
+   * @param password new user password
+   * @returns new registered user or throws exception
+   */
+  registerAsync(login: string, password: string): Promise<TUser>
+
+  /**
    * retrieves every possible match from the database
    * @param particle the bit to search by
    * @returns TLearnable structure

@@ -79,6 +79,11 @@ a:hover, i:hover {
   text-shadow: 0 0 5px gray;
 }
 
+hr {
+  opacity: .5;
+  margin: .4rem 0;
+}
+
 /****************************************************** HEADER */
 
 .header {
@@ -209,6 +214,19 @@ a:hover, i:hover {
 .menu-line:hover a, .menu-line:hover i {
   color: black !important;
   text-shadow: 0 0 4px gray;
+}
+
+.info {
+  display: flex;
+  flex-flow: column nowrap;
+  font-size: .9rem;
+  color: gray;
+  padding: .5rem;
+}
+
+.info-title {
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
 }
 
 @media only screen and (max-width: 500px) {

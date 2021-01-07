@@ -6,6 +6,22 @@ import { TUser } from "./TUser";
 
 export class MySQLHandler implements IDbHandler {
 
+  async registerAsync(login: string, password: string): Promise<TUser> {
+    const resp = await fetch(`php-api/users/register?login=${login}&password=${password}`)
+    //debugger
+    if (resp.status > 400) {
+      switch (resp.status) {
+        case 504: throw new Error("DB is offline")
+        default: throw new Error("Registration rejected")
+      }
+    }
+
+    const user = await (resp.json() as Promise<TUser>)
+    localStorage.setItem("user", JSON.stringify(user))
+
+    return user
+  }
+
   async authenticateAsync(login: string, password: string): Promise<TUser> {
     const resp = await fetch(`php-api/users/authenticate?login=${login}&password=${password}`)
     //debugger

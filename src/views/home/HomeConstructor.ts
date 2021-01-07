@@ -1,3 +1,4 @@
+import window from "../../index"
 import { IDbHandler } from "../../models/IDbHandler";
 import { MySQLHandler } from "../../models/MySQLHandler";
 import { TConstructor } from "../IConstructor";
@@ -6,8 +7,8 @@ export class HomeConstructor extends TConstructor {
   private db: IDbHandler = new MySQLHandler()
 
   render(): void {
-    const main = document.querySelector(".main-field")
     document.querySelector(".location").textContent = "home"
+    document.querySelector(".login-wrapper a").addEventListener("click", _ => window.render("login"))
 
     const title = this.constructTitle()
     const input = this.constructInputField()
@@ -19,6 +20,7 @@ export class HomeConstructor extends TConstructor {
     searchWrapper.append(input)
     searchWrapper.append(answer)
 
+    const main = document.querySelector(".main-field")
     main.innerHTML = ""
     main.append(searchWrapper)
 
@@ -26,12 +28,6 @@ export class HomeConstructor extends TConstructor {
     this.highlightMenu()
   }
 
-  protected passOver(): void {
-    throw new Error("Method not implemented.");
-  }
-  protected handleSubmit(): void {
-    throw new Error("Method not implemented.");
-  }
 
   protected highlightMenu(): void {
     super.deselectMenu()
@@ -40,7 +36,6 @@ export class HomeConstructor extends TConstructor {
     for (let ch of menuHome)
       !ch.classList.contains("active") && ch.classList.add("active")
   }
-
 
   private constructTitle(): HTMLDivElement {
     const h1 = document.createElement("h1")

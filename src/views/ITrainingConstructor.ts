@@ -4,6 +4,8 @@ import { MySQLHandler } from "../models/MySQLHandler";
 import { TLearnable } from "../models/TLearnable";
 import { IConstructor } from "./IConstructor";
 
+
+
 export interface ITrainingConstructor extends IConstructor {
   passOver(): void
   handleSubmit(): void

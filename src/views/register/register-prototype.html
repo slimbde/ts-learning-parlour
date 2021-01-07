@@ -10,7 +10,7 @@
     href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
     rel="stylesheet">
   <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="../login/login.css">
   <title>Learning parlour</title>
 </head>
 
@@ -22,7 +22,7 @@
         <div class="location">Location</div>
       </div>
       <div class="login-wrapper">
-        <a href="/#" onclick="render('login')" title="Войти в учетную запись">Login</a>
+        <a href="/#" onclick="render('register')" title="Зарегистрироваться">Register</a>
         <i class="material-icons-outlined">login</i>
       </div>
     </div>
@@ -74,14 +74,13 @@
           <input type="password" placeholder="password" name="" id="password">
           <span class="status-message">wrong</span>
           <div class="input-footer">
-            <a onclick="constructor.invoke('loginAction')">Register</a>
-            <button type="submit" class="btn">Log in</button>
+            <a>Login</a>
+            <button type="submit" class="btn">Register</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </body>
 
 </html>
