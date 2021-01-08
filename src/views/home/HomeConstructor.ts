@@ -1,10 +1,7 @@
 import window from "../../index"
-import { IDbHandler } from "../../models/IDbHandler";
-import { MySQLHandler } from "../../models/MySQLHandler";
 import { TConstructor } from "../IConstructor";
 
 export class HomeConstructor extends TConstructor {
-  private db: IDbHandler = new MySQLHandler()
 
   render(): void {
     document.querySelector(".location").textContent = "home"
@@ -24,8 +21,9 @@ export class HomeConstructor extends TConstructor {
     main.innerHTML = ""
     main.append(searchWrapper)
 
-    document.getElementById("input").focus()
+    this.renderDbInfo()
     this.highlightMenu()
+    document.getElementById("input").focus()
   }
 
 

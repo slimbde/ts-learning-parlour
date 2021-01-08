@@ -1,6 +1,6 @@
 import { IDbHandler } from "./IDbHandler";
 import { TLearnable } from "./TLearnable";
-import { TUser } from "./TUser";
+
 
 export interface ISetHandler {
   nextAsync(): Promise<TLearnable>
@@ -13,21 +13,21 @@ export interface ISetHandler {
 
 export abstract class TSetHandler implements ISetHandler {
   protected db: IDbHandler
-  protected user: TUser
+  protected userName: string
   protected set: TLearnable[]
 
   get Count(): number { return this.set.length }
 
   constructor(dbHandler: IDbHandler) {
     this.db = dbHandler
-    this.user = (JSON.parse(localStorage.getItem("user")) as TUser)
+    this.userName = localStorage.getItem("user")
   }
 
   abstract scoreAsync(entryId: string): Promise<void>
 
   async nextAsync(): Promise<TLearnable> {
     if (!this.set) {
-      this.set = await this.db.getGeneralsForAsync(this.user.id)
+      this.set = await this.db.getGeneralsForAsync(this.userName)
       shuffle(this.set)
     }
 

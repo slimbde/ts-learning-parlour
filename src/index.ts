@@ -44,10 +44,9 @@ window.toggleMenu = () => document.querySelector(".menu-wrapper").classList.togg
 window.hideMenu = () => document.querySelector(".menu-wrapper").classList.remove("menu-wrapper-visible")
 
 
-window.constructor = new HomeConstructor();
-window.render('home')
-
 export default window
+
+!!window.constructor && window.render('home')
 
 const db: IDbHandler = new MySQLHandler()
 db.checkAuthStateAsync()

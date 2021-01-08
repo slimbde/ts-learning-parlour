@@ -1,4 +1,3 @@
-import { TUser } from "../../models/TUser";
 import { TTrainingConstructor } from "../ITrainingConstructor";
 import { GeneralsSetHandler } from "./GeneralsSetHandler";
 
@@ -6,8 +5,8 @@ import { GeneralsSetHandler } from "./GeneralsSetHandler";
 export class GeneralsConstructor extends TTrainingConstructor {
 
   render(): void {
-    const user = (JSON.parse(localStorage.getItem("user")) as TUser)
-    if (!user)
+    const userName = localStorage.getItem("user")
+    if (!userName)
       throw new Error("generals:401:not-authorized")
 
     super.render()

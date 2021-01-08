@@ -1,14 +1,11 @@
 import window from '../../index'
 import { TConstructor } from "../IConstructor";
-import { IDbHandler } from "../../models/IDbHandler";
-import { MySQLHandler } from "../../models/MySQLHandler";
 
 export class LoginConstructor extends TConstructor {
 
   private static loginAnchor = (document.querySelector(".login-wrapper a") as HTMLAnchorElement)
   private static loginImage = (document.querySelector(".login-wrapper i") as HTMLElement)
   private static referrer: string
-  private db: IDbHandler = new MySQLHandler()
 
   constructor(referrer?: string) {
     super()

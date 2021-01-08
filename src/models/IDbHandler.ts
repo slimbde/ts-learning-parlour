@@ -1,14 +1,14 @@
+import { DBInfo } from "./DBInfo";
 import { TLearnable } from "./TLearnable";
-import { TUser } from "./TUser";
+
 
 export interface IDbHandler {
   /**
    * authenticates user to the database
    * @param login
    * @param password
-   * @returns TUser structure
    */
-  authenticateAsync(login: string, password: string): Promise<TUser>
+  authenticateAsync(login: string, password: string): Promise<void>
 
   /**
    * checks and applies user authentication
@@ -20,9 +20,8 @@ export interface IDbHandler {
    * performs a new user registration
    * @param login new user login
    * @param password new user password
-   * @returns new registered user or throws exception
    */
-  registerAsync(login: string, password: string): Promise<TUser>
+  registerAsync(login: string, password: string): Promise<void>
 
   /**
    * retrieves every possible match from the database
@@ -33,15 +32,21 @@ export interface IDbHandler {
 
   /**
    * retrieves not solved generals list from the database
-   * @param id person id
+   * @param login person login
    * @returns TLearnable structure
    */
-  getGeneralsForAsync(id: string): Promise<TLearnable[]>
+  getGeneralsForAsync(login: string): Promise<TLearnable[]>
 
   /**
    * sets as solved a notion for a user
-   * @param id user id
+   * @param login user login
    * @param notionId notion id
    */
-  scoreGeneralsForAsync(id: string, notionId: string): Promise<void>
+  scoreGeneralsForAsync(login: string, notionId: string): Promise<void>
+
+  /**
+   * retrieves db info
+   * @returns JSON object
+   */
+  getDbInfoAsync(): Promise<DBInfo>
 }

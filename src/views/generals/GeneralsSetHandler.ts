@@ -8,6 +8,6 @@ export class GeneralsSetHandler extends TSetHandler {
   }
 
   async scoreAsync(entryId: string): Promise<void> {
-    this.db.scoreGeneralsForAsync(this.user.id, entryId)
+    this.db.scoreGeneralsForAsync(this.userName, entryId)
   }
 }

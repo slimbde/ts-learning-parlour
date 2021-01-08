@@ -1,10 +1,7 @@
 import window from '../../index'
 import { TConstructor } from "../IConstructor";
-import { IDbHandler } from "../../models/IDbHandler";
-import { MySQLHandler } from "../../models/MySQLHandler";
 
 export class RegisterConstructor extends TConstructor {
-  private db: IDbHandler = new MySQLHandler()
 
   render(): void {
     document.querySelector(".location").textContent = "register"

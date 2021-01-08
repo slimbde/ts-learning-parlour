@@ -1,49 +1,43 @@
 import { LoginConstructor } from "../views/login/LoginConstructor";
+import { DBInfo } from "./DBInfo";
 import { IDbHandler } from "./IDbHandler";
 import { TLearnable } from "./TLearnable";
-import { TUser } from "./TUser";
+
 
 
 export class MySQLHandler implements IDbHandler {
 
-  async registerAsync(login: string, password: string): Promise<TUser> {
-    const resp = await fetch(`php-api/users/register?login=${login}&password=${password}`)
-    //debugger
-    if (resp.status > 400) {
-      switch (resp.status) {
-        case 504: throw new Error("DB is offline")
-        default: throw new Error("Registration rejected")
-      }
-    }
+  async registerAsync(login: string, password: string): Promise<void> {
+    const body = new FormData()
+    body.append("login", login)
+    body.append("password", password)
 
-    const user = await (resp.json() as Promise<TUser>)
-    localStorage.setItem("user", JSON.stringify(user))
+    const resp = await fetch(`php-api/users`, {
+      method: 'POST',
+      body: body
+    })
 
-    return user
+    this.checkResponse(resp)
+
+    localStorage.setItem("user", login)
   }
 
-  async authenticateAsync(login: string, password: string): Promise<TUser> {
+  async authenticateAsync(login: string, password: string): Promise<void> {
     const resp = await fetch(`php-api/users/authenticate?login=${login}&password=${password}`)
-    //debugger
-    if (resp.status > 400) {
-      switch (resp.status) {
-        case 504: throw new Error("DB is offline")
-        case 404: throw new Error("Wrong login or password")
-        default: throw new Error("Authentication rejected")
-      }
+    try {
+      this.checkResponse(resp)
+    } catch (error: any) {
+      if (error.message === "Not found")
+        throw new Error("Wrong login/password")
     }
 
-    const user = await (resp.json() as Promise<TUser>)
-    localStorage.setItem("user", JSON.stringify(user))
-
-    return user
+    localStorage.setItem("user", login)
   }
 
   async checkAuthStateAsync(): Promise<string> {
-    if (localStorage.getItem("user")) {
-      const userName = (JSON.parse(localStorage.getItem("user")) as TUser).login
+    const userName = localStorage.getItem("user")
+    if (userName) {
       LoginConstructor.applyCredentialsAsync(userName)
-
       return userName
     }
 
@@ -52,46 +46,54 @@ export class MySQLHandler implements IDbHandler {
 
   async searchWordsAsync(particle: string): Promise<TLearnable[]> {
     const resp = await fetch(`php-api/words/getfor?particle=${particle}`)
-    if (resp.status === 200) {
-      const data = await (resp.json() as Promise<any>)
+    this.checkResponse(resp)
 
-      return data.map((dt: any) => ({
-        id: dt["#"],
-        notion: dt["Word"],
-        ipa: dt["IPA"],
-        meaning: dt["Translation"],
-        example: dt["Example"],
-        addDate: dt["Add Date"]
-      }))
-    }
-    else {
-      if (resp.status > 500)
-        console.error(`[SearchWordsAsync]: ${resp.status} - ${resp.statusText} at ${resp.url}`)
-    }
+    const data = await (resp.json() as Promise<any>)
 
-    throw new Error("Nothing found")
+    return data.map((dt: any) => ({
+      id: dt["#"],
+      notion: dt["Word"],
+      ipa: dt["IPA"],
+      meaning: dt["Translation"],
+      example: dt["Example"],
+      addDate: dt["Add Date"]
+    }))
   }
 
-  async getGeneralsForAsync(id: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getgeneralsfor?id=${id}`)
-    if (resp.status == 200) {
-      const data = await (resp.json() as Promise<any>)
+  async getGeneralsForAsync(userName: string): Promise<TLearnable[]> {
+    const resp = await fetch(`php-api/words/getgeneralsfor?login=${userName}`)
+    this.checkResponse(resp)
+    const data = await (resp.json() as Promise<any>)
 
-      return data.map((dt: any) => ({
-        id: dt["#"],
-        issue: dt["Issue"],
-        solution: dt["Answer"]
-      }))
-    }
-    else {
-      if (resp.status > 500)
-        console.error(`[GetGeneralsFor]: ${resp.status} - ${resp.statusText} at ${resp.url}`)
-    }
-
-    throw new Error("Nothing found")
+    return data.map((dt: any) => ({
+      id: dt["#"],
+      issue: dt["Issue"],
+      solution: dt["Answer"]
+    }))
   }
 
-  async scoreGeneralsForAsync(id: string, notionId: string): Promise<void> {
-    await fetch(`php-api/words/setgeneralsfor?id=${id}&notionId=${notionId}`)
+  async scoreGeneralsForAsync(userName: string, notionId: string): Promise<void> {
+    await fetch(`php-api/words/setgeneralsfor?login=${userName}&notionId=${notionId}`)
+  }
+
+  async getDbInfoAsync(): Promise<DBInfo> {
+    const resp = await fetch(`php-api/users/getdbinfo`)
+    this.checkResponse(resp)
+
+    return await (resp.json() as Promise<DBInfo>)
+  }
+
+
+  /**
+   * checks server response and throws common errors
+   * @param resp response from server
+   */
+  private checkResponse(resp: Response): void {
+    if (resp.status > 400) {
+      switch (resp.status) {
+        case 504: throw new Error("DB is offline")
+        default: throw new Error(resp.statusText)
+      }
+    }
   }
 }
