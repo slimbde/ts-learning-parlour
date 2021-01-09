@@ -11,10 +11,6 @@ export class GeneralsConstructor extends TTrainingConstructor {
 
     super.render()
 
-    document.querySelector(".location").textContent = "generals"
-
-    this.highlightMenu()
-
     this.setHandler = new GeneralsSetHandler(this.db)
     this.applyNewNotionAsync()
       .then(_ => {
@@ -45,11 +41,13 @@ export class GeneralsConstructor extends TTrainingConstructor {
 
 
   protected highlightMenu(): void {
-    super.deselectMenu()
+    this.deselectMenu()
 
     const menuGenerals = document.querySelector("#menu-generals").children
     for (let ch of menuGenerals)
       !ch.classList.contains("active") && ch.classList.add("active")
+
+    document.querySelector(".location").textContent = "generals"
   }
 
   private async applyNewNotionAsync(): Promise<void> {

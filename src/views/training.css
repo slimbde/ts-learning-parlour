@@ -92,8 +92,6 @@
   border: 1px solid rgba(211, 211, 211, 0.466);
   border-top: unset;
   border-bottom: unset;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 
 .training-field-issue {
@@ -119,8 +117,6 @@
   padding: 1rem;
   padding-top: 0;
   border-bottom: 1px solid rgba(211, 211, 211, 0.466);
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   line-height: 1.3rem;
 }
 

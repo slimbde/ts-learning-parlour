@@ -6,6 +6,7 @@ import { LoginConstructor } from "./views/login/LoginConstructor"
 import { HomeConstructor } from "./views/home/HomeConstructor"
 import { GeneralsConstructor } from "./views/generals/GeneralsConstructor"
 import { RegisterConstructor } from "./views/register/RegisterConstructor"
+import { TrainingConstructor } from "./views/training/TrainingConstructor"
 
 
 interface ExtendedWindow extends Window {
@@ -24,6 +25,7 @@ window.render = (what: string): void => {
     case "login": window.constructor = new LoginConstructor(); break
     case "register": window.constructor = new RegisterConstructor(); break
     case "generals": window.constructor = new GeneralsConstructor(); break
+    case "training": window.constructor = new TrainingConstructor(); break
 
     default: throw new Error(`[render]: not existing route "${what}"`)
   }

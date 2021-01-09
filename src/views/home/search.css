@@ -124,8 +124,8 @@
   overflow-y: auto;
 }
 
-.answer-wrapper:hover::-webkit-scrollbar {
-  width: 10px;
+.answer-wrapper:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.411);
 }
 
 .answer-entry {

@@ -11,12 +11,11 @@
 }
 
 ::-webkit-scrollbar {
-  width: 2px;
-  /*background-color: whitesmoke;*/
+  width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(128, 128, 128, 0.411);
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -220,6 +219,7 @@ hr {
   display: flex;
   flex-flow: column nowrap;
   font-size: .9rem;
+  font-weight: 300;
   color: gray;
   padding: .5rem;
 }

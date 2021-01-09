@@ -36,46 +36,31 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
 
 
   render(): void {
-    const progressInfo = this.constructProgressInfo()
-    const trainingFieldTitle = this.constructTrainingFieldTitle()
-    const trainingFieldWorkspace = this.constructTrainingFieldWorkspace()
-
-    //const trainingFieldExample = document.createElement("div")
-    //trainingFieldExample.className = "training-field-example"
-    //trainingFieldExample.textContent = "some example"
+    const pageTitles = this.constructPageTitles()
+    const trainingZone = this.constructTrainingZone()
 
     const trainingField = document.createElement("div")
     trainingField.className = "training-field"
-    trainingField.append(progressInfo)
-    trainingField.append(trainingFieldTitle)
-    trainingField.append(trainingFieldWorkspace)
-    //trainingField.append(trainingFieldExample)
+    trainingField.append(...trainingZone)
 
     const trainingFieldWrapper = document.createElement("div")
     trainingFieldWrapper.className = "training-field-wrapper"
     trainingFieldWrapper.append(trainingField)
 
-    const trainingTitle = document.createElement("div")
-    trainingTitle.className = "training-title"
-    trainingTitle.textContent = "general vocabulary"
-
-    const trainingTask = document.createElement("div")
-    trainingTask.className = "training-task"
-    trainingTask.textContent = "fill in blanks with appropriate notion"
-
     const trainingWrapper = document.createElement("div")
     trainingWrapper.className = "training-wrapper"
-    trainingWrapper.append(trainingTitle)
-    trainingWrapper.append(trainingTask)
-    trainingWrapper.append(trainingFieldWrapper)
+    trainingWrapper.append(...pageTitles, trainingFieldWrapper)
 
     const main = document.querySelector(".main-field")
     main.innerHTML = ""
     main.append(trainingWrapper)
+
+    this.highlightMenu()
   }
 
   abstract passOver(): void
   abstract handleSubmit(): void
+  protected abstract highlightMenu(): void
 
   protected deselectMenu(): void {
     const menu = document.querySelector(".menu-wrapper").children
@@ -91,7 +76,27 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
     }
   }
 
-  private constructProgressInfo(): HTMLDivElement {
+  protected constructPageTitles(): HTMLDivElement[] {
+    const trainingTitle = document.createElement("div")
+    trainingTitle.className = "training-title"
+    trainingTitle.textContent = "general vocabulary"
+
+    const trainingTask = document.createElement("div")
+    trainingTask.className = "training-task"
+    trainingTask.textContent = "fill in blanks with appropriate notion"
+
+    return [trainingTitle, trainingTask]
+  }
+
+  protected constructTrainingZone(): HTMLDivElement[] {
+    const progressInfo = this.constructProgressInfo()
+    const trainingFieldTitle = this.constructTrainingFieldTitle()
+    const trainingFieldWorkspace = this.constructTrainingFieldWorkspace()
+
+    return [progressInfo, trainingFieldTitle, trainingFieldWorkspace]
+  }
+
+  protected constructProgressInfo(): HTMLDivElement {
     const divCorrect = document.createElement("div")
     divCorrect.textContent = "Correct: 0"
     this.correctDiv = divCorrect
@@ -127,7 +132,7 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
     return result
   }
 
-  private constructTrainingFieldTitle(): HTMLDivElement {
+  protected constructTrainingFieldTitle(): HTMLDivElement {
     const left = document.createElement("div")
     left.className = "title-left"
     left.textContent = "Query: 0"
@@ -146,7 +151,7 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
     return result
   }
 
-  private constructTrainingFieldWorkspace(): HTMLDivElement {
+  protected constructTrainingFieldWorkspace(): HTMLDivElement {
     const issueDiv = document.createElement("div")
     issueDiv.className = "training-field-issue"
     this.issueDiv = issueDiv
