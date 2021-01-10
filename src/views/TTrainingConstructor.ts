@@ -1,20 +1,13 @@
 import { IDbHandler } from "../models/IDbHandler";
 import { ISetHandler } from "../models/ISetHandler";
 import { MySQLHandler } from "../models/MySQLHandler";
-import { TLearnable } from "../models/TLearnable";
 import { IConstructor } from "./IConstructor";
 
 
 
-export interface ITrainingConstructor extends IConstructor {
-  passOver(): void
-  handleSubmit(): void
-}
 
 
-
-
-export abstract class TTrainingConstructor implements ITrainingConstructor {
+export abstract class TTrainingConstructor implements IConstructor {
   protected db: IDbHandler = new MySQLHandler()
   protected setHandler: ISetHandler
 
@@ -29,14 +22,8 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
   protected answerIssue: HTMLDivElement
   protected answerAnswer: HTMLDivElement
 
-  protected currentNotion: TLearnable
-  protected previousNotion: TLearnable
-  protected correct = 0
-  protected wrong = 0
-
 
   render(): void {
-    const pageTitles = this.constructPageTitles()
     const trainingZone = this.constructTrainingZone()
 
     const trainingField = document.createElement("div")
@@ -49,6 +36,8 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
 
     const trainingWrapper = document.createElement("div")
     trainingWrapper.className = "training-wrapper"
+
+    const pageTitles = this.constructPageTitles()
     trainingWrapper.append(...pageTitles, trainingFieldWrapper)
 
     const main = document.querySelector(".main-field")
@@ -58,43 +47,11 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
     this.highlightMenu()
   }
 
-  abstract passOver(): void
-  abstract handleSubmit(): void
+
   protected abstract highlightMenu(): void
+  protected abstract constructPageTitles(): HTMLDivElement[]
+  protected abstract constructTrainingZone(): HTMLDivElement[]
 
-  protected deselectMenu(): void {
-    const menu = document.querySelector(".menu-wrapper").children
-    for (let ch of menu) {
-      for (let subCh of ch.children)
-        subCh.classList.remove("active")
-    }
-
-    const header = document.querySelector(".header-container").children
-    for (let ch of header) {
-      for (let subCh of ch.children)
-        subCh.classList.remove("active")
-    }
-  }
-
-  protected constructPageTitles(): HTMLDivElement[] {
-    const trainingTitle = document.createElement("div")
-    trainingTitle.className = "training-title"
-    trainingTitle.textContent = "general vocabulary"
-
-    const trainingTask = document.createElement("div")
-    trainingTask.className = "training-task"
-    trainingTask.textContent = "fill in blanks with appropriate notion"
-
-    return [trainingTitle, trainingTask]
-  }
-
-  protected constructTrainingZone(): HTMLDivElement[] {
-    const progressInfo = this.constructProgressInfo()
-    const trainingFieldTitle = this.constructTrainingFieldTitle()
-    const trainingFieldWorkspace = this.constructTrainingFieldWorkspace()
-
-    return [progressInfo, trainingFieldTitle, trainingFieldWorkspace]
-  }
 
   protected constructProgressInfo(): HTMLDivElement {
     const divCorrect = document.createElement("div")
@@ -191,5 +148,93 @@ export abstract class TTrainingConstructor implements ITrainingConstructor {
     result.append(answerDiv)
 
     return result
+  }
+
+  protected deselectMenu(): void {
+    const menu = document.querySelector(".menu-wrapper").children
+    for (let ch of menu) {
+      for (let subCh of ch.children)
+        subCh.classList.remove("active")
+    }
+
+    const header = document.querySelector(".header-container").children
+    for (let ch of header) {
+      for (let subCh of ch.children)
+        subCh.classList.remove("active")
+    }
+  }
+
+  protected passOver(): void {
+    this.score()
+    setTimeout(_ => this.applyNewNotionAsync(), 300)
+  }
+
+  protected handleSubmit(): void {
+    if (this.input.value === this.setHandler.Solution)
+      this.score()
+    else {
+      this.setHandler.incrementWrong()
+      this.setHandler.enqueue()
+      this.input.placeholder = this.input.value
+
+      this.blink(false)
+    }
+
+    setTimeout(_ => this.applyNewNotionAsync(), 300)
+  }
+
+  protected async applyNewNotionAsync(): Promise<void> {
+    await this.setHandler.nextAsync()
+
+    this.correctDiv.textContent = `Correct: ${this.setHandler.Correct}`
+    this.wrongDiv.textContent = `Wrong: ${this.setHandler.Wrong}`
+
+    this.successDiv.textContent = `Success: ${Math.round(this.setHandler.Rate)}%`
+
+    this.leftDiv.textContent = `Query: ${this.setHandler.NotionId}`
+    this.rightDiv.textContent = `To go: ${this.setHandler.Count}`
+
+    this.issueDiv.textContent = this.setHandler.Issue
+
+    this.answerIssue.textContent = this.setHandler.PreviousIssue
+    this.answerAnswer.textContent = this.setHandler.PreviousSolution
+
+    this.input.value = ""
+    this.input.focus()
+  }
+
+  protected blink(correct: boolean) {
+    const color = correct ? "green" : "lightcoral"
+    const str = correct ? "CORRECT" : "WRONG"
+
+    this.hintDiv.style.color = correct ? color : "lightcoral"
+    this.hintDiv.textContent = str
+    this.hintDiv.style.opacity = "1"
+
+    this.input.style.boxShadow = `0 0 10px ${color}`
+
+    setTimeout(() => {
+      this.hintDiv.style.opacity = "0"
+      this.input.style.boxShadow = "unset"
+
+      !correct && setTimeout(() => {
+        this.hintDiv.style.opacity = "1"
+        this.input.style.boxShadow = `0 0 10px ${color}`
+
+        setTimeout(() => {
+          this.hintDiv.style.opacity = "0"
+          this.input.style.boxShadow = "unset"
+        }, 300)
+      }, 300)
+    }, correct ? 1000 : 300)
+  }
+
+  protected score(): void {
+    this.setHandler.incrementCorrect()
+    this.input.placeholder = ""
+
+    this.blink(true)
+
+    this.setHandler.scoreAsync()
   }
 }

@@ -1,17 +1,16 @@
 import { TTrainingConstructor } from "../TTrainingConstructor";
-import { GeneralsSetHandler } from "./GeneralsSetHandler";
+import { WordsSetHandler } from "./WordsSetHandler";
 
 
-
-export class GeneralsConstructor extends TTrainingConstructor {
+export class WordsConstructor extends TTrainingConstructor {
 
   render(): void {
     if (!localStorage.getItem("user"))
-      throw new Error("generals:401:not-authorized")
+      throw new Error("words:401:not-authorized")
 
     super.render()
 
-    this.setHandler = new GeneralsSetHandler(this.db)
+    this.setHandler = new WordsSetHandler(this.db)
     this.applyNewNotionAsync()
       .then(_ => {
         this.hintDiv.style.backgroundImage = "none"
@@ -23,11 +22,11 @@ export class GeneralsConstructor extends TTrainingConstructor {
   protected constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "training-title"
-    trainingTitle.textContent = "general vocabulary"
+    trainingTitle.textContent = "words training routine"
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "training-task"
-    trainingTask.textContent = "fill in blanks with appropriate notion"
+    trainingTask.textContent = "guess the word"
 
     return [trainingTitle, trainingTask]
   }
@@ -36,17 +35,27 @@ export class GeneralsConstructor extends TTrainingConstructor {
     const progressInfo = this.constructProgressInfo()
     const trainingFieldTitle = this.constructTrainingFieldTitle()
     const trainingFieldWorkspace = this.constructTrainingFieldWorkspace()
+    const trainingFieldExample = this.constructExampleField()
 
-    return [progressInfo, trainingFieldTitle, trainingFieldWorkspace]
+    return [progressInfo, trainingFieldTitle, trainingFieldWorkspace, trainingFieldExample]
   }
 
   protected highlightMenu(): void {
-    this.deselectMenu()
+    super.deselectMenu()
 
-    const menuGenerals = document.querySelector("#menu-generals").children
-    for (let ch of menuGenerals)
+    const menu = document.querySelector("#menu-training").children
+    for (let ch of menu)
       !ch.classList.contains("active") && ch.classList.add("active")
 
-    document.querySelector(".location").textContent = "generals"
+    document.querySelector(".location").textContent = "training"
+  }
+
+
+
+  private constructExampleField(): HTMLDivElement {
+    const trainingFieldExample = document.createElement("div")
+    trainingFieldExample.className = "training-field-example"
+    trainingFieldExample.textContent = "some example"
+    return trainingFieldExample
   }
 }

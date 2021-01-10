@@ -60,6 +60,20 @@ export class MySQLHandler implements IDbHandler {
     }))
   }
 
+  async getWordsForAsync(userName: string): Promise<TLearnable[]> {
+    const resp = await fetch(`php-api/words/getsetfor?login=${userName}`)
+    this.checkResponse(resp)
+    const data = await (resp.json() as Promise<any>)
+
+    return data.map((dt: any) => ({
+      id: dt["#"],
+      notion: dt["Word"],
+      ipa: dt["IPA"],
+      meaning: dt["Translation"],
+      example: dt["Example"]
+    }))
+  }
+
   async getGeneralsForAsync(userName: string): Promise<TLearnable[]> {
     const resp = await fetch(`php-api/words/getgeneralsfor?login=${userName}`)
     this.checkResponse(resp)

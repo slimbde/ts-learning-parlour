@@ -1,14 +1,13 @@
 import { shuffle, TSetHandler } from "../../models/ISetHandler";
 
-export class GeneralsSetHandler extends TSetHandler {
 
-  async scoreAsync(): Promise<void> {
-    this.db.scoreGeneralsForAsync(this.userName, this.NotionId)
-  }
+export class WordsSetHandler extends TSetHandler {
+
+  async scoreAsync(): Promise<void> { }
 
   async nextAsync(): Promise<void> {
     if (!this.set) {
-      this.set = await this.db.getGeneralsForAsync(this.userName)
+      this.set = await this.db.getWordsForAsync(this.userName)
       shuffle(this.set)
     }
 

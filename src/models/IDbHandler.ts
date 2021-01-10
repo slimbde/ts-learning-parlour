@@ -45,6 +45,13 @@ export interface IDbHandler {
   scoreGeneralsForAsync(login: string, notionId: string): Promise<void>
 
   /**
+   * retrieves today words for a certain user
+   * @param login user login
+   * @returns TLearnable structure
+   */
+  getWordsForAsync(login: string): Promise<TLearnable[]>
+
+  /**
    * retrieves db info
    * @returns JSON object
    */
