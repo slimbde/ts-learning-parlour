@@ -3,6 +3,7 @@ import { WordsSetHandler } from "./WordsSetHandler";
 
 
 export class WordsConstructor extends TTrainingConstructor {
+  private exampleDiv: HTMLDivElement
 
   render(): void {
     if (!localStorage.getItem("user"))
@@ -17,6 +18,7 @@ export class WordsConstructor extends TTrainingConstructor {
         this.hintDiv.style.opacity = "0"
       })
   }
+
 
 
   protected constructPageTitles(): HTMLDivElement[] {
@@ -50,12 +52,34 @@ export class WordsConstructor extends TTrainingConstructor {
     document.querySelector(".location").textContent = "training"
   }
 
+  protected async applyNewNotionAsync(): Promise<void> {
+    await this.setHandler.nextAsync()
+
+    this.correctDiv.textContent = `Correct: ${this.setHandler.Correct}`
+    this.wrongDiv.textContent = `Wrong: ${this.setHandler.Wrong}`
+
+    this.successDiv.textContent = `Success: ${Math.round(this.setHandler.Rate)}%`
+
+    this.leftDiv.textContent = `Query: ${this.setHandler.NotionId} ~ Round: ${this.setHandler.Round}`
+    this.rightDiv.textContent = `To go: ${this.setHandler.Count}`
+
+    this.issueDiv.textContent = this.setHandler.Solution
+
+    this.answerIssue.textContent = this.setHandler.PreviousSolution
+    this.answerAnswer.textContent = (this.setHandler.PreviousIssue || "") + " " + (this.setHandler.PreviousIPA || "")
+    this.exampleDiv.textContent = this.setHandler.PreviousExample
+
+    this.input.value = ""
+    this.input.focus()
+  }
+
 
 
   private constructExampleField(): HTMLDivElement {
     const trainingFieldExample = document.createElement("div")
     trainingFieldExample.className = "training-field-example"
-    trainingFieldExample.textContent = "some example"
+    trainingFieldExample.textContent = ""
+    this.exampleDiv = trainingFieldExample
     return trainingFieldExample
   }
 }

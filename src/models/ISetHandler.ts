@@ -8,7 +8,9 @@ export interface ISetHandler {
   scoreAsync(): Promise<void>
   incrementWrong(): void
   incrementCorrect(): void
+  assess(what: string): boolean
   Count: number
+  Round: number
   Correct: number
   Wrong: number
   Rate: number
@@ -17,6 +19,8 @@ export interface ISetHandler {
   Solution: string
   PreviousIssue: string
   PreviousSolution: string
+  PreviousIPA: string
+  PreviousExample: string
 }
 
 
@@ -25,19 +29,23 @@ export abstract class TSetHandler implements ISetHandler {
   protected db: IDbHandler
   protected userName: string
   protected set: TLearnable[]
+  protected round: number
   protected correct: number
   protected wrong: number
   protected currentNotion: TLearnable
   protected previousNotion: TLearnable
 
   get Count(): number { return this.set.length }
+  get Round(): number { return this.round }
   get Correct(): number { return this.correct }
   get Wrong(): number { return this.wrong }
-  get Issue(): string { return this.currentNotion.issue }
-  get Solution(): string { return this.currentNotion.solution }
+  get NotionId(): string { return this.currentNotion.id.toString() }
+  get Issue(): string { return this.currentNotion?.issue }
+  get Solution(): string { return this.currentNotion?.solution }
   get PreviousIssue(): string { return this.previousNotion?.issue }
   get PreviousSolution(): string { return this.previousNotion?.solution }
-  get NotionId(): string { return this.currentNotion.id.toString() }
+  get PreviousIPA(): string { return this.previousNotion?.ipa }
+  get PreviousExample(): string { return this.previousNotion?.example }
   get Rate(): number {
     return !this.correct && !this.wrong
       ? 0
@@ -49,6 +57,7 @@ export abstract class TSetHandler implements ISetHandler {
     this.userName = localStorage.getItem("user")
     this.correct = 0
     this.wrong = 0
+    this.round = 1
   }
 
   abstract scoreAsync(): Promise<void>
@@ -57,6 +66,7 @@ export abstract class TSetHandler implements ISetHandler {
   enqueue(): void { this.set.push(this.currentNotion) }
   incrementWrong(): void { ++this.wrong }
   incrementCorrect(): void { ++this.correct }
+  assess(what: string): boolean { return what === this.Solution }
 }
 
 

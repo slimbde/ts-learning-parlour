@@ -70,7 +70,6 @@
 
 .training-field-title {
   display: flex;
-  height: 1.7rem;
   color: white;
   font-weight: 500;
   vertical-align: baseline;
@@ -130,7 +129,7 @@
 
 .training-field-example {
   color: steelblue;
-  font-weight: 500;
+  font-weight: 300;
   background-color: rgba(70, 131, 180, 0.027);
   padding: 1rem;
   border: 1px solid rgba(211, 211, 211, 0.479);
@@ -154,5 +153,8 @@
   }
   .progress-info div {
     margin-right: .5rem;
+  }
+  .training-field-title {
+    font-size: .9rem;
   }
 }

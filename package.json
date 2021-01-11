@@ -39,6 +39,7 @@
     "@babel/polyfill": "^7.10.4",
     "@types/jquery": "^3.5.5",
     "jquery": "^3.5.1",
+    "moment": "^2.29.1",
     "normalize.css": "^8.0.1"
   },
   "browserslist": "> 0.25%, not dead"

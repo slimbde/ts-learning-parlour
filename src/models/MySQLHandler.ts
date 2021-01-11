@@ -67,10 +67,11 @@ export class MySQLHandler implements IDbHandler {
 
     return data.map((dt: any) => ({
       id: dt["#"],
-      notion: dt["Word"],
+      issue: dt["Word"],
       ipa: dt["IPA"],
-      meaning: dt["Translation"],
-      example: dt["Example"]
+      solution: dt["Translation"],
+      example: dt["Example"],
+      addDate: dt["Add Date"]
     }))
   }
 

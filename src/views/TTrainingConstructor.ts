@@ -170,7 +170,7 @@ export abstract class TTrainingConstructor implements IConstructor {
   }
 
   protected handleSubmit(): void {
-    if (this.input.value === this.setHandler.Solution)
+    if (this.setHandler.assess(this.input.value))
       this.score()
     else {
       this.setHandler.incrementWrong()
