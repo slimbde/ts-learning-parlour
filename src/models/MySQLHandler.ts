@@ -91,6 +91,22 @@ export class MySQLHandler implements IDbHandler {
     await fetch(`php-api/words/setgeneralsfor?login=${userName}&notionId=${notionId}`)
   }
 
+  async getGerundsForAsync(userName: string): Promise<TLearnable[]> {
+    const resp = await fetch(`php-api/words/getgerundsfor?login=${userName}`)
+    this.checkResponse(resp)
+    const data = await (resp.json() as Promise<any>)
+
+    return data.map((dt: any) => ({
+      id: dt["#"],
+      issue: dt["Issue"],
+      solution: dt["Answer"]
+    }))
+  }
+
+  async scoreGerundsForAsync(userName: string, notionId: string): Promise<void> {
+    await fetch(`php-api/words/setgerundsfor?login=${userName}&notionId=${notionId}`)
+  }
+
   async getDbInfoAsync(): Promise<DBInfo> {
     const resp = await fetch(`php-api/users/getdbinfo`)
     this.checkResponse(resp)

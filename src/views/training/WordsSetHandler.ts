@@ -35,11 +35,12 @@ export class WordsSetHandler extends TSetHandler {
 
     if (this.currentSet.length === 0) {
       switch (this.round) {
-        case 1: this.currentSet = this.today.concat(this.last7days); break
+        case 1: throw new Error("Finish")
+        //case 1: this.currentSet = this.today.concat(this.last7days); break
         case 2: this.currentSet = this.today.concat(this.last7days.concat(this.last30days)); break
         case 3: this.currentSet = this.today.concat(this.last7days.concat(this.last30days.concat(this.last120days))); break
 
-        default: alert("Congratulations! You've finished the training routine");
+        default: throw new Error("Finish")
       }
 
       ++this.round
@@ -50,7 +51,7 @@ export class WordsSetHandler extends TSetHandler {
   }
 
   enqueue() { this.currentSet.push(this.currentNotion) }
-  assess(what: string): boolean { return what === this.Issue }
+  assess(what: string): boolean { return what.trim().toLowerCase() === this.Issue.trim().toLowerCase() }
 
 
 

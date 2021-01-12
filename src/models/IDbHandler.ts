@@ -45,6 +45,20 @@ export interface IDbHandler {
   scoreGeneralsForAsync(login: string, notionId: string): Promise<void>
 
   /**
+   * retrieves not solved gerunds list from the database
+   * @param login person login
+   * @returns TLearnable structure
+   */
+  getGerundsForAsync(login: string): Promise<TLearnable[]>
+
+  /**
+   * sets as solved a notion for a user
+   * @param login user login
+   * @param notionId notion id
+   */
+  scoreGerundsForAsync(login: string, notionId: string): Promise<void>
+
+  /**
    * retrieves today words for a certain user
    * @param login user login
    * @returns TLearnable structure

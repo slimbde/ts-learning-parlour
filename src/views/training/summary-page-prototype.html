@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="./src" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../training.css">
+  <title>Learning parlour</title>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-container">
+      <div class="menu-link" onclick="toggleMenu()">
+        <div class="menu-btn"><i class="material-icons-outlined">menu</i></div>
+        <div class="location">Location</div>
+      </div>
+      <div class="login-wrapper">
+        <a href="/#" onclick="render('login')" title="Войти в учетную запись">Login</a>
+        <i class="material-icons-outlined">login</i>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="menu-wrapper">
+      <div class="menu-line" id="menu-home">
+        <i class="material-icons">search</i>
+        <a href="/#" onclick="constructMain()">Home</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">run_circle</i>
+        <a href="#">Training</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">collections_bookmark</i>
+        <a href="#">Total</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">today</i>
+        <a href="#">Today</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">extension</i>
+        <a href="#">Generals</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">g_translate</i>
+        <a href="#">Gerunds</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">style</i>
+        <a href="#">Phrases</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">set_meal</i>
+        <a href="#">Idioms</a>
+      </div>
+      <div class="menu-line">
+        <i class="material-icons-outlined">question_answer</i>
+        <a href="#">Phrasals</a>
+      </div>
+    </div>
+    <div class="main-field">
+      <div class="training-wrapper">
+        <div class="training-title">Words training routine</div>
+        <div class="training-task">guess the word</div>
+        <div class="training-field-wrapper">
+          <div class="training-field">
+            <div class="progress-info">
+              <div id="correct">Congratulations! You've solved your training routine for today</div>
+              <div style="margin-left: auto;">
+                <a onclick="alert(`hello`)">run over again</a>
+              </div>
+            </div>
+            <div class="training-field-title">
+              <div class="title-left">Correct: 0 Wrong: 0 Success: 0%</div>
+              <div class="title-right">Examples</div>
+            </div>
+            <div class="training-field-example">
+              <div>
+                I've taken the opportunity to gain extra qualifications that were on
+                offer.. I really look up to my teacher.. I started last in the race but I soon caught up with the
+                others..
+                Never get into a stranger's car.. The train got in late. What time do you get into Heathrow?. He didn't
+                really care about students.. I have to say I'm not exactly enamoured with this part of the country.. He
+                is
+                very quick to catch on to things.. The manager decides on the assignment of tasks.. He has a collection
+                of
+                prehistoric insects preserved in amber.. I suddenly looked up and saw Mr Rutland watching me. Can you
+                look
+                up the time of the next train? I looked it up in the dictionary.. I'll give this old coat away. He said
+                that he was not an American but his accent gave him away.. You asked him out? Oh you brazen hussy..
+                Despite him being irresponsible, he knows how to make impression on the employers.. He was charged with
+                sexual assault.. She knows how to get round her parents.. In the 20th century, however, it includes
+                other
+                media used to broadcast news.. How does she get by on such a small salary?. As soon as I get through
+                with
+                this washing, I'll help you. I've been trying for a whole hour to get through to you. It has got through
+                to him quickly. I couldn't get through to her.. I want you to have a seat on the chaise lounge.. The
+                liquid gave off a strong smell.. Food, tableware, wine, candles... When the train stopped he got off..
+                The
+                woman alleges that her employers passed her over for promotion because she was pregnant.. When do we get
+                to New York?. He read the instructions but he didn't carry them out.. He says he'll tell the authorities
+                but it's just an empty threat (= it will not happen).. What time do you get up? Could you get me up at
+                6.30 tomorrow?. The children were all clamouring for attention.. I checked in at the Gordon Hotel.. Pets
+                must be properly cared for.. His application for citizenship was still pending.. We need a mayor who is
+                tough enough to clean up this town.. The teacher gave out the exam papers. They gave out the names of
+                the
+                winners on the radio. The water supply at last gave out.. She looked round when she heard the noise.
+                Shall
+                we look round the Cathedral this afternoon?. Only two senators voted against the bill (law).. I must
+                call
+                at the library to give back this book.. Don't forget to give in your exercise books.. Guests should
+                check
+                out of their rooms by noon.. How can I get my books back?. The company has been registered as a legal
+                entity since 1997.. Now, if you have nothing against we'll get down to business.. I have worked
+                extensively with Fitness Publisher.. He was sentenced to a 150-year prison term for cheating thousands
+                of
+                ordinary people out of their savings.. I didn't have enough time so the cake's a bit slapdash, but it
+                tastes great.. I'll complete this report in two weeks.. She managed to get over the first difficulties.
+                I'm glad to hear you have got over your cold. Have you got over the shock? This is the only way I know
+                of
+                getting my message over to you clearly.. The loneliness really started to get my mother down after a few
+                months..
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

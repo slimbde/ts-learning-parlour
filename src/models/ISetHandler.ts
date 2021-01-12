@@ -21,6 +21,7 @@ export interface ISetHandler {
   PreviousSolution: string
   PreviousIPA: string
   PreviousExample: string
+  Examples: string
 }
 
 
@@ -46,10 +47,16 @@ export abstract class TSetHandler implements ISetHandler {
   get PreviousSolution(): string { return this.previousNotion?.solution }
   get PreviousIPA(): string { return this.previousNotion?.ipa }
   get PreviousExample(): string { return this.previousNotion?.example }
+  get Examples(): string {
+    let str = ""
+    this.set.forEach((item: TLearnable) => item.example && (str += `${item.example.replace(item.issue, `<font color='black' style='font-weight:500'>${item.issue}</font>`)} `))
+
+    return str
+  }
   get Rate(): number {
     return !this.correct && !this.wrong
       ? 0
-      : (this.correct | 0) / ((this.correct | 0) + (this.wrong | 0)) * 100
+      : Math.round((this.correct | 0) / ((this.correct | 0) + (this.wrong | 0)) * 100)
   }
 
   constructor(dbHandler: IDbHandler) {
@@ -66,7 +73,7 @@ export abstract class TSetHandler implements ISetHandler {
   enqueue(): void { this.set.push(this.currentNotion) }
   incrementWrong(): void { ++this.wrong }
   incrementCorrect(): void { ++this.correct }
-  assess(what: string): boolean { return what === this.Solution }
+  assess(what: string): boolean { return what.trim().toLowerCase() === this.Solution.trim().toLowerCase() }
 }
 
 

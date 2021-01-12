@@ -1,5 +1,6 @@
 import { TTrainingConstructor } from "../TTrainingConstructor";
 import { WordsSetHandler } from "./WordsSetHandler";
+import window from '../../index'
 
 
 export class WordsConstructor extends TTrainingConstructor {
@@ -53,7 +54,12 @@ export class WordsConstructor extends TTrainingConstructor {
   }
 
   protected async applyNewNotionAsync(): Promise<void> {
-    await this.setHandler.nextAsync()
+    try {
+      await this.setHandler.nextAsync()
+    } catch (error) {
+      this.renderSummary()
+      return
+    }
 
     this.correctDiv.textContent = `Correct: ${this.setHandler.Correct}`
     this.wrongDiv.textContent = `Wrong: ${this.setHandler.Wrong}`
@@ -76,10 +82,40 @@ export class WordsConstructor extends TTrainingConstructor {
 
 
   private constructExampleField(): HTMLDivElement {
+    const div = document.createElement("div")
+    this.exampleDiv = div
+
     const trainingFieldExample = document.createElement("div")
     trainingFieldExample.className = "training-field-example"
-    trainingFieldExample.textContent = ""
-    this.exampleDiv = trainingFieldExample
+    trainingFieldExample.append(div)
+
     return trainingFieldExample
+  }
+
+  private renderSummary(): void {
+    const progressInfo = document.querySelector(".progress-info")
+    progressInfo.innerHTML = ""
+
+    const anchor = document.createElement("a")
+    anchor.textContent = "run again"
+    anchor.addEventListener("click", _ => window.render("words"))
+
+    const divPass = document.createElement("div")
+    divPass.style.marginLeft = "auto"
+    divPass.append(anchor)
+
+    const divStatus = document.createElement("div")
+    divStatus.textContent = "You've solved your training routine for today"
+
+    progressInfo.append(divStatus)
+    progressInfo.append(divPass)
+
+    this.leftDiv.textContent = `Correct: ${this.setHandler.Correct} Wrong: ${this.setHandler.Wrong} Success: ${this.setHandler.Rate}%`
+    this.rightDiv.textContent = "Examples:"
+
+    const trainingWorkspace = document.querySelector(".training-field-workspace")
+    trainingWorkspace.innerHTML = ""
+
+    this.exampleDiv.innerHTML = this.setHandler.Examples
   }
 }

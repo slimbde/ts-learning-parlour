@@ -9,6 +9,8 @@
   box-shadow: 0 0 5px lightgray;
 }
 
+/* ************************************** TRAINING-TITLE TRAINING-TASK */
+
 .training-title {
   font-size: 2rem;
   font-weight: 100;
@@ -16,7 +18,7 @@
   align-self: flex-end;
   padding: 1rem;
   padding-bottom: unset;
-  color: lightgray;
+  color: gray;
 }
 
 .training-task {
@@ -28,6 +30,8 @@
   padding-right: 1rem;
   margin-bottom: 2rem;
 }
+
+/* *********************************** PROGRESS-INFO */
 
 .progress-info {
   display: flex;
@@ -54,6 +58,8 @@
   opacity: 1;
   transition: opacity .3s ease-in-out;
 }
+
+/* ********************************************  TRAINING-FIELD */
 
 .training-field-wrapper {
   display: flex;
@@ -131,11 +137,27 @@
   color: steelblue;
   font-weight: 300;
   background-color: rgba(70, 131, 180, 0.027);
-  padding: 1rem;
+  padding: 1rem 0;
   border: 1px solid rgba(211, 211, 211, 0.479);
   border-top: unset;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
+  overflow: hidden;
+}
+
+.training-field-example div {
+  padding: 0 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 60vh;
+}
+
+.training-field-example div:hover::-webkit-scrollbar {
+  background-color: rgba(128, 128, 128, 0.11);
+}
+
+.training-field-example div:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.534);
 }
 
 @media only screen and (max-width: 500px) {
@@ -149,12 +171,12 @@
     font-size: .7rem;
   }
   .progress-info {
-    font-size: .7rem;
+    font-size: .75rem;
   }
   .progress-info div {
-    margin-right: .5rem;
+    margin-right: .2rem;
   }
   .training-field-title {
-    font-size: .9rem;
+    font-size: .8rem;
   }
 }
