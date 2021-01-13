@@ -8,6 +8,8 @@ import { GeneralsConstructor } from "./views/generals/GeneralsConstructor"
 import { RegisterConstructor } from "./views/register/RegisterConstructor"
 import { WordsConstructor } from "./views/training/WordsConstructor"
 import { GerundsConstructor } from "./views/gerunds/GerundsConstructor"
+import { PhrasesConstructor } from "./views/phrases/PhrasesConstructor"
+import { IdiomsConstructor } from "./views/idioms/IdiomsConstructor"
 
 
 interface ExtendedWindow extends Window {
@@ -28,6 +30,8 @@ window.render = (what: string): void => {
     case "generals": window.constructor = new GeneralsConstructor(); break
     case "words": window.constructor = new WordsConstructor(); break
     case "gerunds": window.constructor = new GerundsConstructor(); break
+    case "phrases": window.constructor = new PhrasesConstructor(); break
+    case "idioms": window.constructor = new IdiomsConstructor(); break
 
     default: throw new Error(`[render]: not existing route "${what}"`)
   }

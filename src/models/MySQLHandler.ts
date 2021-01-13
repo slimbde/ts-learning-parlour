@@ -107,6 +107,38 @@ export class MySQLHandler implements IDbHandler {
     await fetch(`php-api/words/setgerundsfor?login=${userName}&notionId=${notionId}`)
   }
 
+  async getPhrasesForAsync(userName: string): Promise<TLearnable[]> {
+    const resp = await fetch(`php-api/words/getphrasesfor?login=${userName}`)
+    this.checkResponse(resp)
+    const data = await (resp.json() as Promise<any>)
+
+    return data.map((dt: any) => ({
+      id: dt["#"],
+      issue: dt["Issue"],
+      solution: dt["Answer"]
+    }))
+  }
+
+  async scorePhrasesForAsync(userName: string, notionId: string): Promise<void> {
+    await fetch(`php-api/words/setphrasesfor?login=${userName}&notionId=${notionId}`)
+  }
+
+  async getIdiomsForAsync(userName: string): Promise<TLearnable[]> {
+    const resp = await fetch(`php-api/words/getidiomsfor?login=${userName}`)
+    this.checkResponse(resp)
+    const data = await (resp.json() as Promise<any>)
+
+    return data.map((dt: any) => ({
+      id: dt["#"],
+      issue: dt["Issue"],
+      solution: dt["Answer"]
+    }))
+  }
+
+  async scoreIdiomsForAsync(userName: string, notionId: string): Promise<void> {
+    await fetch(`php-api/words/setidiomsfor?login=${userName}&notionId=${notionId}`)
+  }
+
   async getDbInfoAsync(): Promise<DBInfo> {
     const resp = await fetch(`php-api/users/getdbinfo`)
     this.checkResponse(resp)

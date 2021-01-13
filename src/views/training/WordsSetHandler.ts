@@ -35,8 +35,8 @@ export class WordsSetHandler extends TSetHandler {
 
     if (this.currentSet.length === 0) {
       switch (this.round) {
-        case 1: throw new Error("Finish")
-        //case 1: this.currentSet = this.today.concat(this.last7days); break
+        //case 1: throw new Error("Finish")
+        case 1: this.currentSet = this.today.concat(this.last7days); break
         case 2: this.currentSet = this.today.concat(this.last7days.concat(this.last30days)); break
         case 3: this.currentSet = this.today.concat(this.last7days.concat(this.last30days.concat(this.last120days))); break
 

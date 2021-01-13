@@ -59,6 +59,34 @@ export interface IDbHandler {
   scoreGerundsForAsync(login: string, notionId: string): Promise<void>
 
   /**
+   * retrieves not solved phrases list from the database
+   * @param login person login
+   * @returns TLearnable structure
+   */
+  getPhrasesForAsync(login: string): Promise<TLearnable[]>
+
+  /**
+   * sets as solved a notion for a user
+   * @param login user login
+   * @param notionId notion id
+   */
+  scorePhrasesForAsync(login: string, notionId: string): Promise<void>
+
+  /**
+   * retrieves not solved idioms list from the database
+   * @param login person login
+   * @returns TLearnable structure
+   */
+  getIdiomsForAsync(login: string): Promise<TLearnable[]>
+
+  /**
+   * sets as solved a notion for a user
+   * @param login user login
+   * @param notionId notion id
+   */
+  scoreIdiomsForAsync(login: string, notionId: string): Promise<void>
+
+  /**
    * retrieves today words for a certain user
    * @param login user login
    * @returns TLearnable structure
