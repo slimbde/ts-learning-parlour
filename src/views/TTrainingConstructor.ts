@@ -14,10 +14,11 @@ export abstract class TTrainingConstructor implements IConstructor {
   protected correctDiv: HTMLDivElement
   protected wrongDiv: HTMLDivElement
   protected successDiv: HTMLDivElement
-  protected hintDiv: HTMLDivElement
+  protected indicatorDiv: HTMLDivElement
   protected leftDiv: HTMLDivElement
   protected rightDiv: HTMLDivElement
   protected issueDiv: HTMLDivElement
+  protected hintDiv: HTMLDivElement
   protected input: HTMLInputElement
   protected answerIssue: HTMLDivElement
   protected answerAnswer: HTMLDivElement
@@ -68,7 +69,7 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const divHint = document.createElement("div")
     divHint.id = "hint"
-    this.hintDiv = divHint
+    this.indicatorDiv = divHint
 
     const anchor = document.createElement("a")
     anchor.textContent = "pass over"
@@ -113,6 +114,10 @@ export abstract class TTrainingConstructor implements IConstructor {
     issueDiv.className = "training-field-issue"
     this.issueDiv = issueDiv
 
+    const hint = document.createElement("div")
+    hint.className = "hint"
+    this.hintDiv = hint
+
     const input = document.createElement("input")
     input.type = "text"
     input.addEventListener("keydown", (e: KeyboardEvent) => e.key === "Enter" && this.handleSubmit())
@@ -125,6 +130,7 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const inputDiv = document.createElement("div")
     inputDiv.className = "training-field-input"
+    inputDiv.append(hint)
     inputDiv.append(input)
     inputDiv.append(btn)
 
@@ -199,6 +205,9 @@ export abstract class TTrainingConstructor implements IConstructor {
     this.answerIssue.textContent = this.setHandler.PreviousIssue
     this.answerAnswer.textContent = this.setHandler.PreviousSolution
 
+    this.indicatorDiv.style.backgroundImage = "none"
+    this.indicatorDiv.style.opacity = "0"
+
     this.input.value = ""
     this.input.focus()
   }
@@ -207,22 +216,22 @@ export abstract class TTrainingConstructor implements IConstructor {
     const color = correct ? "green" : "lightcoral"
     const str = correct ? "CORRECT" : "WRONG"
 
-    this.hintDiv.style.color = correct ? color : "lightcoral"
-    this.hintDiv.textContent = str
-    this.hintDiv.style.opacity = "1"
+    this.indicatorDiv.style.color = correct ? color : "lightcoral"
+    this.indicatorDiv.textContent = str
+    this.indicatorDiv.style.opacity = "1"
 
     this.input.style.boxShadow = `0 0 10px ${color}`
 
     setTimeout(() => {
-      this.hintDiv.style.opacity = "0"
+      this.indicatorDiv.style.opacity = "0"
       this.input.style.boxShadow = "unset"
 
       !correct && setTimeout(() => {
-        this.hintDiv.style.opacity = "1"
+        this.indicatorDiv.style.opacity = "1"
         this.input.style.boxShadow = `0 0 10px ${color}`
 
         setTimeout(() => {
-          this.hintDiv.style.opacity = "0"
+          this.indicatorDiv.style.opacity = "0"
           this.input.style.boxShadow = "unset"
         }, 300)
       }, 300)

@@ -104,6 +104,14 @@
   text-align: center;
 }
 
+.hint {
+  position: absolute;
+  margin-top: -1.1rem;
+  margin-left: .5rem;
+  font-weight: 300;
+  color: darkgray;
+}
+
 .training-field-input {
   display: flex;
   text-align: center;
@@ -159,6 +167,57 @@
 .training-field-example div:hover::-webkit-scrollbar-thumb {
   background-color: rgba(128, 128, 128, 0.534);
 }
+
+/* ************************************************************* SELECT */
+
+.select-category {
+  color: black;
+  font-weight: 300;
+  cursor: pointer;
+  appearance: none;
+  padding: .3rem;
+  border: unset;
+  border-bottom: 1px solid darkgrey;
+  margin-right: .5rem;
+  outline: unset;
+}
+
+.progress-info label {
+  position: absolute;
+  margin-top: -18px;
+  font-size: small;
+  font-weight: 300;
+  color: darkgray;
+  margin-left: 0.1rem;
+}
+
+.select-category:after {
+  content: "Select";
+  color: black;
+  width: 40px;
+  height: 40px;
+  border: 1px solid gray;
+}
+
+.select-category option {
+  color: gray;
+  font-weight: 300;
+}
+
+.select-category:hover::-webkit-scrollbar {
+  background-color: rgba(128, 128, 128, 0.11);
+}
+
+.select-category:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.295);
+}
+
+.select-category:hover {
+  text-shadow: 0 0 5px lightgray;
+  background-color: rgba(211, 211, 211, 0.144);
+}
+
+/* *************************************************************** MEDIA */
 
 @media only screen and (max-width: 500px) {
   .training-wrapper {

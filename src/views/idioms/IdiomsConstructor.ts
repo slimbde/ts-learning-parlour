@@ -13,10 +13,6 @@ export class IdiomsConstructor extends TTrainingConstructor {
 
     this.setHandler = new IdiomsSetHandler(this.db)
     this.applyNewNotionAsync()
-      .then(_ => {
-        this.hintDiv.style.backgroundImage = "none"
-        this.hintDiv.style.opacity = "0"
-      })
   }
 
 

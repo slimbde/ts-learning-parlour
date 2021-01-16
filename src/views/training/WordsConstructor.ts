@@ -14,10 +14,6 @@ export class WordsConstructor extends TTrainingConstructor {
 
     this.setHandler = new WordsSetHandler(this.db)
     this.applyNewNotionAsync()
-      .then(_ => {
-        this.hintDiv.style.backgroundImage = "none"
-        this.hintDiv.style.opacity = "0"
-      })
   }
 
 
@@ -74,6 +70,9 @@ export class WordsConstructor extends TTrainingConstructor {
     this.answerIssue.textContent = this.setHandler.PreviousSolution
     this.answerAnswer.textContent = (this.setHandler.PreviousIssue || "") + " " + (this.setHandler.PreviousIPA || "")
     this.exampleDiv.textContent = this.setHandler.PreviousExample
+
+    this.indicatorDiv.style.backgroundImage = "none"
+    this.indicatorDiv.style.opacity = "0"
 
     this.input.value = ""
     this.input.focus()

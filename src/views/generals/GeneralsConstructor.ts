@@ -13,10 +13,6 @@ export class GeneralsConstructor extends TTrainingConstructor {
 
     this.setHandler = new GeneralsSetHandler(this.db)
     this.applyNewNotionAsync()
-      .then(_ => {
-        this.hintDiv.style.backgroundImage = "none"
-        this.hintDiv.style.opacity = "0"
-      })
   }
 
 

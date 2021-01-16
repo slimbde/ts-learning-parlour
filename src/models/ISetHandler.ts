@@ -16,6 +16,7 @@ export interface ISetHandler {
   Rate: number
   NotionId: string
   Issue: string
+  Hint: string
   Solution: string
   PreviousIssue: string
   PreviousSolution: string
@@ -42,6 +43,7 @@ export abstract class TSetHandler implements ISetHandler {
   get Wrong(): number { return this.wrong }
   get NotionId(): string { return this.currentNotion.id.toString() }
   get Issue(): string { return this.currentNotion?.issue }
+  get Hint(): string { return "" }
   get Solution(): string { return this.currentNotion?.solution }
   get PreviousIssue(): string { return this.previousNotion?.issue }
   get PreviousSolution(): string { return this.previousNotion?.solution }

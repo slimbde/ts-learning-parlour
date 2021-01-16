@@ -17,7 +17,6 @@ export class WordsSetHandler extends TSetHandler {
   async nextAsync(): Promise<void> {
     if (!this.set) {
       this.set = await this.db.getWordsForAsync(this.userName)
-      shuffle(this.set)
 
       const maxDate = this.findMaxDate(this.set)
 
@@ -31,6 +30,7 @@ export class WordsSetHandler extends TSetHandler {
       })
 
       this.currentSet = this.today.concat()
+      shuffle(this.currentSet)
     }
 
     if (this.currentSet.length === 0) {
@@ -43,6 +43,7 @@ export class WordsSetHandler extends TSetHandler {
         default: throw new Error("Finish")
       }
 
+      shuffle(this.currentSet)
       ++this.round
     }
 

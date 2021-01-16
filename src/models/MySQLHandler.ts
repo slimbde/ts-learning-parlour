@@ -1,6 +1,7 @@
 import { LoginConstructor } from "../views/login/LoginConstructor";
 import { DBInfo } from "./DBInfo";
 import { IDbHandler } from "./IDbHandler";
+import { TCategory } from "./TCategory";
 import { TLearnable } from "./TLearnable";
 
 
@@ -137,6 +138,25 @@ export class MySQLHandler implements IDbHandler {
 
   async scoreIdiomsForAsync(userName: string, notionId: string): Promise<void> {
     await fetch(`php-api/words/setidiomsfor?login=${userName}&notionId=${notionId}`)
+  }
+
+  async getCategoriesAsync(): Promise<TCategory[]> {
+    const resp = await fetch(`php-api/words/getphrasalscategories`)
+    this.checkResponse(resp)
+    return (resp.json() as Promise<TCategory[]>)
+  }
+
+  async getPhrasalsForAsync(category: string): Promise<TLearnable[]> {
+    const resp = await fetch(`php-api/words/getphrasalsfor?category=${category}`)
+    this.checkResponse(resp)
+    const data = await (resp.json() as Promise<any>)
+
+    return data.map((dt: any) => ({
+      id: dt["#"],
+      issue: dt["Translation"],
+      solution: dt["Phrasal"],
+      meaning: dt["hint"]
+    }))
   }
 
   async getDbInfoAsync(): Promise<DBInfo> {

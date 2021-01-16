@@ -1,4 +1,5 @@
 import { DBInfo } from "./DBInfo";
+import { TCategory } from "./TCategory";
 import { TLearnable } from "./TLearnable";
 
 
@@ -92,6 +93,19 @@ export interface IDbHandler {
    * @returns TLearnable structure
    */
   getWordsForAsync(login: string): Promise<TLearnable[]>
+
+  /**
+   * retrieves a notion categories from db
+   * @returns categories list
+   */
+  getCategoriesAsync(): Promise<TCategory[]>
+
+  /**
+   * retrieves phrasals for a certain category
+   * @param category phrasals range
+   * @returns TLearnable structure
+   */
+  getPhrasalsForAsync(category: string): Promise<TLearnable[]>
 
   /**
    * retrieves db info
