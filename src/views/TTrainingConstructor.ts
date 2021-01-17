@@ -1,6 +1,7 @@
 import { IDbHandler } from "../models/IDbHandler";
 import { ISetHandler } from "../models/ISetHandler";
 import { MySQLHandler } from "../models/MySQLHandler";
+import { TLearnable } from "../models/TLearnable";
 import { IConstructor } from "./IConstructor";
 
 
@@ -23,6 +24,10 @@ export abstract class TTrainingConstructor implements IConstructor {
   protected answerIssue: HTMLDivElement
   protected answerAnswer: HTMLDivElement
 
+  private quickSearchBtn: HTMLButtonElement
+  private quickInput: HTMLInputElement
+  private quickResult: HTMLDivElement
+  private quickSearchLoading: HTMLDivElement
 
   render(): void {
     const trainingZone = this.constructTrainingZone()
@@ -55,6 +60,31 @@ export abstract class TTrainingConstructor implements IConstructor {
 
 
   protected constructProgressInfo(): HTMLDivElement {
+    const quickSearch = this.constructQuickSearch()
+
+    const quickSearchToggle = document.createElement("a")
+    quickSearchToggle.textContent = "Show quick search"
+    quickSearchToggle.className = "quick-search-toggle"
+    quickSearchToggle.addEventListener("click", _ => {
+      quickSearch.classList.toggle("hidden")
+      quickSearchToggle.textContent = "Show quick search"
+
+      if (!quickSearch.classList.contains("hidden")) {
+        quickSearchToggle.textContent = "Hide quick search"
+        this.quickSearchBtn.style.visibility = "visible"
+
+        this.quickInput.placeholder = ""
+        this.quickInput.value = ""
+        this.quickInput.focus()
+      }
+      else
+        this.quickSearchBtn.style.visibility = "hidden"
+    })
+
+    const loading = document.createElement("div")
+    loading.className = "quick-search-loading"
+    this.quickSearchLoading = loading
+
     const divCorrect = document.createElement("div")
     divCorrect.textContent = "Correct: 0"
     this.correctDiv = divCorrect
@@ -81,6 +111,9 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const result = document.createElement("div")
     result.className = "progress-info"
+    result.append(quickSearchToggle)
+    result.append(loading)
+    result.append(quickSearch)
     result.append(divCorrect)
     result.append(divWrong)
     result.append(divSuccess)
@@ -206,17 +239,16 @@ export abstract class TTrainingConstructor implements IConstructor {
     this.answerAnswer.textContent = this.setHandler.PreviousSolution
 
     this.indicatorDiv.style.backgroundImage = "none"
-    this.indicatorDiv.style.opacity = "0"
 
     this.input.value = ""
     this.input.focus()
   }
 
   protected blink(correct: boolean) {
-    const color = correct ? "green" : "lightcoral"
+    const color = correct ? "darkgoldenrod" : "lightcoral"
     const str = correct ? "CORRECT" : "WRONG"
 
-    this.indicatorDiv.style.color = correct ? color : "lightcoral"
+    this.indicatorDiv.style.color = color
     this.indicatorDiv.textContent = str
     this.indicatorDiv.style.opacity = "1"
 
@@ -245,5 +277,72 @@ export abstract class TTrainingConstructor implements IConstructor {
     this.blink(true)
 
     this.setHandler.scoreAsync()
+  }
+
+
+
+  private constructQuickSearch(): HTMLDivElement {
+    const input = document.createElement("input")
+    input.addEventListener("keypress", (e: KeyboardEvent) => e.key === "Enter" && this.findQuickSearch())
+    this.quickInput = input
+
+    const button = document.createElement("button") as HTMLButtonElement
+    button.style.visibility = "hidden"
+    button.className = "btn"
+    button.textContent = "FIND"
+    button.addEventListener("click", _ => this.findQuickSearch())
+    this.quickSearchBtn = button
+
+    const quickMatch = document.createElement("div")
+    quickMatch.textContent = "match"
+
+    const quickExample = document.createElement("div")
+    quickExample.textContent = "a;lskdjf;alsdkjf ;alsdkjf ;alskdjf ;alsdkjf ;lsdjkfl;skjdflsdkjf"
+
+    const quickResult = document.createElement("div")
+    quickResult.className = "quick-result-wrapper hidden"
+    quickResult.append(quickMatch, quickExample)
+    this.quickResult = quickResult
+
+    const mainField = document.querySelector(".main-field")
+    mainField.removeEventListener("click", _ => !quickResult.classList.contains("hidden") && quickResult.classList.add("hidden"))
+    mainField.addEventListener("click", _ => !quickResult.classList.contains("hidden") && quickResult.classList.add("hidden"))
+
+    const result = document.createElement("div")
+    result.className = "quick-search-wrapper hidden"
+    result.append(input, button, quickResult)
+
+    return result
+  }
+
+  private findQuickSearch(): void {
+    const particle = this.quickInput.value.trim().toLowerCase()
+
+    if (particle.length > 0) {
+      this.quickSearchLoading.style.opacity = "1"
+
+      this.setHandler.findAsync(particle)
+        .then((data: TLearnable[]) => {
+          if (data.length > 1) {
+            this.quickInput.placeholder = `${particle}: multiple match: clarify your query`
+            this.quickInput.value = ""
+            !this.quickResult.classList.contains("hidden") && this.quickResult.classList.toggle("hidden")
+            this.quickSearchLoading.style.opacity = "0"
+            return
+          }
+
+          const word = data[0]
+          this.quickResult.children[0].textContent = `${word.notion} ${word.ipa} ${word.meaning}`
+          this.quickResult.children[1].textContent = word.example
+
+          this.quickResult.classList.contains("hidden") && this.quickResult.classList.toggle("hidden")
+          this.quickSearchLoading.style.opacity = "0"
+        })
+        .catch((error: Error) => {
+          this.quickInput.placeholder = "nothing found"
+          this.quickInput.value = ""
+          this.quickSearchLoading.style.opacity = "0"
+        })
+    }
   }
 }

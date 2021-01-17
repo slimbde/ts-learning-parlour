@@ -4,6 +4,7 @@ import { TLearnable } from "./TLearnable";
 
 export interface ISetHandler {
   nextAsync(): Promise<void>
+  findAsync(notion: string): Promise<TLearnable[]>
   enqueue(): void
   scoreAsync(): Promise<void>
   incrementWrong(): void
@@ -76,6 +77,9 @@ export abstract class TSetHandler implements ISetHandler {
   incrementWrong(): void { ++this.wrong }
   incrementCorrect(): void { ++this.correct }
   assess(what: string): boolean { return what.trim().toLowerCase() === this.Solution.trim().toLowerCase() }
+  async findAsync(notion: string): Promise<TLearnable[]> {
+    return await this.db.searchWordsAsync(notion)
+  }
 }
 
 

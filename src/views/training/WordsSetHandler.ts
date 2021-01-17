@@ -1,5 +1,5 @@
-import { shuffle, TSetHandler } from "../../models/ISetHandler";
 import * as moment from 'moment'
+import { shuffle, TSetHandler } from "../../models/ISetHandler";
 import { TLearnable } from "../../models/TLearnable";
 
 
@@ -53,7 +53,6 @@ export class WordsSetHandler extends TSetHandler {
 
   enqueue() { this.currentSet.push(this.currentNotion) }
   assess(what: string): boolean { return what.trim().toLowerCase() === this.Issue.trim().toLowerCase() }
-
 
 
   private findMaxDate(set: TLearnable[]): moment.Moment {

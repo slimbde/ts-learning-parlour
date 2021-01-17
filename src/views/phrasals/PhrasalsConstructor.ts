@@ -22,7 +22,7 @@ export class PhrasalsConstructor extends TTrainingConstructor {
 
   protected constructTrainingZone(): HTMLDivElement[] {
     const label = document.createElement("label")
-    label.textContent = "Category:"
+    label.textContent = "Select category:"
     label.htmlFor = "select"
 
     const select = document.createElement("select")

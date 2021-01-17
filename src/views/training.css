@@ -56,7 +56,7 @@
   background-repeat: no-repeat;
   min-width: 40px;
   opacity: 1;
-  transition: opacity .3s ease-in-out;
+  transition: all .5s ease-in-out;
 }
 
 /* ********************************************  TRAINING-FIELD */
@@ -217,6 +217,74 @@
   background-color: rgba(211, 211, 211, 0.144);
 }
 
+/* ************************************************************** QUICK-SEARCH */
+
+.quick-search-wrapper {
+  display: flex;
+  position: absolute;
+  margin-top: -3rem;
+  margin-left: -.5rem;
+  font-size: .8rem;
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.quick-search-wrapper input {
+  width: 300px;
+}
+
+.quick-search-wrapper.hidden {
+  opacity: 0;
+}
+
+.quick-result-wrapper {
+  position: absolute;
+  margin-top: 2.2rem;
+  border: 1px solid lightgray;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: .5rem;
+  flex-flow: column nowrap;
+  background-color: rgba(255, 255, 255, 0.973);
+  box-shadow: 0 5px 5px rgba(67, 93, 119, 0.829);
+  font-weight: 300;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.quick-result-wrapper.hidden {
+  opacity: 0;
+}
+
+.quick-result-wrapper div:first-child {
+  color: blue;
+  font-weight: 500;
+  margin-bottom: .5rem;
+}
+
+.progress-info .quick-search-toggle {
+  position: absolute;
+  margin-left: -.5rem;
+  margin-top: -4.3rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: .8rem;
+}
+
+.quick-search-loading {
+  background-image: url("../assets/loading.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-width: 30px;
+  min-height: 15px;
+  position: absolute;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  margin-top: -4.4rem;
+  margin-left: 7.3rem;
+}
+
 /* *************************************************************** MEDIA */
 
 @media only screen and (max-width: 500px) {
@@ -238,5 +306,25 @@
   }
   .training-field-title {
     font-size: .8rem;
+  }
+  .quick-search-wrapper {
+    font-size: .7rem;
+    margin-top: -1rem;
+  }
+  .quick-search-wrapper input {
+    width: 200px;
+    padding: .4rem;
+  }
+  .quick-search-loading {
+    margin-top: -1.9rem;
+    margin-left: 5.5rem;
+    min-height: 12px;
+  }
+  .progress-info .quick-search-toggle {
+    font-size: .6rem;
+    margin-top: -1.8rem;
+  }
+  .quick-result-wrapper {
+    margin-top: 1.7rem;
   }
 }
