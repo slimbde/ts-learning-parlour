@@ -1,7 +1,9 @@
 import window from "../../index"
+import { TLearnable } from "../../models/TLearnable";
 import { TConstructor } from "../IConstructor";
 
 export class HomeConstructor extends TConstructor {
+  private instantSearch: HTMLDivElement
 
   render(): void {
     document.querySelector(".location").textContent = "home"
@@ -26,7 +28,6 @@ export class HomeConstructor extends TConstructor {
     document.getElementById("input").focus()
   }
 
-
   protected highlightMenu(): void {
     super.deselectMenu()
 
@@ -34,6 +35,9 @@ export class HomeConstructor extends TConstructor {
     for (let ch of menuHome)
       !ch.classList.contains("active") && ch.classList.add("active")
   }
+
+
+
 
   private constructTitle(): HTMLDivElement {
     const h1 = document.createElement("h1")
@@ -65,6 +69,40 @@ export class HomeConstructor extends TConstructor {
     input.placeholder = "input your query"
     input.addEventListener("keydown", e => e.key === "Enter" && this.search())
 
+    input.addEventListener("input", async (e: InputEvent) => {
+      const query = (e.target as HTMLInputElement).value.trim().toLowerCase()
+
+      if (query.length > 1) {
+        try {
+          const resp = await this.db.searchWordsAsync(query)
+
+          if (resp.length > 0) {
+            this.instantSearch.innerHTML = ""
+
+            resp.forEach((entry: TLearnable) => {
+              const div = document.createElement("div")
+              const content = `${entry.notion} ${entry.ipa} ${entry.meaning}`
+              div.innerHTML = content.replace(query, `<font style="color:red;">${query === "to" ? "to&nbsp;" : query}</font>`)
+              div.addEventListener("click", _ => this.search(entry.notion))
+
+              this.instantSearch.append(div)
+            })
+
+            this.instantSearch.style.visibility = "visible"
+            this.instantSearch.style.opacity = "1"
+          }
+          return
+        }
+        catch (ex) {
+          this.instantSearch.style.opacity = "0"
+          setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 500)
+        }
+      }
+
+      this.instantSearch.style.opacity = "0"
+      setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 500)
+    })
+
     const btn = document.createElement("button")
     btn.textContent = "Search"
     btn.addEventListener("click", _ => this.search())
@@ -81,11 +119,16 @@ export class HomeConstructor extends TConstructor {
     const loading = document.createElement("div")
     loading.className = "loading"
 
+    const instantSearch = document.createElement("div")
+    instantSearch.className = "instant-wrapper"
+    this.instantSearch = instantSearch
+
     const inputWrapper = document.createElement("div")
     inputWrapper.className = "input-wrapper"
     inputWrapper.append(inputGroup)
     inputWrapper.append(summary)
     inputWrapper.append(loading)
+    inputWrapper.append(instantSearch)
 
     return inputWrapper
   }
@@ -97,17 +140,21 @@ export class HomeConstructor extends TConstructor {
     return answerWrapper
   }
 
-  private search(): void {
+  private search(what?: string): void {
+    this.instantSearch.style.opacity = "0"
+    setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 500)
+
     const input = (document.querySelector(".input-group input") as HTMLInputElement)
 
-    if (input.value.trim() !== "") {
+    if (input.value.trim() !== "" || what !== "") {
       const answerWrapper = (document.querySelector(".answer-wrapper") as HTMLDivElement)
       const summary = (document.querySelector(".summary") as HTMLDivElement)
       const loading = (document.querySelector(".loading") as HTMLDivElement)
       answerWrapper.textContent = ""
       loading.style.display = "flex"
       summary.style.display = "none"
-      const inputVal = input.value.trim().toLowerCase()
+
+      const inputVal = what || input.value.trim().toLowerCase()
 
       this.db.searchWordsAsync(inputVal)
         .then(words => {
@@ -120,7 +167,7 @@ export class HomeConstructor extends TConstructor {
             const notion = document.createElement("div")
             notion.className = "notion"
             notion.innerHTML = word.notion.includes(inputVal)
-              ? `<b>${word.notion.split(inputVal)[0]}<font color="red">${inputVal}</font>${word.notion.split(inputVal)[1]}</b>`
+              ? `<font>${word.notion.split(inputVal)[0]}<font color="red">${inputVal}</font>${word.notion.split(inputVal)[1]}</font>`
               : word.notion
 
             const ipa = document.createElement("div")
