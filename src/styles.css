@@ -186,6 +186,7 @@ hr {
   padding: 0.5rem;
   overflow: hidden;
   transition: left .4s ease-in-out;
+  z-index: 1;
 }
 
 .menu-wrapper-visible {

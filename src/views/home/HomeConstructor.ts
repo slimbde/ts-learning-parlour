@@ -81,15 +81,15 @@ export class HomeConstructor extends TConstructor {
 
             resp.forEach((entry: TLearnable) => {
               const div = document.createElement("div")
-              const content = `${entry.notion} ${entry.ipa} ${entry.meaning}`
-              div.innerHTML = content.replace(query, `<font style="color:red;">${query === "to" ? "to&nbsp;" : query}</font>`)
+              const content = `${entry.notion} ${entry.ipa}<br>${entry.meaning}`
+              div.innerHTML = content.replace(query, `<font color='red'>${query === "to" ? "to&nbsp;" : query}</font>`)
               div.addEventListener("click", _ => this.search(entry.notion))
 
               this.instantSearch.append(div)
             })
 
             this.instantSearch.style.visibility = "visible"
-            this.instantSearch.style.opacity = "1"
+            setTimeout(() => this.instantSearch.style.opacity = "1", 300)
           }
           return
         }
@@ -97,6 +97,8 @@ export class HomeConstructor extends TConstructor {
           this.instantSearch.style.opacity = "0"
           setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 500)
         }
+
+        return
       }
 
       this.instantSearch.style.opacity = "0"
