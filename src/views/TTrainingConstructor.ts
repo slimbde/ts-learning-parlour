@@ -293,15 +293,8 @@ export abstract class TTrainingConstructor implements IConstructor {
     button.addEventListener("click", _ => this.findQuickSearch())
     this.quickSearchBtn = button
 
-    const quickMatch = document.createElement("div")
-    quickMatch.textContent = "match"
-
-    const quickExample = document.createElement("div")
-    quickExample.textContent = "a;lskdjf;alsdkjf ;alsdkjf ;alskdjf ;alsdkjf ;lsdjkfl;skjdflsdkjf"
-
     const quickResult = document.createElement("div")
     quickResult.className = "quick-result-wrapper hidden"
-    quickResult.append(quickMatch, quickExample)
     this.quickResult = quickResult
 
     const mainField = document.querySelector(".main-field")
@@ -323,17 +316,14 @@ export abstract class TTrainingConstructor implements IConstructor {
 
       this.setHandler.findAsync(particle)
         .then((data: TLearnable[]) => {
-          if (data.length > 1) {
-            this.quickInput.placeholder = `${particle}: multiple match: clarify your query`
-            this.quickInput.value = ""
-            !this.quickResult.classList.contains("hidden") && this.quickResult.classList.toggle("hidden")
-            this.quickSearchLoading.style.opacity = "0"
-            return
-          }
+          this.quickResult.innerHTML = ""
 
-          const word = data[0]
-          this.quickResult.children[0].textContent = `${word.notion} ${word.ipa} ${word.meaning}`
-          this.quickResult.children[1].textContent = word.example
+          data.forEach((entry: TLearnable) => {
+            const entryDiv = document.createElement("div")
+            entryDiv.className = "quick-result-entry"
+            entryDiv.innerHTML = `${entry.notion} ${entry.ipa} ${entry.meaning}`
+            this.quickResult.append(entryDiv)
+          })
 
           this.quickResult.classList.contains("hidden") && this.quickResult.classList.toggle("hidden")
           this.quickSearchLoading.style.opacity = "0"
