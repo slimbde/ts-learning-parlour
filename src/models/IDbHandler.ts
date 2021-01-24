@@ -1,6 +1,7 @@
 import { DBInfo } from "./DBInfo";
 import { TCategory } from "./TCategory";
 import { TLearnable } from "./TLearnable";
+import { TUser } from "./TUser";
 
 
 export interface IDbHandler {
@@ -15,7 +16,7 @@ export interface IDbHandler {
    * checks and applies user authentication
    * @returns login name of the user
    */
-  checkAuthStateAsync(): Promise<string>
+  checkAuthStateAsync(): Promise<boolean>
 
   /**
    * performs a new user registration
@@ -23,6 +24,17 @@ export interface IDbHandler {
    * @param password new user password
    */
   registerAsync(login: string, password: string): Promise<void>
+
+  /**
+   * gets the currently logged user or throws
+   * @returns TUser structure
+   */
+  getUserAsync(): Promise<TUser>
+
+  /**
+   * loggs out
+   */
+  logOutAsync(): Promise<void>
 
   /**
    * retrieves every possible match from the database

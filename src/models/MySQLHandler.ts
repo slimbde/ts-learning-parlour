@@ -1,8 +1,8 @@
-import { LoginConstructor } from "../views/login/LoginConstructor";
 import { DBInfo } from "./DBInfo";
 import { IDbHandler } from "./IDbHandler";
 import { TCategory } from "./TCategory";
 import { TLearnable } from "./TLearnable";
+import { TUser } from "./TUser";
 
 
 
@@ -24,25 +24,31 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async authenticateAsync(login: string, password: string): Promise<void> {
-    const resp = await fetch(`php-api/users/authenticate?login=${login}&password=${password}`)
     try {
+      const resp = await fetch(`php-api/users/authenticate?login=${login.trim().toLowerCase()}&password=${password}`)
       this.checkResponse(resp)
     } catch (error: any) {
-      if (error.message === "Not found")
+      if (error.message === "Not Found")
         throw new Error("Wrong login/password")
     }
 
-    localStorage.setItem("user", login)
+    localStorage.setItem("user", JSON.stringify({ login, role: login === "admin" ? "admin" : "user" }))
   }
 
-  async checkAuthStateAsync(): Promise<string> {
-    const userName = localStorage.getItem("user")
-    if (userName) {
-      LoginConstructor.applyCredentialsAsync(userName)
-      return userName
-    }
+  async checkAuthStateAsync(): Promise<boolean> {
+    return !!localStorage.getItem("user")
+  }
 
-    return ""
+  async getUserAsync(): Promise<TUser> {
+    const userString = localStorage.getItem("user")
+    if (userString)
+      return JSON.parse(userString)
+
+    throw new Error("No user has been logged in")
+  }
+
+  async logOutAsync(): Promise<void> {
+    localStorage.removeItem("user")
   }
 
   async searchWordsAsync(particle: string): Promise<TLearnable[]> {

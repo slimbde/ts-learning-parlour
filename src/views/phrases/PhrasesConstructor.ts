@@ -5,11 +5,12 @@ import { PhrasesSetHandler } from "./PhrasesSetHandler";
 
 export class PhrasesConstructor extends TTrainingConstructor {
 
-  render(): void {
-    if (!localStorage.getItem("user"))
+  async renderAsync(): Promise<void> {
+    const authorized = await this.db.checkAuthStateAsync()
+    if (!authorized)
       throw new Error("phrases:401:not-authorized")
 
-    super.render()
+    await super.renderAsync()
 
     this.setHandler = new PhrasesSetHandler(this.db)
     this.applyNewNotionAsync()

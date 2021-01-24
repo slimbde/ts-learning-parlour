@@ -5,11 +5,12 @@ import { GerundsSetHandler } from "./GerundsSetHandler";
 
 export class GerundsConstructor extends TTrainingConstructor {
 
-  render(): void {
-    if (!localStorage.getItem("user"))
+  async renderAsync(): Promise<void> {
+    const authorized = await this.db.checkAuthStateAsync()
+    if (!authorized)
       throw new Error("gerunds:401:not-authorized")
 
-    super.render()
+    await super.renderAsync()
 
     this.setHandler = new GerundsSetHandler(this.db)
     this.applyNewNotionAsync()

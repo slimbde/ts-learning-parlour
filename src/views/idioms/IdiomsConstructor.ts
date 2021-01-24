@@ -5,11 +5,12 @@ import { IdiomsSetHandler } from "./IdiomsSetHandler";
 
 export class IdiomsConstructor extends TTrainingConstructor {
 
-  render(): void {
-    if (!localStorage.getItem("user"))
+  async renderAsync(): Promise<void> {
+    const authorized = await this.db.checkAuthStateAsync()
+    if (!authorized)
       throw new Error("idioms:401:not-authorized")
 
-    super.render()
+    await super.renderAsync()
 
     this.setHandler = new IdiomsSetHandler(this.db)
     this.applyNewNotionAsync()

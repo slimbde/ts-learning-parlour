@@ -7,6 +7,8 @@ export class GerundsSetHandler extends TSetHandler {
   }
 
   async nextAsync(): Promise<void> {
+    await super.nextAsync()
+
     if (!this.set) {
       this.set = await this.db.getGerundsForAsync(this.userName)
       shuffle(this.set)

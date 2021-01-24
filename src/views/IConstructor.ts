@@ -1,9 +1,10 @@
+import window from '../index'
 import { DBInfo } from "../models/DBInfo"
 import { IDbHandler } from "../models/IDbHandler"
-import { MySQLHandler } from "../models/MySQLHandler"
+
 
 export interface IConstructor {
-  render(): void  // renders a view
+  renderAsync(): Promise<void> // renders a view
 }
 
 
@@ -11,9 +12,9 @@ export interface IConstructor {
 
 
 export abstract class TConstructor implements IConstructor {
-  protected db: IDbHandler = new MySQLHandler()
+  protected db: IDbHandler = window.db
 
-  abstract render(): void
+  abstract renderAsync(): Promise<void>
 
   protected abstract highlightMenu(): void
 

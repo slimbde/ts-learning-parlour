@@ -5,9 +5,8 @@ import { TConstructor } from "../IConstructor";
 export class HomeConstructor extends TConstructor {
   private instantSearch: HTMLDivElement
 
-  render(): void {
+  async renderAsync(): Promise<void> {
     document.querySelector(".location").textContent = "home"
-    document.querySelector(".login-wrapper a").addEventListener("click", _ => window.render("login"))
 
     const title = this.constructTitle()
     const input = this.constructInputField()

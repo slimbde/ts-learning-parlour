@@ -1,5 +1,6 @@
 import { IDbHandler } from "./IDbHandler";
 import { TLearnable } from "./TLearnable";
+import { TUser } from "./TUser";
 
 
 export interface ISetHandler {
@@ -64,15 +65,14 @@ export abstract class TSetHandler implements ISetHandler {
 
   constructor(dbHandler: IDbHandler) {
     this.db = dbHandler
-    this.userName = localStorage.getItem("user")
     this.correct = 0
     this.wrong = 0
     this.round = 1
   }
 
   abstract scoreAsync(): Promise<void>
-  abstract nextAsync(): Promise<void>
 
+  async nextAsync(): Promise<void> { !this.userName && (this.userName = (await this.db.getUserAsync()).login) }
   enqueue(): void { this.set.push(this.currentNotion) }
   incrementWrong(): void { ++this.wrong }
   incrementCorrect(): void { ++this.correct }

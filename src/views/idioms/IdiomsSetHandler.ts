@@ -7,6 +7,8 @@ export class IdiomsSetHandler extends TSetHandler {
   }
 
   async nextAsync(): Promise<void> {
+    await super.nextAsync()
+
     if (!this.set) {
       this.set = await this.db.getIdiomsForAsync(this.userName)
       shuffle(this.set)

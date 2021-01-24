@@ -2,6 +2,7 @@
 @import "./views/login/login.css";
 @import "./views/home/search.css";
 @import "./views/training.css";
+@import "./views/account/account.css";
 @import "./assets/fonts/font.css";
 * {
   box-sizing: border-box;
@@ -248,6 +249,6 @@ hr {
 
 @media only screen and (max-width: 500px) {
   .main-field {
-    height: 80vh;
+    /*height: 80vh;*/
   }
 }

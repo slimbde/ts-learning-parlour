@@ -11,10 +11,12 @@ import { GerundsConstructor } from "./views/gerunds/GerundsConstructor"
 import { PhrasesConstructor } from "./views/phrases/PhrasesConstructor"
 import { IdiomsConstructor } from "./views/idioms/IdiomsConstructor"
 import { PhrasalsConstructor } from "./views/phrasals/PhrasalsConstructor"
+import { AccountConstructor } from "./views/account/AccountConstructor"
 
 
 interface ExtendedWindow extends Window {
   constructor: IConstructor
+  db: IDbHandler
   render(what: string): void
   toggleMenu(): void
   hideMenu(): void
@@ -34,29 +36,29 @@ window.render = (what: string): void => {
     case "phrases": window.constructor = new PhrasesConstructor(); break
     case "idioms": window.constructor = new IdiomsConstructor(); break
     case "phrasals": window.constructor = new PhrasalsConstructor(); break
+    case "account": window.constructor = new AccountConstructor(); break
 
     default: throw new Error(`[render]: not existing route "${what}"`)
   }
 
-  try {
-    // if user is not logged in, an Exception is thrown 'referrer:code:message'
-    window.constructor.render()
-  } catch (error) {
-    const errInfo = !!error.message && error.message.split(":")
-    if (errInfo && errInfo[1] === "401") {
-      window.constructor = new LoginConstructor(errInfo[0]) // pass referrer to login constructor
-      window.constructor.render()
-    }
-  }
+  // if user is not logged in, an Exception is thrown 'referrer:code:message'
+  window.constructor.renderAsync()
+    .catch(error => {
+      const errInfo = !!error.message && error.message.split(":")
+      if (errInfo && errInfo[1] === "401") {
+        window.constructor = new LoginConstructor(errInfo[0]) // pass referrer to login constructor
+        window.constructor.renderAsync()
+      }
+    })
 }
 
 window.toggleMenu = () => document.querySelector(".menu-wrapper").classList.toggle("menu-wrapper-visible")
 window.hideMenu = () => document.querySelector(".menu-wrapper").classList.remove("menu-wrapper-visible")
 
-
 export default window
 
-!!window.constructor && window.render('home')
+window.db = new MySQLHandler()
+window.render("home")
 
-const db: IDbHandler = new MySQLHandler()
-db.checkAuthStateAsync()
+window.db.checkAuthStateAsync()
+  .then((isLogged: boolean) => isLogged && LoginConstructor.applyCredentialsAsync(window.db))

@@ -3,7 +3,7 @@ import { TConstructor } from "../IConstructor";
 
 export class RegisterConstructor extends TConstructor {
 
-  render(): void {
+  async renderAsync(): Promise<void> {
     document.querySelector(".location").textContent = "register"
     const register = document.querySelector(".login-wrapper a")
     register.textContent = "register"

@@ -14,6 +14,8 @@ export class PhrasalsSetHandler extends TSetHandler {
   async scoreAsync(): Promise<void> { }
 
   async nextAsync(): Promise<void> {
+    await super.nextAsync()
+
     if (!this.set) {
       this.set = await this.db.getPhrasalsForAsync(this.category)
       shuffle(this.set)

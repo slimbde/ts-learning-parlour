@@ -1,6 +1,6 @@
+import window from '../index'
 import { IDbHandler } from "../models/IDbHandler";
 import { ISetHandler } from "../models/ISetHandler";
-import { MySQLHandler } from "../models/MySQLHandler";
 import { TLearnable } from "../models/TLearnable";
 import { IConstructor } from "./IConstructor";
 
@@ -9,7 +9,7 @@ import { IConstructor } from "./IConstructor";
 
 
 export abstract class TTrainingConstructor implements IConstructor {
-  protected db: IDbHandler = new MySQLHandler()
+  protected db: IDbHandler = window.db
   protected setHandler: ISetHandler
 
   protected correctDiv: HTMLDivElement
@@ -29,7 +29,7 @@ export abstract class TTrainingConstructor implements IConstructor {
   private quickResult: HTMLDivElement
   private quickSearchLoading: HTMLDivElement
 
-  render(): void {
+  async renderAsync(): Promise<void> {
     const trainingZone = this.constructTrainingZone()
 
     const trainingField = document.createElement("div")

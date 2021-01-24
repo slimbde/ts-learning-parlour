@@ -6,11 +6,12 @@ import window from '../../index'
 export class WordsConstructor extends TTrainingConstructor {
   private exampleDiv: HTMLDivElement
 
-  render(): void {
-    if (!localStorage.getItem("user"))
+  async renderAsync(): Promise<void> {
+    const authorized = await this.db.checkAuthStateAsync()
+    if (!authorized)
       throw new Error("words:401:not-authorized")
 
-    super.render()
+    await super.renderAsync()
 
     this.setHandler = new WordsSetHandler(this.db)
     this.applyNewNotionAsync()

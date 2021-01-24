@@ -5,14 +5,15 @@ import { GeneralsSetHandler } from "./GeneralsSetHandler";
 
 export class GeneralsConstructor extends TTrainingConstructor {
 
-  render(): void {
-    if (!localStorage.getItem("user"))
+  async renderAsync(): Promise<void> {
+    const authorized = await this.db.checkAuthStateAsync()
+    if (!authorized)
       throw new Error("generals:401:not-authorized")
 
-    super.render()
-
     this.setHandler = new GeneralsSetHandler(this.db)
-    this.applyNewNotionAsync()
+
+    await super.renderAsync()
+    await this.applyNewNotionAsync()
   }
 
 

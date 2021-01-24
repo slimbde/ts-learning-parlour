@@ -15,6 +15,8 @@ export class WordsSetHandler extends TSetHandler {
   async scoreAsync(): Promise<void> { }
 
   async nextAsync(): Promise<void> {
+    await super.nextAsync()
+
     if (!this.set) {
       this.set = await this.db.getWordsForAsync(this.userName)
 
