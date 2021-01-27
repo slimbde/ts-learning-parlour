@@ -2,17 +2,19 @@ import window from '../../index'
 import { TLearnable } from "../../models/TLearnable";
 import { TUser } from "../../models/TUser";
 import { TConstructor } from "../IConstructor";
+import { LoginConstructor } from "../login/LoginConstructor";
 
 export class AccountConstructor extends TConstructor {
   private user: TUser
+  private newName: HTMLInputElement
   private newPassword: HTMLInputElement
   private newPasswordConfirm: HTMLInputElement
   private anchorNewPassword: HTMLAnchorElement
+  private messageCredentials: HTMLSpanElement
 
 
-  //TODO: IMPLEMENT PASSWORD CHANGE
+
   async renderAsync(): Promise<void> {
-    console.log("render-account")
     this.user = await this.db.getUserAsync()
 
     document.querySelector(".location").textContent = "account"
@@ -57,19 +59,20 @@ export class AccountConstructor extends TConstructor {
   }
 
   private constructCredentialsField(): HTMLDivElement {
-    // name group
+    /////// name group
     const divName = document.createElement("div")
     divName.textContent = "User name"
 
     const loginInput = document.createElement("input")
     loginInput.value = this.user.login
+    this.newName = loginInput
 
     const group1 = document.createElement("div")
     group1.className = "account-info-group"
     group1.append(divName, loginInput)
 
 
-    // password group
+    /////// password group
     const anchor = document.createElement("a")
     anchor.addEventListener("click", _ => this.showAlterPasswordFields())
     anchor.textContent = "Change"
@@ -97,23 +100,36 @@ export class AccountConstructor extends TConstructor {
     group2.append(divPassword, passwordDiv)
 
 
-    // submit group
-    const blankDiv = document.createElement("a")
-    blankDiv.addEventListener("click", _ => window.render("account"))
-    blankDiv.textContent = "Cancel"
-    blankDiv.style.color = "lightcoral"
+    //////// message group
+    const message = document.createElement("span")
+    message.style.display = "none"
+    message.style.opacity = "0"
+    message.style.fontSize = ".9rem"
+    message.style.transition = "opacity .5s ease-in-out"
+    this.messageCredentials = message
+
+    const group3 = document.createElement("div")
+    group3.className = "account-info-group"
+    group3.append(message)
+
+    //////// submit group
+    const cancelAnchor = document.createElement("a")
+    cancelAnchor.addEventListener("click", _ => window.render("account"))
+    cancelAnchor.textContent = "Cancel"
+    cancelAnchor.style.color = "lightcoral"
 
     const button = document.createElement("button")
     button.className = "btn"
     button.textContent = "Submit"
+    button.addEventListener("click", _ => this.alterCredentials())
 
-    const group3 = document.createElement("div")
-    group3.className = "account-info-group"
-    group3.append(blankDiv, button)
+    const group4 = document.createElement("div")
+    group4.className = "account-info-group"
+    group4.append(cancelAnchor, button)
 
     const result = document.createElement("div")
     result.className = "account-info-wrapper"
-    result.append(group1, group2, group3)
+    result.append(group1, group2, group3, group4)
     return result
   }
 
@@ -147,4 +163,55 @@ export class AccountConstructor extends TConstructor {
     return result
   }
 
+  private alterCredentials(): void {
+    try {
+      const newLogin = this.newName.value.trim().toLowerCase()
+      if (newLogin.length === 0) {
+        this.newName.focus()
+        throw new Error("Provide correct login name")
+      }
+
+      let newPassword = ""
+      if (this.newPassword.style.display !== "none") {
+        const pass = this.newPassword.value.trim().toLowerCase()
+        if (pass.length === 0) {
+          this.newPassword.focus()
+          throw new Error("Provide correct password")
+        }
+
+        const passConfirm = this.newPasswordConfirm.value.trim().toLowerCase()
+        if (pass !== passConfirm) {
+          this.newPasswordConfirm.focus()
+          throw new Error("Confirmation doesn't match")
+        }
+
+        newPassword = pass
+      }
+
+      this.db.alterCredentialsAsync(this.user.login, newLogin, newPassword)
+        .catch((error: Error) => this.blink(false, error.message))
+        .then(_ => {
+          this.blink(true, "The credentials have been updated!")
+          setTimeout(() => LoginConstructor.applyCredentialsAsync(this.db), 2000)
+        })
+    } catch (error: any) {
+      this.blink(false, error.message)
+    }
+  }
+
+  private blink(ok: boolean, text: string) {
+    const cls = ok ? "success" : "fail"
+
+    this.messageCredentials.style.display = "block"
+    this.messageCredentials.classList.remove("success", "fail")
+    this.messageCredentials.className = cls
+    this.messageCredentials.textContent = text
+
+    setTimeout(() => this.messageCredentials.style.opacity = "1", 0)
+
+    setTimeout(() => {
+      this.messageCredentials.style.opacity = "0"
+      setTimeout(() => this.messageCredentials.style.display = "none", 500)
+    }, 2000)
+  }
 }

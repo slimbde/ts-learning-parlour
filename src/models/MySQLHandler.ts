@@ -19,8 +19,8 @@ export class MySQLHandler implements IDbHandler {
     })
 
     this.checkResponse(resp)
-
-    localStorage.setItem("user", login)
+    localStorage.removeItem("user")
+    localStorage.setItem("user", JSON.stringify({ login, role: login === "admin" ? "admin" : "user" }))
   }
 
   async authenticateAsync(login: string, password: string): Promise<void> {
@@ -32,6 +32,7 @@ export class MySQLHandler implements IDbHandler {
         throw new Error("Wrong login/password")
     }
 
+    localStorage.removeItem("user")
     localStorage.setItem("user", JSON.stringify({ login, role: login === "admin" ? "admin" : "user" }))
   }
 
@@ -49,6 +50,13 @@ export class MySQLHandler implements IDbHandler {
 
   async logOutAsync(): Promise<void> {
     localStorage.removeItem("user")
+  }
+
+  async alterCredentialsAsync(prevLogin: string, login: string, password: string = ""): Promise<void> {
+    const resp = await fetch(`php-api/users/altercredentials?prevLogin=${prevLogin}&login=${login}&password=${password}`)
+    this.checkResponse(resp)
+    localStorage.removeItem("user")
+    localStorage.setItem("user", JSON.stringify({ login, role: login === "admin" ? "admin" : "user" }))
   }
 
   async searchWordsAsync(particle: string): Promise<TLearnable[]> {

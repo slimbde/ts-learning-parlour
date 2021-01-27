@@ -63,13 +63,18 @@
   align-items: baseline;
   justify-content: space-between;
   width: 300px;
+  margin-bottom: .5rem;
+  overflow: hidden;
 }
 
 .account-info-group input {
   flex-grow: unset;
-  margin-bottom: 0.5rem;
   margin-right: unset;
   min-width: 100px;
+}
+
+.account-info-group input+input {
+  margin-top: .2rem;
 }
 
 .account-password {
@@ -80,7 +85,6 @@
 
 .account-info-group button {
   padding: .4rem 1rem;
-  margin-top: 1rem;
 }
 
 .account-today-words {
@@ -104,6 +108,15 @@
 .account-today-words div {
   margin-right: 0.5rem;
   font-size: .9rem;
+}
+
+.success {
+  color: green;
+  text-shadow: 0 0 5px lightgreen;
+}
+
+.fail {
+  color: red;
 }
 
 /************************************************** MEDIA */

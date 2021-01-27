@@ -37,6 +37,14 @@ export interface IDbHandler {
   logOutAsync(): Promise<void>
 
   /**
+   * alters user credentials or throws if something went wrong
+   * @param prevLogin previous login
+   * @param login new login
+   * @param password optional new password
+   */
+  alterCredentialsAsync(prevLogin: string, login: string, password: string): Promise<void>
+
+  /**
    * retrieves every possible match from the database
    * @param particle the bit to search by
    * @returns TLearnable structure
