@@ -28,6 +28,7 @@ export class LoginConstructor extends TConstructor {
   static async applyCredentialsAsync(db: IDbHandler): Promise<void> {
     this.user = await db.getUserAsync()
     LoginConstructor.loginAnchor.textContent = this.user.login
+    LoginConstructor.loginAnchor.onclick = _ => window.render("login")
 
     LoginConstructor.loginImage.title = "Выйти из учетной записи"
     LoginConstructor.loginImage.style.transform = "scale(1,1)"
@@ -90,6 +91,7 @@ export class LoginConstructor extends TConstructor {
     document.querySelector(".location").textContent = "login"
 
     LoginConstructor.loginAnchor.textContent = "login"
+    LoginConstructor.loginAnchor.onclick = _ => window.render("login")
 
     const btn = document.createElement("button")
     btn.className = "btn"

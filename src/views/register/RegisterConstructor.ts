@@ -6,9 +6,6 @@ export class RegisterConstructor extends TConstructor {
 
   async renderAsync(): Promise<void> {
     document.querySelector(".location").textContent = "register"
-    const register = document.querySelector(".login-wrapper a")
-    register.textContent = "register"
-    register.addEventListener("click", _ => window.render("register"))
 
     const btn = document.createElement("button")
     btn.className = "btn"

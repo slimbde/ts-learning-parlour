@@ -345,4 +345,13 @@
   .quick-result-wrapper {
     margin-top: 1.7rem;
   }
+  .training-field-example div {
+    max-height: 47vh;
+  }
+  .training-field-example {
+    height: 52vh;
+  }
+  .training-field {
+    height: 60vh;
+  }
 }
