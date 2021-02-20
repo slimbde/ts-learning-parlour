@@ -19,8 +19,8 @@ export class MySQLHandler implements IDbHandler {
     })
 
     this.checkResponse(resp)
-    localStorage.removeItem("user")
-    localStorage.setItem("user", JSON.stringify({ login, role: login === "admin" ? "admin" : "user" }))
+    //localStorage.removeItem("user")
+    //localStorage.setItem("user", JSON.stringify({ login, role: login === "admin" ? "admin" : "user" }))
   }
 
   async authenticateAsync(login: string, password: string): Promise<void> {

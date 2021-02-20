@@ -1,5 +1,6 @@
 import window from '../../index'
 import { TConstructor } from "../IConstructor";
+import { LoginConstructor } from "../login/LoginConstructor";
 
 export class RegisterConstructor extends TConstructor {
 
@@ -87,7 +88,8 @@ export class RegisterConstructor extends TConstructor {
       try {
         await this.db.registerAsync(login.value, password.value)
         await this.db.authenticateAsync(login.value, password.value)
-        await this.db.checkAuthStateAsync()
+        if (await this.db.checkAuthStateAsync())
+          await LoginConstructor.applyCredentialsAsync(this.db)
       } catch (error) {
         password.value = ""
         loginTip.textContent = error
