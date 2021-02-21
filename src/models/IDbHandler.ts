@@ -132,4 +132,25 @@ export interface IDbHandler {
    * @returns JSON object
    */
   getDbInfoAsync(): Promise<DBInfo>
+
+  /**
+   * deletes a notion from db
+   * @param notion the notion to delete
+   * @returns number of rows affected
+   */
+  deleteNotionAsync(notion: TLearnable): Promise<number>
+
+  /**
+   * updates a db notion
+   * @param notion the notion to update
+   * @returns number of rows affected
+   */
+  updateNotionAsync(notion: TLearnable): Promise<number>
+
+  /**
+   * appends a db notion
+   * @param notion a notion to create
+   * @returns number of rows affected
+   */
+  createNotionAsync(notion: TLearnable): Promise<number>
 }

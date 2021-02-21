@@ -1,4 +1,3 @@
-import window from "../../index"
 import { TLearnable } from "../../models/TLearnable";
 import { TConstructor } from "../IConstructor";
 
@@ -88,7 +87,7 @@ export class HomeConstructor extends TConstructor {
             })
 
             this.instantSearch.style.visibility = "visible"
-            setTimeout(() => this.instantSearch.style.opacity = "1", 300)
+            setTimeout(() => this.instantSearch.style.opacity = "1", 0)
           }
           return
         }
@@ -101,7 +100,7 @@ export class HomeConstructor extends TConstructor {
       }
 
       this.instantSearch.style.opacity = "0"
-      setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 500)
+      setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 0)
     })
 
     const btn = document.createElement("button")

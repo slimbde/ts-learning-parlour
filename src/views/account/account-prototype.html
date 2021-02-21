@@ -90,6 +90,24 @@
               <button class="btn">Submit</button>
             </div>
           </div>
+          <div class="account-info-wrapper" style="flex-grow: 1;">
+            <div class="account-db-group">
+              <input type="text" name="" id="" placeholder="find">
+            </div>
+            <div class="account-db-group">
+              <a onclick="showControls()">Append</a>
+              <a onclick="alert('hello')">Submit</a>
+              <a onclick="alert('hello')">Delete</a>
+            </div>
+            <div class="account-db-group" id="db-controls">
+              <div class="account-db-row">
+                <input type="text" name="" id="notion" placeholder="notion">
+                <input type="text" name="" id="ipa" placeholder="ipa">
+                <input type="text" name="" id="meaning" placeholder="meaning">
+                <input type="text" name="" id="example" placeholder="example">
+              </div>
+            </div>
+          </div>
           <div class="account-info-wrapper">
             <div class="account-today-words-title">СЛОВА НА СЕГОДНЯ:</div>
             <div class="account-today-words">
@@ -118,6 +136,12 @@
   function test() {
     inputs.forEach(el => el.style.display = "block")
     document.querySelector(".account-password a").style.display = "none"
+  }
+
+  function showControls() {
+    const controls = document.getElementById("db-controls")
+    controls.style.height = "fit-content";
+    controls.style.opacity = 1;
   }
 </script>
 
