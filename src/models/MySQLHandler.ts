@@ -187,17 +187,14 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async updateNotionAsync(notion: TLearnable): Promise<number> {
-    const body = new FormData()
-    body.append("notion", JSON.stringify(notion))
-
     const resp = await fetch(`php-api/words`, {
       method: 'PUT',
-      body: body
+      body: JSON.stringify(notion)
     })
 
     await this.checkResponseAsync(resp)
-    debugger
-    return 0;
+
+    return await (resp.json() as Promise<number>)
   }
 
   async createNotionAsync(notion: TLearnable): Promise<number> {

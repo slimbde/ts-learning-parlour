@@ -43,7 +43,7 @@
 
 .account-field-wrapper {
   display: flex;
-  /*padding: 0 1rem;*/
+  padding: .5rem 1rem;
   height: 74vh;
   width: 100%;
   max-width: 700px;
@@ -67,10 +67,14 @@
   margin-bottom: 1rem;
 }
 
-/*.account-info-wrapper+.account-info-wrapper {
-  margin-left: .5rem;
-  margin-right: 0.5rem;
-}*/
+.frame-title {
+  padding: .2rem;
+  margin-top: -1.8rem;
+  margin-bottom: .5rem;
+  font-size: smaller;
+  color: rgb(58, 109, 151);
+  text-shadow: 1px 1px 5px lightblue;
+}
 
 .account-info-group {
   display: flex;
@@ -195,7 +199,7 @@
   display: flex;
   flex-flow: column nowrap;
   opacity: 0;
-  transition: opacity .3s ease-in-out;
+  transition: opacity .3s ease-in;
   max-height: 40vh;
   overflow: hidden;
   overflow-y: auto;

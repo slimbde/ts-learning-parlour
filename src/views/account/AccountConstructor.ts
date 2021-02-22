@@ -14,14 +14,15 @@ export class AccountConstructor extends TConstructor {
   private dbRow: HTMLDivElement
   private instantSearch: HTMLDivElement
 
-  private dbNotion: HTMLInputElement
-  private dbIpa: HTMLInputElement
-  private dbMeaning: HTMLInputElement
-  private dbExample: HTMLInputElement
+  private dbNotion: HTMLInputElement      // input for notion
+  private dbIpa: HTMLInputElement         // input for ipa
+  private dbMeaning: HTMLInputElement     // input for meaning
+  private dbExample: HTMLInputElement     // input for example
   private submitBtn: HTMLAnchorElement
   private deleteBtn: HTMLAnchorElement
   private currentNotion: TLearnable
-  private messageDb: HTMLSpanElement
+  private messageDb: HTMLSpanElement      // query result span
+  private instantRequests: string[] = []  // requests array for handling last request
 
   async renderAsync(): Promise<void> {
     this.user = await this.db.getUserAsync()
@@ -141,9 +142,14 @@ export class AccountConstructor extends TConstructor {
     group4.className = "account-info-group"
     group4.append(cancelAnchor, button)
 
+    ////// frame title
+    const ftitle = document.createElement("span") as HTMLSpanElement
+    ftitle.className = "frame-title"
+    ftitle.textContent = "user: credentials"
+
     const result = document.createElement("div")
     result.className = "account-info-wrapper"
-    result.append(group1, group2, group3, group4)
+    result.append(ftitle, group1, group2, group3, group4)
     return result
   }
 
@@ -154,7 +160,7 @@ export class AccountConstructor extends TConstructor {
   }
 
   private constructDbHandlingField(): HTMLDivElement {
-    ///////// db controls
+    ///////// inputs
     const constructColumn = (id: string): HTMLInputElement => {
       const result = document.createElement("input") as HTMLInputElement
       result.id = id
@@ -227,34 +233,50 @@ export class AccountConstructor extends TConstructor {
       const query = (e.target as HTMLInputElement).value.trim().toLowerCase()
 
       if (query.length > 1) {
-        this.db.searchWordsAsync(query)
-          .then((resp: TLearnable[]) => {
-            if (resp.length > 0) {
-              this.instantSearch.innerHTML = ""
+        this.instantRequests.push(query)                  // push new valid query to the array
+        const requestsNum = this.instantRequests.length   // store current array length
 
-              resp.forEach((entry: TLearnable) => {
-                const div = document.createElement("div")
-                const content = `${entry.notion} ${entry.ipa}<br>${entry.meaning}`
-                div.innerHTML = content.replace(query, `<font color='red'>${query === "to" ? "to&nbsp;" : query}</font>`)
-                div.addEventListener("click", _ => this.fillFormRow(entry))
+        setTimeout(() => {
+          if (requestsNum === this.instantRequests.length) {      // in 300ms collate stored length with current
 
-                this.instantSearch.append(div)
+            if ((input as HTMLInputElement).value.trim().length < 2)  // if input is empty - return
+              return
+
+            this.db.searchWordsAsync(this.instantRequests.pop())  // if the length is same - handle last request
+              .then((resp: TLearnable[]) => {
+                this.instantRequests.length = 0   // right after we got an answer - clear the array
+                if (resp.length > 0) {
+                  this.instantSearch.innerHTML = ""
+
+                  resp.forEach((entry: TLearnable) => {
+                    const div = document.createElement("div")
+                    const content = `${entry.notion} ${entry.ipa}<br>${entry.meaning}`
+                    div.innerHTML = content.replace(query, `<font color='red'>${query === "to" ? "to&nbsp;" : query}</font>`)
+                    div.addEventListener("click", _ => this.fillFormRow(entry))
+
+                    this.instantSearch.append(div)
+                  })
+
+                  this.instantSearch.style.visibility = "visible"
+                  setTimeout(() => this.instantSearch.style.opacity = "1", 0)
+                }
+              })
+              .catch((ex: Error) => {
+                this.instantSearch.style.opacity = "0"
+                setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 300)
               })
 
-              this.instantSearch.style.visibility = "visible"
-              setTimeout(() => this.instantSearch.style.opacity = "1", 0)
-            }
-          })
-          .catch((ex: Error) => {
-            this.instantSearch.style.opacity = "0"
-            setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 500)
-          })
+            return
+          }
 
-        return
+          this.instantSearch.style.opacity = "0"
+          setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 0)
+        }, 300)
       }
-
-      this.instantSearch.style.opacity = "0"
-      setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 0)
+      else {
+        this.instantSearch.style.opacity = "0"
+        setTimeout(() => (this.instantSearch.style.visibility = "hidden"), 0)
+      }
     }
 
     const inputGroup = document.createElement("div") as HTMLDivElement
@@ -266,11 +288,16 @@ export class AccountConstructor extends TConstructor {
     span.className = "message"
     this.messageDb = span
 
+    ////// frame title
+    const ftitle = document.createElement("span") as HTMLSpanElement
+    ftitle.className = "frame-title"
+    ftitle.textContent = "admin: database"
+
     ////// result
     const result = document.createElement("div") as HTMLDivElement
     result.className = "account-info-wrapper"
     result.style.flexGrow = "1"
-    result.append(inputGroup, btnGroup, span, rowsGroup)
+    result.append(ftitle, inputGroup, btnGroup, span, rowsGroup)
     result.style.backgroundColor = "rgba(176, 196, 222, 0.075)"
 
     return result
@@ -279,7 +306,7 @@ export class AccountConstructor extends TConstructor {
   private constructTodayWordsField(): HTMLDivElement {
     const title = document.createElement("div")
     title.className = "account-today-words-title"
-    title.textContent = "СЛОВА НА СЕГОДНЯ:"
+    title.textContent = "THE WORDS FOR TODAY:"
 
     const words = document.createElement("div")
     words.className = "account-today-words"
@@ -293,10 +320,15 @@ export class AccountConstructor extends TConstructor {
         })
       })
 
+    ////// frame title
+    const ftitle = document.createElement("span") as HTMLSpanElement
+    ftitle.className = "frame-title"
+    ftitle.textContent = "user: today words"
+
     const result = document.createElement("div")
     result.className = "account-info-wrapper"
     result.style.flexGrow = "1"
-    result.append(title, words)
+    result.append(ftitle, title, words)
     return result
   }
 
@@ -379,15 +411,17 @@ export class AccountConstructor extends TConstructor {
     if (this.submitBtn.classList.contains("disabled"))
       return
 
+    const notion: TLearnable = {
+      notion: this.dbNotion.value,
+      ipa: this.dbIpa.value,
+      meaning: this.dbMeaning.value,
+      example: this.dbExample.value,
+    }
+
     if (!this.currentNotion) {
-      this.db.createNotionAsync({
-        notion: this.dbNotion.value,
-        ipa: this.dbIpa.value,
-        meaning: this.dbMeaning.value,
-        example: this.dbExample.value
-      })
+      this.db.createNotionAsync(notion)
         .then((num: number) => {
-          this.blink(this.messageDb, true, `Row ${num} has been successfully appended`)
+          this.blink(this.messageDb, true, `The notion ${num} has successfully been appended`)
           this.clearCurrentNotionAsync()
         })
         .catch((err: Error) => {
@@ -398,7 +432,19 @@ export class AccountConstructor extends TConstructor {
         })
     }
     else {
-      alert("updating")
+      notion.id = this.currentNotion.id
+
+      this.db.updateNotionAsync(notion)
+        .then((num: number) => {
+          this.blink(this.messageDb, true, `The notion ${num} has successfully been updated`)
+          this.clearCurrentNotionAsync()
+        })
+        .catch((err: Error) => {
+          const msg = err.message.toLowerCase().includes("duplicate")
+            ? `The notion '${this.dbNotion.value}' is already there`
+            : err.message
+          this.blink(this.messageDb, false, msg)
+        })
     }
   }
 
@@ -409,7 +455,7 @@ export class AccountConstructor extends TConstructor {
     if (confirm("Are you sure?")) {
       this.db.deleteNotionAsync(this.currentNotion)
         .then((num: number) => {
-          this.blink(this.messageDb, true, `The notion '${num}' has been successfully removed from the database`)
+          this.blink(this.messageDb, true, `The notion '${num}' has successfully been removed from the database`)
           this.clearCurrentNotionAsync()
         })
         .catch((err: Error) => this.blink(this.messageDb, false, err.message))
