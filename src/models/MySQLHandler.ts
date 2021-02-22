@@ -1,4 +1,3 @@
-import { data } from "jquery";
 import { DBInfo } from "./DBInfo";
 import { IDbHandler } from "./IDbHandler";
 import { TCategory } from "./TCategory";

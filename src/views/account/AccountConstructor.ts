@@ -416,8 +416,13 @@ export class AccountConstructor extends TConstructor {
       ipa: this.dbIpa.value,
       meaning: this.dbMeaning.value,
       example: this.dbExample.value,
+      issue: this.dbExample.value.includes(this.dbNotion.value)
+        ? this.dbExample.value.slice(0).replace(this.dbNotion.value, `__(${this.dbMeaning.value})__`)
+        : '',
+      solution: this.dbExample.value.includes(this.dbNotion.value) ? this.dbNotion.value : ''
     }
 
+    ////// appending new notion
     if (!this.currentNotion) {
       this.db.createNotionAsync(notion)
         .then((num: number) => {
@@ -431,8 +436,12 @@ export class AccountConstructor extends TConstructor {
           this.blink(this.messageDb, false, msg)
         })
     }
+    ////// updating existing ones
     else {
       notion.id = this.currentNotion.id
+      debugger
+      this.currentNotion.issue && (notion.issue = this.currentNotion.issue)
+      this.currentNotion.solution && (notion.solution = this.currentNotion.solution)
 
       this.db.updateNotionAsync(notion)
         .then((num: number) => {
