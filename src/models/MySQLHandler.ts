@@ -26,7 +26,7 @@ export class MySQLHandler implements IDbHandler {
       const resp = await fetch(`php-api/users/authenticate?login=${login.trim().toLowerCase()}&password=${password}`)
       await this.checkResponseAsync(resp)
     } catch (error: any) {
-      if (error.message === "Not Found")
+      if (error.message === "Not found")
         throw new Error("Wrong login/password")
     }
 
