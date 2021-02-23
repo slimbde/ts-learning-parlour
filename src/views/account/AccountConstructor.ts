@@ -1,7 +1,7 @@
 import window from '../../index'
 import { TLearnable } from "../../models/TLearnable";
 import { TUser } from "../../models/TUser";
-import { TConstructor } from "../IConstructor";
+import { TConstructor } from "../../models/IConstructor";
 import { LoginConstructor } from "../login/LoginConstructor";
 
 export class AccountConstructor extends TConstructor {

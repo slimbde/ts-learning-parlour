@@ -1,7 +1,7 @@
 import window from '../../index'
 import { IDbHandler } from "../../models/IDbHandler";
 import { TUser } from "../../models/TUser";
-import { TConstructor } from "../IConstructor";
+import { TConstructor } from "../../models/IConstructor";
 
 export class LoginConstructor extends TConstructor {
 

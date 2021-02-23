@@ -1,5 +1,5 @@
 import window from '../../index'
-import { TConstructor } from "../IConstructor";
+import { TConstructor } from "../../models/IConstructor";
 import { LoginConstructor } from "../login/LoginConstructor";
 
 export class RegisterConstructor extends TConstructor {

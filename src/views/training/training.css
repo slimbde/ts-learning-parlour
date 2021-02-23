@@ -51,7 +51,7 @@
 }
 
 #hint {
-  background-image: url("../assets/loading.gif");
+  background-image: url("../../assets/loading.gif");
   background-size: contain;
   background-repeat: no-repeat;
   min-width: 40px;
@@ -291,7 +291,7 @@
 }
 
 .quick-search-loading {
-  background-image: url("../assets/loading.gif");
+  background-image: url("../../assets/loading.gif");
   background-size: contain;
   background-repeat: no-repeat;
   min-width: 30px;
@@ -349,7 +349,7 @@
     max-height: 47vh;
   }
   .training-field-example {
-    height: 52vh;
+    max-height: 52vh;
   }
   .training-field {
     height: 60vh;

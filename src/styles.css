@@ -1,7 +1,7 @@
 @import "~normalize.css";
 @import "./views/login/login.css";
 @import "./views/home/search.css";
-@import "./views/training.css";
+@import "./views/training/training.css";
 @import "./views/account/account.css";
 @import "./assets/fonts/font.css";
 * {

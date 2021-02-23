@@ -1,4 +1,4 @@
-import { TTrainingConstructor } from "../TTrainingConstructor";
+import { TTrainingConstructor } from "../../models/TTrainingConstructor";
 import { IdiomsSetHandler } from "./IdiomsSetHandler";
 
 

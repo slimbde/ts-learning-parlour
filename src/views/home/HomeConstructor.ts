@@ -1,5 +1,5 @@
 import { TLearnable } from "../../models/TLearnable";
-import { TConstructor } from "../IConstructor";
+import { TConstructor } from "../../models/IConstructor";
 
 export class HomeConstructor extends TConstructor {
   private instantSearch: HTMLDivElement

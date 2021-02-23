@@ -1,7 +1,7 @@
 import window from '../index'
-import { IDbHandler } from "../models/IDbHandler";
-import { ISetHandler } from "../models/ISetHandler";
-import { TLearnable } from "../models/TLearnable";
+import { IDbHandler } from "./IDbHandler";
+import { ISetHandler } from "./ISetHandler";
+import { TLearnable } from "./TLearnable";
 import { IConstructor } from "./IConstructor";
 
 

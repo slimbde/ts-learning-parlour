@@ -1,13 +1,13 @@
 import { IDbHandler } from "./IDbHandler";
 import { TLearnable } from "./TLearnable";
-import { TUser } from "./TUser";
+
 
 
 export interface ISetHandler {
   nextAsync(): Promise<void>
+  scoreAsync(): Promise<void>
   findAsync(notion: string): Promise<TLearnable[]>
   enqueue(): void
-  scoreAsync(): Promise<void>
   incrementWrong(): void
   incrementCorrect(): void
   assess(what: string): boolean

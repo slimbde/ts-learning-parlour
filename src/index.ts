@@ -1,7 +1,7 @@
 import './styles.css'
 import { IDbHandler } from "./models/IDbHandler"
 import { MySQLHandler } from "./models/MySQLHandler"
-import { IConstructor } from "./views/IConstructor"
+import { IConstructor } from "./models/IConstructor"
 import { LoginConstructor } from "./views/login/LoginConstructor"
 import { HomeConstructor } from "./views/home/HomeConstructor"
 import { GeneralsConstructor } from "./views/generals/GeneralsConstructor"

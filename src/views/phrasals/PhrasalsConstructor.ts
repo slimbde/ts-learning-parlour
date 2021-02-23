@@ -1,5 +1,5 @@
 import { TCategory } from "../../models/TCategory";
-import { TTrainingConstructor } from "../TTrainingConstructor";
+import { TTrainingConstructor } from "../../models/TTrainingConstructor";
 import { PhrasalsSetHandler } from "./PhrasalsSetHandler";
 
 

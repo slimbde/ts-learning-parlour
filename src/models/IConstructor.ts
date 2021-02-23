@@ -1,6 +1,6 @@
 import window from '../index'
-import { DBInfo } from "../models/DBInfo"
-import { IDbHandler } from "../models/IDbHandler"
+import { DBInfo } from "./DBInfo"
+import { IDbHandler } from "./IDbHandler"
 
 
 export interface IConstructor {

@@ -1,4 +1,4 @@
-import { TTrainingConstructor } from "../TTrainingConstructor";
+import { TTrainingConstructor } from "../../models/TTrainingConstructor";
 import { WordsSetHandler } from "./WordsSetHandler";
 import window from '../../index'
 
