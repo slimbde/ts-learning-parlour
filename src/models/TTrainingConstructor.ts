@@ -153,7 +153,10 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const input = document.createElement("input")
     input.type = "text"
-    input.addEventListener("keydown", (e: KeyboardEvent) => e.key === "Enter" && this.handleSubmit())
+    input.addEventListener("keydown", (e: KeyboardEvent) => {
+      e.key === "Enter" && this.handleSubmit()
+      e.ctrlKey && e.key === "Enter" && this.passOver()
+    })
     this.input = input
 
     const btn = document.createElement("button")

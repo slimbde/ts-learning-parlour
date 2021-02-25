@@ -172,6 +172,10 @@ export class AccountConstructor extends TConstructor {
     this.dbIpa = constructColumn("ipa")
     this.dbMeaning = constructColumn("meaning")
     this.dbExample = constructColumn("example")
+    this.dbExample.onkeyup = (e: KeyboardEvent) => {
+      if (e.key === "Enter")
+        this.updateNotion()
+    }
 
     const checkNotion = () => {
       if (this.dbNotion.value && this.dbMeaning.value)
@@ -411,15 +415,19 @@ export class AccountConstructor extends TConstructor {
     if (this.submitBtn.classList.contains("disabled"))
       return
 
+    const pureNotion = this.dbNotion.value.includes("to ")
+      ? this.dbNotion.value.substr(3)
+      : this.dbNotion.value
+
     const notion: TLearnable = {
       notion: this.dbNotion.value,
       ipa: this.dbIpa.value,
       meaning: this.dbMeaning.value,
       example: this.dbExample.value,
-      issue: this.dbExample.value.includes(this.dbNotion.value)
-        ? this.dbExample.value.slice(0).replace(this.dbNotion.value, `__(${this.dbMeaning.value})__`)
+      issue: this.dbExample.value.includes(pureNotion)
+        ? this.dbExample.value.slice(0).replace(pureNotion, `__(${this.dbMeaning.value})__`)
         : '',
-      solution: this.dbExample.value.includes(this.dbNotion.value) ? this.dbNotion.value : ''
+      solution: this.dbExample.value.includes(pureNotion) ? pureNotion : ''
     }
 
     ////// appending new notion
@@ -439,7 +447,7 @@ export class AccountConstructor extends TConstructor {
     ////// updating existing ones
     else {
       notion.id = this.currentNotion.id
-      debugger
+
       this.currentNotion.issue && (notion.issue = this.currentNotion.issue)
       this.currentNotion.solution && (notion.solution = this.currentNotion.solution)
 
