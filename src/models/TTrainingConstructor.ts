@@ -208,7 +208,7 @@ export abstract class TTrainingConstructor implements IConstructor {
 
   protected passOver(): void {
     this.score()
-    setTimeout(_ => this.applyNewNotionAsync(), 300)
+    setTimeout(() => this.applyNewNotionAsync(), 300)
   }
 
   protected handleSubmit(): void {
@@ -222,7 +222,7 @@ export abstract class TTrainingConstructor implements IConstructor {
       this.blink(false)
     }
 
-    setTimeout(_ => this.applyNewNotionAsync(), 300)
+    setTimeout(() => this.applyNewNotionAsync(), 300)
   }
 
   protected async applyNewNotionAsync(): Promise<void> {
