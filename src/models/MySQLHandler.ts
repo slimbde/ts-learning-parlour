@@ -7,13 +7,14 @@ import { TUser } from "./TUser";
 
 
 export class MySQLHandler implements IDbHandler {
+  private backEnd = `http://slimbde.atwebpages.com/`
 
   async registerAsync(login: string, password: string): Promise<void> {
     const body = new FormData()
     body.append("login", login)
     body.append("password", password)
 
-    const resp = await fetch(`php-api/users`, {
+    const resp = await fetch(`${this.backEnd}php-api/users`, {
       method: 'POST',
       body: body
     })
@@ -23,7 +24,7 @@ export class MySQLHandler implements IDbHandler {
 
   async authenticateAsync(login: string, password: string): Promise<void> {
     try {
-      const resp = await fetch(`php-api/users/authenticate?login=${login.trim().toLowerCase()}&password=${password}`)
+      const resp = await fetch(`${this.backEnd}php-api/users/authenticate?login=${login.trim().toLowerCase()}&password=${password}`)
       await this.checkResponseAsync(resp)
     } catch (error: any) {
       if (error.message === "Not found")
@@ -51,14 +52,14 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async alterCredentialsAsync(prevLogin: string, login: string, password: string = ""): Promise<void> {
-    const resp = await fetch(`php-api/users/altercredentials?prevLogin=${prevLogin}&login=${login}&password=${password}`)
+    const resp = await fetch(`${this.backEnd}php-api/users/altercredentials?prevLogin=${prevLogin}&login=${login}&password=${password}`)
     await this.checkResponseAsync(resp)
     localStorage.removeItem("user")
     localStorage.setItem("user", JSON.stringify({ login, role: login === "admin" ? "admin" : "user" }))
   }
 
   async searchWordsAsync(particle: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getfor?particle=${particle}`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getfor?particle=${particle}`)
     await this.checkResponseAsync(resp)
 
     const data = await (resp.json() as Promise<any>)
@@ -74,7 +75,7 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async getWordsForAsync(userName: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getsetfor?login=${userName}`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getsetfor?login=${userName}`)
     await this.checkResponseAsync(resp)
     const data = await (resp.json() as Promise<any>)
 
@@ -89,7 +90,7 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async getGeneralsForAsync(userName: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getgeneralsfor?login=${userName}`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getgeneralsfor?login=${userName}`)
     await this.checkResponseAsync(resp)
     const data = await (resp.json() as Promise<any>)
 
@@ -101,11 +102,11 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async scoreGeneralsForAsync(userName: string, notionId: string): Promise<void> {
-    await fetch(`php-api/words/setgeneralsfor?login=${userName}&notionId=${notionId}`)
+    await fetch(`${this.backEnd}php-api/words/setgeneralsfor?login=${userName}&notionId=${notionId}`)
   }
 
   async getGerundsForAsync(userName: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getgerundsfor?login=${userName}`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getgerundsfor?login=${userName}`)
     await this.checkResponseAsync(resp)
     const data = await (resp.json() as Promise<any>)
 
@@ -117,11 +118,11 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async scoreGerundsForAsync(userName: string, notionId: string): Promise<void> {
-    await fetch(`php-api/words/setgerundsfor?login=${userName}&notionId=${notionId}`)
+    await fetch(`${this.backEnd}php-api/words/setgerundsfor?login=${userName}&notionId=${notionId}`)
   }
 
   async getPhrasesForAsync(userName: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getphrasesfor?login=${userName}`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getphrasesfor?login=${userName}`)
     await this.checkResponseAsync(resp)
     const data = await (resp.json() as Promise<any>)
 
@@ -133,11 +134,11 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async scorePhrasesForAsync(userName: string, notionId: string): Promise<void> {
-    await fetch(`php-api/words/setphrasesfor?login=${userName}&notionId=${notionId}`)
+    await fetch(`${this.backEnd}php-api/words/setphrasesfor?login=${userName}&notionId=${notionId}`)
   }
 
   async getIdiomsForAsync(userName: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getidiomsfor?login=${userName}`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getidiomsfor?login=${userName}`)
     await this.checkResponseAsync(resp)
     const data = await (resp.json() as Promise<any>)
 
@@ -149,17 +150,17 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async scoreIdiomsForAsync(userName: string, notionId: string): Promise<void> {
-    await fetch(`php-api/words/setidiomsfor?login=${userName}&notionId=${notionId}`)
+    await fetch(`${this.backEnd}php-api/words/setidiomsfor?login=${userName}&notionId=${notionId}`)
   }
 
   async getCategoriesAsync(): Promise<TCategory[]> {
-    const resp = await fetch(`php-api/words/getphrasalscategories`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getphrasalscategories`)
     await this.checkResponseAsync(resp)
     return (resp.json() as Promise<TCategory[]>)
   }
 
   async getPhrasalsForAsync(category: string): Promise<TLearnable[]> {
-    const resp = await fetch(`php-api/words/getphrasalsfor?category=${category}`)
+    const resp = await fetch(`${this.backEnd}php-api/words/getphrasalsfor?category=${category}`)
     await this.checkResponseAsync(resp)
     const data = await (resp.json() as Promise<any>)
 
@@ -179,14 +180,14 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async deleteNotionAsync(notion: TLearnable): Promise<number> {
-    const resp = await fetch(`php-api/words/${notion.id}`, { method: 'DELETE' })
+    const resp = await fetch(`${this.backEnd}php-api/words/${notion.id}`, { method: 'DELETE' })
     await this.checkResponseAsync(resp)
 
     return await (resp.json() as Promise<number>)
   }
 
   async updateNotionAsync(notion: TLearnable): Promise<number> {
-    const resp = await fetch(`php-api/words`, {
+    const resp = await fetch(`${this.backEnd}php-api/words`, {
       method: 'PUT',
       body: JSON.stringify(notion)
     })
@@ -200,7 +201,7 @@ export class MySQLHandler implements IDbHandler {
     const body = new FormData()
     body.append("notion", JSON.stringify(notion))
 
-    const resp = await fetch(`php-api/words`, {
+    const resp = await fetch(`${this.backEnd}php-api/words`, {
       method: 'POST',
       body: body
     })
