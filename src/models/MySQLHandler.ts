@@ -7,7 +7,7 @@ import { TUser } from "./TUser";
 
 
 export class MySQLHandler implements IDbHandler {
-  private backEnd = `http://slimbde.atwebpages.com/`
+  private backEnd = `/`
 
   async registerAsync(login: string, password: string): Promise<void> {
     const body = new FormData()
