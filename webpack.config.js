@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 //console.log("isDev", isDev);
@@ -62,7 +63,11 @@ module.exports = {
         { from: "./assets/favicon.ico" }
       ]
     }),
-    new MiniCssExtractPlugin({ filename: filename(`css`) })
+    new MiniCssExtractPlugin({ filename: filename(`css`) }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
   ],
   module: {
     rules: [
