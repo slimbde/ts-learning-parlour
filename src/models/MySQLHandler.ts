@@ -173,7 +173,7 @@ export class MySQLHandler implements IDbHandler {
   }
 
   async getDbInfoAsync(): Promise<DBInfo> {
-    const resp = await fetch(`php-api/users/getdbinfo`)
+    const resp = await fetch(`${this.backEnd}php-api/users/getdbinfo`)
     await this.checkResponseAsync(resp)
 
     return await (resp.json() as Promise<DBInfo>)
