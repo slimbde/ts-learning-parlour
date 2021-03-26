@@ -13,13 +13,13 @@ export class HomeConstructor extends TConstructor {
 
     const searchWrapper = document.createElement("div")
     searchWrapper.className = "search-wrapper"
-    searchWrapper.append(title)
-    searchWrapper.append(input)
-    searchWrapper.append(answer)
+    searchWrapper.appendChild(title)
+    searchWrapper.appendChild(input)
+    searchWrapper.appendChild(answer)
 
     const main = document.querySelector(".main-field")
     main.innerHTML = ""
-    main.append(searchWrapper)
+    main.appendChild(searchWrapper)
 
     this.renderDbInfo()
     this.highlightMenu()
@@ -46,16 +46,16 @@ export class HomeConstructor extends TConstructor {
 
     const titleContent = document.createElement("div")
     titleContent.className = "title-content"
-    titleContent.append(h1)
-    titleContent.append(titleText)
+    titleContent.appendChild(h1)
+    titleContent.appendChild(titleText)
 
     const logo = document.createElement("div")
     logo.className = "logo"
 
     const titleWrapper = document.createElement("div")
     titleWrapper.className = "title-wrapper"
-    titleWrapper.append(logo)
-    titleWrapper.append(titleContent)
+    titleWrapper.appendChild(logo)
+    titleWrapper.appendChild(titleContent)
 
     return titleWrapper
   }
@@ -83,7 +83,7 @@ export class HomeConstructor extends TConstructor {
               div.innerHTML = content.replace(query, `<font color='red'>${query === "to" ? "to&nbsp;" : query}</font>`)
               div.addEventListener("click", _ => this.search(entry.notion))
 
-              this.instantSearch.append(div)
+              this.instantSearch.appendChild(div)
             })
 
             this.instantSearch.style.visibility = "visible"
@@ -109,8 +109,8 @@ export class HomeConstructor extends TConstructor {
 
     const inputGroup = document.createElement("div")
     inputGroup.className = "input-group"
-    inputGroup.append(input)
-    inputGroup.append(btn)
+    inputGroup.appendChild(input)
+    inputGroup.appendChild(btn)
 
     const summary = document.createElement("div")
     summary.className = "summary"
@@ -125,10 +125,10 @@ export class HomeConstructor extends TConstructor {
 
     const inputWrapper = document.createElement("div")
     inputWrapper.className = "input-wrapper"
-    inputWrapper.append(inputGroup)
-    inputWrapper.append(summary)
-    inputWrapper.append(loading)
-    inputWrapper.append(instantSearch)
+    inputWrapper.appendChild(inputGroup)
+    inputWrapper.appendChild(summary)
+    inputWrapper.appendChild(loading)
+    inputWrapper.appendChild(instantSearch)
 
     return inputWrapper
   }
@@ -182,9 +182,9 @@ export class HomeConstructor extends TConstructor {
 
             const definition = document.createElement("div")
             definition.className = "definition"
-            definition.append(notion)
-            definition.append(ipa)
-            definition.append(meaning)
+            definition.appendChild(notion)
+            definition.appendChild(ipa)
+            definition.appendChild(meaning)
 
             const example = document.createElement("div")
             example.className = "example"
@@ -194,10 +194,10 @@ export class HomeConstructor extends TConstructor {
             addDate.className = "addDate"
             addDate.textContent = word.addDate
 
-            entry.append(definition)
-            entry.append(example)
-            entry.append(addDate)
-            answerWrapper.append(entry)
+            entry.appendChild(definition)
+            entry.appendChild(example)
+            entry.appendChild(addDate)
+            answerWrapper.appendChild(entry)
           })
         })
         .catch((error: Error) => {

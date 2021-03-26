@@ -47,10 +47,10 @@ export abstract class TSetHandler implements ISetHandler {
   get Issue(): string { return this.currentNotion?.issue }
   get Hint(): string { return "" }
   get Solution(): string { return this.currentNotion?.solution }
-  get PreviousIssue(): string { return this.previousNotion?.issue }
-  get PreviousSolution(): string { return this.previousNotion?.solution }
-  get PreviousIPA(): string { return this.previousNotion?.ipa }
-  get PreviousExample(): string { return this.previousNotion?.example }
+  get PreviousIssue(): string { return this.previousNotion?.issue || "" }
+  get PreviousSolution(): string { return this.previousNotion?.solution || "" }
+  get PreviousIPA(): string { return this.previousNotion?.ipa || "" }
+  get PreviousExample(): string { return this.previousNotion?.example || "" }
   get Examples(): string {
     let str = ""
     this.set.forEach((item: TLearnable) => item.example && (str += `${item.example.replace(item.issue, `<font color='black' style='font-weight:500'>${item.issue}</font>`)} `))

@@ -54,16 +54,20 @@ module.exports = {
     }
     //hot: isDev, - this should be disabled. Otherwise html page doesn't refresh
   },
+  devtool: isDev ? 'eval-cheap-source-map' : false, // disable source-maps at production
   plugins: [
     new HtmlWebpackPlugin({ template: "./index.html", minify: { collapseWhitespace: !isDev } }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "./assets/favicon.ico" }
+        { from: "./assets/favicon.ico" },
       ]
     }),
     new MiniCssExtractPlugin({ filename: filename(`css`) }),
   ],
+  performance: {
+    hints: false, // to disable irritating notices about large chunk sizes
+  },
   module: {
     rules: [
       {
@@ -83,14 +87,8 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: {
-          loader: "ts-loader",
-          //options: {
-          //  presets: ["@babel/preset-env"],
-          //  plugins: ["@babel/plugin-proposal-class-properties"]
-          //}
-        }
-      }
+        loaders: ['babel-loader']
+      },
     ],
-  }
+  },
 }

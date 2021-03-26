@@ -48,9 +48,9 @@ export class PhrasalsConstructor extends TTrainingConstructor {
     const result = document.createElement("div")
     result.className = "progress-info"
 
-    result.append(label)
-    result.append(select)
-    result.append(button)
+    result.appendChild(label)
+    result.appendChild(select)
+    result.appendChild(button)
 
     return [result]
   }
@@ -100,7 +100,9 @@ export class PhrasalsConstructor extends TTrainingConstructor {
 
     const trainingField = document.querySelector(".training-field")
     trainingField.innerHTML = ""
-    trainingField.append(progressInfo, trainingFieldTitle, trainingFieldWorkspace)
+    trainingField.appendChild(progressInfo)
+    trainingField.appendChild(trainingFieldTitle)
+    trainingField.appendChild(trainingFieldWorkspace)
 
 
     this.setHandler = new PhrasalsSetHandler(this.db, category)

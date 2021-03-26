@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <title>Learning parlour</title>
 </head>
 
@@ -25,22 +26,13 @@
   <div class="container">
     <div class="menu-wrapper">
       <div class="menu-line" id="menu-home" onclick="toggleMenu(); render('home')">
-        <i class="material-icons">search</i>
+        <span class="material-icons-outlined">search</span>
         <a href="javascript:;">Home</a>
       </div>
       <div class="menu-line" id="menu-training" onclick="toggleMenu(); render('words')">
         <i class="material-icons-outlined">run_circle</i>
         <a href="javascript:;">Training</a>
       </div>
-      <!--
-      <div class="menu-line" id="menu-total">
-        <i class="material-icons-outlined">collections_bookmark</i>
-        <a href="javascript:;" onclick="render('total')">Total</a>
-      </div>
-      <div class="menu-line" id="menu-today">
-        <i class="material-icons-outlined">today</i>
-        <a href="javascript:;" onclick="render('today')">Today</a>
-      </div>-->
       <div class="menu-line" id="menu-generals" onclick="toggleMenu(); render('generals')">
         <i class=" material-icons-outlined">extension</i>
         <a href="javascript:;">Generals</a>
@@ -62,10 +54,7 @@
         <a href="javascript:;">Phrasals</a>
       </div>
       <hr />
-      <div class="info">
-        <!--<div class="info-title">DB info:</div>
-        <div class="info-notion">words: 3600</div>-->
-      </div>
+      <div class="info"></div>
     </div>
     <div class="main-field" onclick="hideMenu()"></div>
   </div>

@@ -1,4 +1,3 @@
-import window from '../index'
 import { DBInfo } from "./DBInfo"
 import { IDbHandler } from "./IDbHandler"
 
@@ -27,14 +26,14 @@ export abstract class TConstructor implements IConstructor {
         const infoTitle = document.createElement("div")
         infoTitle.className = "info-title"
         infoTitle.textContent = "DB info:"
-        info.append(infoTitle)
+        info.appendChild(infoTitle)
 
         Object.keys(dbInfo).forEach((key: string) => {
           const value = dbInfo[key]
           const div = document.createElement("div")
           div.className = "info-notion"
           div.textContent = `${key} ${value}`
-          info.append(div)
+          info.appendChild(div)
         })
       })
       .catch(console.error)

@@ -1,4 +1,3 @@
-import window from '../../index'
 import { TLearnable } from "../../models/TLearnable";
 import { TUser } from "../../models/TUser";
 import { TConstructor } from "../../models/IConstructor";
@@ -42,15 +41,17 @@ export class AccountConstructor extends TConstructor {
     }
     fieldsToAppend.push(todayWordsField)
 
-    accountFieldWrapper.append(...fieldsToAppend)
+    fieldsToAppend.forEach(el => accountFieldWrapper.appendChild(el))
 
     const accountWrapper = document.createElement("div")
     accountWrapper.className = "account-wrapper"
-    accountWrapper.append(...this.constructPageTitles(), accountFieldWrapper)
+    const titles = this.constructPageTitles()
+    titles.forEach(t => accountWrapper.appendChild(t))
+    accountWrapper.appendChild(accountFieldWrapper)
 
     const main = document.querySelector(".main-field")
     main.innerHTML = ""
-    main.append(accountWrapper)
+    main.appendChild(accountWrapper)
 
     this.highlightMenu()
   }
@@ -87,7 +88,8 @@ export class AccountConstructor extends TConstructor {
 
     const group1 = document.createElement("div")
     group1.className = "account-info-group"
-    group1.append(divName, loginInput)
+    group1.appendChild(divName)
+    group1.appendChild(loginInput)
 
 
     /////// password group
@@ -108,14 +110,17 @@ export class AccountConstructor extends TConstructor {
 
     const passwordDiv = document.createElement("div")
     passwordDiv.className = "account-password"
-    passwordDiv.append(anchor, inputNewPassword, inputConfirmPassword)
+    passwordDiv.appendChild(anchor)
+    passwordDiv.appendChild(inputNewPassword)
+    passwordDiv.appendChild(inputConfirmPassword)
 
     const divPassword = document.createElement("div")
     divPassword.textContent = "Password"
 
     const group2 = document.createElement("div")
     group2.className = "account-info-group"
-    group2.append(divPassword, passwordDiv)
+    group2.appendChild(divPassword)
+    group2.appendChild(passwordDiv)
 
 
     //////// message group
@@ -125,7 +130,7 @@ export class AccountConstructor extends TConstructor {
 
     const group3 = document.createElement("div")
     group3.className = "account-info-group"
-    group3.append(message)
+    group3.appendChild(message)
 
     //////// submit group
     const cancelAnchor = document.createElement("a")
@@ -140,7 +145,8 @@ export class AccountConstructor extends TConstructor {
 
     const group4 = document.createElement("div")
     group4.className = "account-info-group"
-    group4.append(cancelAnchor, button)
+    group4.appendChild(cancelAnchor)
+    group4.appendChild(button)
 
     ////// frame title
     const ftitle = document.createElement("span") as HTMLSpanElement
@@ -149,7 +155,11 @@ export class AccountConstructor extends TConstructor {
 
     const result = document.createElement("div")
     result.className = "account-info-wrapper"
-    result.append(ftitle, group1, group2, group3, group4)
+    result.appendChild(ftitle)
+    result.appendChild(group1)
+    result.appendChild(group2)
+    result.appendChild(group3)
+    result.appendChild(group4)
     return result
   }
 
@@ -189,12 +199,15 @@ export class AccountConstructor extends TConstructor {
 
     const dbRow = document.createElement("div") as HTMLDivElement
     dbRow.className = "account-db-row"
-    dbRow.append(this.dbNotion, this.dbIpa, this.dbMeaning, this.dbExample)
+    dbRow.appendChild(this.dbNotion)
+    dbRow.appendChild(this.dbIpa)
+    dbRow.appendChild(this.dbMeaning)
+    dbRow.appendChild(this.dbExample)
 
     const rowsGroup = document.createElement("div") as HTMLDivElement
     rowsGroup.className = "account-db-group"
     rowsGroup.id = "db-controls"
-    rowsGroup.append(dbRow)
+    rowsGroup.appendChild(dbRow)
     this.dbRow = rowsGroup
 
     //////// buttons
@@ -216,7 +229,9 @@ export class AccountConstructor extends TConstructor {
 
     const btnGroup = document.createElement("div") as HTMLDivElement
     btnGroup.className = "account-db-group"
-    btnGroup.append(append, submit, delet)
+    btnGroup.appendChild(append)
+    btnGroup.appendChild(submit)
+    btnGroup.appendChild(delet)
 
     ////// search field
     const instantSearch = document.createElement("div")
@@ -258,7 +273,7 @@ export class AccountConstructor extends TConstructor {
                     div.innerHTML = content.replace(query, `<font color='red'>${query === "to" ? "to&nbsp;" : query}</font>`)
                     div.addEventListener("click", _ => this.fillFormRow(entry))
 
-                    this.instantSearch.append(div)
+                    this.instantSearch.appendChild(div)
                   })
 
                   this.instantSearch.style.visibility = "visible"
@@ -285,7 +300,8 @@ export class AccountConstructor extends TConstructor {
 
     const inputGroup = document.createElement("div") as HTMLDivElement
     inputGroup.className = "account-db-group"
-    inputGroup.append(input, instantSearch)
+    inputGroup.appendChild(input)
+    inputGroup.appendChild(instantSearch)
 
     ////// message span
     const span = document.createElement("span") as HTMLSpanElement
@@ -301,8 +317,14 @@ export class AccountConstructor extends TConstructor {
     const result = document.createElement("div") as HTMLDivElement
     result.className = "account-info-wrapper"
     result.style.flexGrow = "1"
-    result.append(ftitle, inputGroup, btnGroup, span, rowsGroup)
+    result.appendChild(ftitle)
+    result.appendChild(inputGroup)
+    result.appendChild(btnGroup)
+    result.appendChild(span)
+    result.appendChild(rowsGroup)
     result.style.backgroundColor = "rgba(176, 196, 222, 0.075)"
+    result.style.height = "100%"
+    result.style.maxHeight = "266px"
 
     return result
   }
@@ -320,7 +342,7 @@ export class AccountConstructor extends TConstructor {
         resp.forEach((word: TLearnable, idx: number) => {
           const div = document.createElement("div")
           div.textContent = `${idx + 1}. ${word.issue}`
-          words.append(div)
+          words.appendChild(div)
         })
       })
 
@@ -332,7 +354,9 @@ export class AccountConstructor extends TConstructor {
     const result = document.createElement("div")
     result.className = "account-info-wrapper"
     result.style.flexGrow = "1"
-    result.append(ftitle, title, words)
+    result.appendChild(ftitle)
+    result.appendChild(title)
+    result.appendChild(words)
     return result
   }
 
@@ -367,7 +391,7 @@ export class AccountConstructor extends TConstructor {
           this.blink(this.messageCredentials, true, "The credentials have been updated!")
           setTimeout(() => LoginConstructor.applyCredentialsAsync(this.db), 2000)
         })
-    } catch (error: any) {
+    } catch (error) {
       this.blink(this.messageCredentials, false, error.message)
     }
   }

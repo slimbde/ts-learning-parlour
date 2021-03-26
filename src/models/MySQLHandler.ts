@@ -3,6 +3,7 @@ import { IDbHandler } from "./IDbHandler";
 import { TCategory } from "./TCategory";
 import { TLearnable } from "./TLearnable";
 import { TUser } from "./TUser";
+import 'isomorphic-fetch'
 
 
 
@@ -26,7 +27,7 @@ export class MySQLHandler implements IDbHandler {
     try {
       const resp = await fetch(`${this.backEnd}php-api/users/authenticate?login=${login.trim().toLowerCase()}&password=${password}`)
       await this.checkResponseAsync(resp)
-    } catch (error: any) {
+    } catch (error) {
       if (error.message === "Not found")
         throw new Error("Wrong login/password")
     }

@@ -1,4 +1,3 @@
-import window from '../../index'
 import { IDbHandler } from "../../models/IDbHandler";
 import { TUser } from "../../models/TUser";
 import { TConstructor } from "../../models/IConstructor";
@@ -104,8 +103,8 @@ export class LoginConstructor extends TConstructor {
 
     const inputFooter = document.createElement("div")
     inputFooter.className = "input-footer"
-    inputFooter.append(a)
-    inputFooter.append(btn)
+    inputFooter.appendChild(a)
+    inputFooter.appendChild(btn)
 
     const span = document.createElement("span")
     span.textContent = "notice"
@@ -130,20 +129,20 @@ export class LoginConstructor extends TConstructor {
 
     const group = document.createElement("div")
     group.className = "login-input-group"
-    group.append(text)
-    group.append(login)
-    group.append(password)
-    group.append(span)
-    group.append(loading)
-    group.append(inputFooter)
+    group.appendChild(text)
+    group.appendChild(login)
+    group.appendChild(password)
+    group.appendChild(span)
+    group.appendChild(loading)
+    group.appendChild(inputFooter)
 
     const card = document.createElement("div")
     card.className = "login-card"
-    card.append(group)
+    card.appendChild(group)
 
     const main = document.querySelector(".main-field") as HTMLElement
     main.innerHTML = ""
-    main.append(card)
+    main.appendChild(card)
 
     this.highlightMenu()
     login.focus()

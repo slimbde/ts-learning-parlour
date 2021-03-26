@@ -1,4 +1,3 @@
-import window from '../index'
 import { IDbHandler } from "./IDbHandler";
 import { ISetHandler } from "./ISetHandler";
 import { TLearnable } from "./TLearnable";
@@ -34,21 +33,22 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const trainingField = document.createElement("div")
     trainingField.className = "training-field"
-    trainingField.append(...trainingZone)
+    trainingZone.forEach(el => trainingField.appendChild(el))
 
     const trainingFieldWrapper = document.createElement("div")
     trainingFieldWrapper.className = "training-field-wrapper"
-    trainingFieldWrapper.append(trainingField)
+    trainingFieldWrapper.appendChild(trainingField)
 
     const trainingWrapper = document.createElement("div")
     trainingWrapper.className = "training-wrapper"
 
     const pageTitles = this.constructPageTitles()
-    trainingWrapper.append(...pageTitles, trainingFieldWrapper)
+    pageTitles.forEach(el => trainingWrapper.appendChild(el))
+    trainingWrapper.appendChild(trainingFieldWrapper)
 
     const main = document.querySelector(".main-field")
     main.innerHTML = ""
-    main.append(trainingWrapper)
+    main.appendChild(trainingWrapper)
 
     this.highlightMenu()
   }
@@ -107,18 +107,18 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const divPass = document.createElement("div")
     divPass.style.marginLeft = "auto"
-    divPass.append(anchor)
+    divPass.appendChild(anchor)
 
     const result = document.createElement("div")
     result.className = "progress-info"
-    result.append(quickSearchToggle)
-    result.append(loading)
-    result.append(quickSearch)
-    result.append(divCorrect)
-    result.append(divWrong)
-    result.append(divSuccess)
-    result.append(divHint)
-    result.append(divPass)
+    result.appendChild(quickSearchToggle)
+    result.appendChild(loading)
+    result.appendChild(quickSearch)
+    result.appendChild(divCorrect)
+    result.appendChild(divWrong)
+    result.appendChild(divSuccess)
+    result.appendChild(divHint)
+    result.appendChild(divPass)
 
     return result
   }
@@ -136,8 +136,8 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const result = document.createElement("div")
     result.className = "training-field-title"
-    result.append(left)
-    result.append(right)
+    result.appendChild(left)
+    result.appendChild(right)
 
     return result
   }
@@ -166,9 +166,9 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const inputDiv = document.createElement("div")
     inputDiv.className = "training-field-input"
-    inputDiv.append(hint)
-    inputDiv.append(input)
-    inputDiv.append(btn)
+    inputDiv.appendChild(hint)
+    inputDiv.appendChild(input)
+    inputDiv.appendChild(btn)
 
     const issue = document.createElement("div")
     issue.className = "issue"
@@ -180,14 +180,14 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const answerDiv = document.createElement("div")
     answerDiv.className = "training-field-answer"
-    answerDiv.append(issue)
-    answerDiv.append(answer)
+    answerDiv.appendChild(issue)
+    answerDiv.appendChild(answer)
 
     const result = document.createElement("div")
     result.className = "training-field-workspace"
-    result.append(issueDiv)
-    result.append(inputDiv)
-    result.append(answerDiv)
+    result.appendChild(issueDiv)
+    result.appendChild(inputDiv)
+    result.appendChild(answerDiv)
 
     return result
   }
@@ -306,7 +306,9 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const result = document.createElement("div")
     result.className = "quick-search-wrapper hidden"
-    result.append(input, button, quickResult)
+    result.appendChild(input)
+    result.appendChild(button)
+    result.appendChild(quickResult)
 
     return result
   }
@@ -325,7 +327,7 @@ export abstract class TTrainingConstructor implements IConstructor {
             const entryDiv = document.createElement("div")
             entryDiv.className = "quick-result-entry"
             entryDiv.innerHTML = `${entry.notion} ${entry.ipa} ${entry.meaning}`
-            this.quickResult.append(entryDiv)
+            this.quickResult.appendChild(entryDiv)
           })
 
           this.quickResult.classList.contains("hidden") && this.quickResult.classList.toggle("hidden")

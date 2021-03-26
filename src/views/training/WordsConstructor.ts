@@ -1,6 +1,5 @@
 import { TTrainingConstructor } from "../../models/TTrainingConstructor";
 import { WordsSetHandler } from "./WordsSetHandler";
-import window from '../../index'
 
 
 export class WordsConstructor extends TTrainingConstructor {
@@ -87,7 +86,7 @@ export class WordsConstructor extends TTrainingConstructor {
 
     const trainingFieldExample = document.createElement("div")
     trainingFieldExample.className = "training-field-example"
-    trainingFieldExample.append(div)
+    trainingFieldExample.appendChild(div)
 
     return trainingFieldExample
   }
@@ -102,13 +101,13 @@ export class WordsConstructor extends TTrainingConstructor {
 
     const divPass = document.createElement("div")
     divPass.style.marginLeft = "auto"
-    divPass.append(anchor)
+    divPass.appendChild(anchor)
 
     const divStatus = document.createElement("div")
     divStatus.textContent = "You've solved your training routine for today"
 
-    progressInfo.append(divStatus)
-    progressInfo.append(divPass)
+    progressInfo.appendChild(divStatus)
+    progressInfo.appendChild(divPass)
 
     this.leftDiv.textContent = `Correct: ${this.setHandler.Correct} Wrong: ${this.setHandler.Wrong} Success: ${this.setHandler.Rate}%`
     this.rightDiv.textContent = "Examples:"

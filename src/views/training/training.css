@@ -239,7 +239,8 @@
 
 .quick-result-wrapper {
   position: absolute;
-  margin-top: 2.1rem;
+  top: 2.1rem;
+  left: 0px;
   border: 1px solid lightgray;
   border-top: unset;
   border-bottom-left-radius: 4px;
@@ -253,10 +254,12 @@
   transition: opacity .5s ease-in-out;
   overflow-y: auto;
   max-height: 40vh;
+  max-width: 300px;
 }
 
 .quick-result-wrapper.hidden {
   opacity: 0;
+  visibility: hidden;
 }
 
 .quick-result-wrapper:hover::-webkit-scrollbar {

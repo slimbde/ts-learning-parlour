@@ -50,6 +50,7 @@
   flex-wrap: wrap;
   align-content: flex-start;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .account-info-wrapper {
@@ -196,7 +197,8 @@
   border-bottom-left-radius: 4px;
   padding: 0;
   width: 265px;
-  margin-top: 2.3rem;
+  top: 2.3rem;
+  left: 0px;
   position: absolute;
   visibility: hidden;
   display: flex;

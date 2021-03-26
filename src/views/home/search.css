@@ -180,7 +180,8 @@
   border-bottom-left-radius: 4px;
   padding: 0;
   width: 99%;
-  margin-top: 2.3rem;
+  top: 2.3rem;
+  left: .3rem;
   position: absolute;
   visibility: hidden;
   display: flex;

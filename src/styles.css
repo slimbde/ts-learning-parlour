@@ -4,7 +4,6 @@
 @import "./views/training/training.css";
 @import "./views/account/account.css";
 @import "./assets/fonts/font.css";
-@import "./assets/fonts/icons.css";
 * {
   box-sizing: border-box;
   margin: 0;
