@@ -1,4 +1,4 @@
-import { IDbHandler } from "../../models/IDbHandler";
+import { IDbHandler } from "../../models/Db/IDbHandler";
 import { shuffle, TSetHandler } from "../../models/ISetHandler";
 
 export class PhrasalsSetHandler extends TSetHandler {

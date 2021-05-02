@@ -1,8 +1,8 @@
-import { DBInfo } from "./DBInfo";
+import { DBInfo } from "../Entities/DBInfo";
 import { IDbHandler } from "./IDbHandler";
-import { TCategory } from "./TCategory";
-import { TLearnable } from "./TLearnable";
-import { TUser } from "./TUser";
+import { TCategory } from "../Entities/TCategory";
+import { TLearnable } from "../Entities/TLearnable";
+import { TUser } from "../Entities/TUser";
 import 'isomorphic-fetch'
 
 

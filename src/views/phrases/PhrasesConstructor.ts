@@ -20,11 +20,11 @@ export class PhrasesConstructor extends TTrainingConstructor {
   protected constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "training-title"
-    trainingTitle.textContent = "phrases training"
+    trainingTitle.textContent = window.langProvider.GetPageTitle("title-phrases")
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "training-task"
-    trainingTask.textContent = "fill in blanks with appropriate phrase"
+    trainingTask.textContent = window.langProvider.GetPageTask("task-phrases")
 
     return [trainingTitle, trainingTask]
   }
@@ -44,6 +44,6 @@ export class PhrasesConstructor extends TTrainingConstructor {
     for (let ch of menuPhrases)
       !ch.classList.contains("active") && ch.classList.add("active")
 
-    document.querySelector(".location").textContent = "phrases"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-phrases")
   }
 }

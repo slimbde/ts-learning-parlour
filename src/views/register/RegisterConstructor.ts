@@ -4,16 +4,16 @@ import { LoginConstructor } from "../login/LoginConstructor";
 export class RegisterConstructor extends TConstructor {
 
   async renderAsync(): Promise<void> {
-    document.querySelector(".location").textContent = "register"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-register")
 
     const btn = document.createElement("button")
     btn.className = "btn"
-    btn.textContent = "Register"
+    btn.textContent = window.langProvider.GetAuthRegBtn()
     btn.addEventListener("click", _ => this.registerActionAsync())
 
     const a = document.createElement("a")
     a.addEventListener("click", _ => this.loginActionAsync())
-    a.textContent = "Log in"
+    a.textContent = window.langProvider.GetAuthLoginBtn()
 
     const inputFooter = document.createElement("div")
     inputFooter.className = "input-footer"
@@ -29,17 +29,17 @@ export class RegisterConstructor extends TConstructor {
     const password = document.createElement("input")
     password.id = "password"
     password.type = "password"
-    password.placeholder = "password"
+    password.placeholder = window.langProvider.GetAuthHintPass()
     password.addEventListener("keydown", e => e.key === "Enter" && this.registerActionAsync())
 
     const login = document.createElement("input")
     login.id = "login"
     login.type = "text"
-    login.placeholder = "login"
+    login.placeholder = window.langProvider.GetAuthHintLogin()
     login.addEventListener("keydown", e => e.key === "Enter" && this.registerActionAsync())
 
     const text = document.createElement("div")
-    text.textContent = "Specify your credentials below:"
+    text.textContent = window.langProvider.GetAuthTitle()
 
     const group = document.createElement("div")
     group.className = "login-input-group"

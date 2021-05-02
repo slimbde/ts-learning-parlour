@@ -1,5 +1,5 @@
-import { IDbHandler } from "./IDbHandler";
-import { TLearnable } from "./TLearnable";
+import { IDbHandler } from "./Db/IDbHandler";
+import { TLearnable } from "./Entities/TLearnable";
 
 
 

@@ -20,11 +20,11 @@ export class IdiomsConstructor extends TTrainingConstructor {
   protected constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "training-title"
-    trainingTitle.textContent = "idioms training"
+    trainingTitle.textContent = window.langProvider.GetPageTitle("title-idioms")
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "training-task"
-    trainingTask.textContent = "fill in blanks with appropriate idiom"
+    trainingTask.textContent = window.langProvider.GetPageTask("task-idioms")
 
     return [trainingTitle, trainingTask]
   }
@@ -44,6 +44,6 @@ export class IdiomsConstructor extends TTrainingConstructor {
     for (let ch of menuIdioms)
       !ch.classList.contains("active") && ch.classList.add("active")
 
-    document.querySelector(".location").textContent = "idioms"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-idioms")
   }
 }

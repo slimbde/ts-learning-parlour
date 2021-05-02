@@ -1,5 +1,5 @@
 import './styles.css'
-import { MySQLHandler } from "./models/MySQLHandler"
+import { MySQLHandler } from "./models/Db/MySQLHandler"
 import { LoginConstructor } from "./views/login/LoginConstructor"
 import { HomeConstructor } from "./views/home/HomeConstructor"
 import { GeneralsConstructor } from "./views/generals/GeneralsConstructor"
@@ -10,6 +10,7 @@ import { PhrasesConstructor } from "./views/phrases/PhrasesConstructor"
 import { IdiomsConstructor } from "./views/idioms/IdiomsConstructor"
 import { PhrasalsConstructor } from "./views/phrasals/PhrasalsConstructor"
 import { AccountConstructor } from "./views/account/AccountConstructor"
+import { TLangProvider } from "./models/Language/ILangProvider"
 
 
 /////////// I've overridden window object. See window.d.ts for details
@@ -40,11 +41,16 @@ window.render = (what: string): void => {
     })
 }
 
+
 window.toggleMenu = () => document.querySelector(".menu-wrapper").classList.toggle("menu-wrapper-visible")
 window.hideMenu = () => document.querySelector(".menu-wrapper").classList.remove("menu-wrapper-visible")
 
 window.db = new MySQLHandler()
+window.construct = new HomeConstructor()
 
-window.render("home")
+window.langProvider = new TLangProvider()
+const lang = document.getElementsByTagName("html")[0].getAttribute("lang")
+window.langProvider.SwitchTo(lang)
+
 window.db.checkAuthStateAsync()
   .then((isLogged: boolean) => isLogged && LoginConstructor.applyCredentialsAsync(window.db))

@@ -1,4 +1,4 @@
-import { TCategory } from "../../models/TCategory";
+import { TCategory } from "../../models/Entities/TCategory";
 import { TTrainingConstructor } from "../../models/TTrainingConstructor";
 import { PhrasalsSetHandler } from "./PhrasalsSetHandler";
 
@@ -11,18 +11,18 @@ export class PhrasalsConstructor extends TTrainingConstructor {
   protected constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "training-title"
-    trainingTitle.textContent = "phrasals training"
+    trainingTitle.textContent = window.langProvider.GetPageTitle("title-phrasals")
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "training-task"
-    trainingTask.textContent = "select category and guess apt phrasal verb"
+    trainingTask.textContent = window.langProvider.GetPageTask("task-phrasals")
 
     return [trainingTitle, trainingTask]
   }
 
   protected constructTrainingZone(): HTMLDivElement[] {
     const label = document.createElement("label")
-    label.textContent = "Select category:"
+    label.textContent = window.langProvider.GetPhrasalsCategory()
     label.htmlFor = "select"
 
     const select = document.createElement("select")
@@ -42,7 +42,7 @@ export class PhrasalsConstructor extends TTrainingConstructor {
 
     const button = document.createElement("button")
     button.className = "btn"
-    button.textContent = "GO"
+    button.textContent = window.langProvider.GetSubmitBtn()
     button.addEventListener("click", _ => this.renderCategory())
 
     const result = document.createElement("div")
@@ -62,19 +62,19 @@ export class PhrasalsConstructor extends TTrainingConstructor {
     for (let ch of menuPhrasals)
       !ch.classList.contains("active") && ch.classList.add("active")
 
-    document.querySelector(".location").textContent = "phrasals"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-phrasals")
   }
 
   protected async applyNewNotionAsync(): Promise<void> {
     await this.setHandler.nextAsync()
 
-    this.correctDiv.textContent = `Correct: ${this.setHandler.Correct}`
-    this.wrongDiv.textContent = `Wrong: ${this.setHandler.Wrong}`
+    this.correctDiv.textContent = `${window.langProvider.GetSummaryCorrect()}: ${this.setHandler.Correct}`
+    this.wrongDiv.textContent = `${window.langProvider.GetSummaryWrong()}: ${this.setHandler.Wrong}`
 
-    this.successDiv.textContent = `Success: ${Math.round(this.setHandler.Rate)}%`
+    this.successDiv.textContent = `${window.langProvider.GetSummarySuccess()}: ${Math.round(this.setHandler.Rate)}%`
 
-    this.leftDiv.textContent = `Query: ${this.setHandler.NotionId}`
-    this.rightDiv.textContent = `To go: ${this.setHandler.Count}`
+    this.leftDiv.textContent = `${window.langProvider.GetSummaryQuery()}: ${this.setHandler.NotionId}`
+    this.rightDiv.textContent = `${window.langProvider.GetSummaryToGo()}: ${this.setHandler.Count}`
 
     this.issueDiv.textContent = this.setHandler.Issue
     this.hintDiv.textContent = this.setHandler.Hint
@@ -83,7 +83,6 @@ export class PhrasalsConstructor extends TTrainingConstructor {
     this.answerAnswer.textContent = this.setHandler.PreviousSolution
 
     this.indicatorDiv.style.backgroundImage = "none"
-    this.indicatorDiv.style.opacity = "0"
 
     this.input.value = ""
     this.input.focus()

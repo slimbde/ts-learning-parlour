@@ -20,11 +20,11 @@ export class GeneralsConstructor extends TTrainingConstructor {
   protected constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "training-title"
-    trainingTitle.textContent = "general vocabulary"
+    trainingTitle.textContent = window.langProvider.GetPageTitle("title-generals")
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "training-task"
-    trainingTask.textContent = "fill in blanks with appropriate notion"
+    trainingTask.textContent = window.langProvider.GetPageTask("task-generals")
 
     return [trainingTitle, trainingTask]
   }
@@ -44,6 +44,6 @@ export class GeneralsConstructor extends TTrainingConstructor {
     for (let ch of menuGenerals)
       !ch.classList.contains("active") && ch.classList.add("active")
 
-    document.querySelector(".location").textContent = "generals"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-generals")
   }
 }

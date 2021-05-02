@@ -73,7 +73,7 @@ a {
   color: gray;
 }
 
-a:hover, i:hover {
+a:hover, i:hover, .language:hover {
   cursor: pointer;
   color: black !important;
   text-shadow: 0 0 5px gray;
@@ -95,7 +95,7 @@ hr {
 }
 
 .header-container {
-  display: block;
+  display: flex;
   align-items: baseline;
   max-width: 1200px;
   padding: .7rem 1rem;
@@ -132,6 +132,30 @@ hr {
   cursor: pointer;
 }
 
+.language {
+  display: inline-block;
+  cursor: pointer;
+  color: gray;
+  margin-right: 0.2rem;
+}
+
+.language~.language {
+  margin-right: 2rem;
+}
+
+.lang-icon {
+  font-size: 20px;
+  align-self: center;
+  margin-right: .2rem;
+  line-height: 19px;
+}
+
+.lang-icon:hover {
+  color: gray !important;
+  cursor: default;
+  text-shadow: unset !important;
+}
+
 .login-wrapper {
   float: right;
   align-items: center;
@@ -149,11 +173,6 @@ hr {
   font-size: 1.2rem;
   transform: scale(-1, -1);
   vertical-align: bottom;
-}
-
-.login-wrapper:hover a, .login-wrapper:hover i {
-  color: black !important;
-  text-shadow: 0 0 5px gray;
 }
 
 @media only screen and (max-width: 500px) {
@@ -227,7 +246,8 @@ hr {
 
 .info-title {
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 500px) {

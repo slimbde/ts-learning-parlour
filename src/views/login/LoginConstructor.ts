@@ -1,5 +1,5 @@
-import { IDbHandler } from "../../models/IDbHandler";
-import { TUser } from "../../models/TUser";
+import { IDbHandler } from "../../models/Db/IDbHandler";
+import { TUser } from "../../models/Entities/TUser";
 import { TConstructor } from "../../models/IConstructor";
 
 export class LoginConstructor extends TConstructor {
@@ -87,19 +87,19 @@ export class LoginConstructor extends TConstructor {
   }
 
   private renderLoginForm(): void {
-    document.querySelector(".location").textContent = "login"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-login")
 
     LoginConstructor.loginAnchor.textContent = "login"
     LoginConstructor.loginAnchor.onclick = _ => window.render("login")
 
     const btn = document.createElement("button")
     btn.className = "btn"
-    btn.textContent = "Log in"
+    btn.textContent = window.langProvider.GetAuthLoginBtn()
     btn.addEventListener("click", _ => this.loginActionAsync())
 
     const a = document.createElement("a")
     a.addEventListener("click", _ => this.registerActionAsync())
-    a.textContent = "Register"
+    a.textContent = window.langProvider.GetAuthRegBtn()
 
     const inputFooter = document.createElement("div")
     inputFooter.className = "input-footer"
@@ -115,17 +115,17 @@ export class LoginConstructor extends TConstructor {
     const password = document.createElement("input")
     password.id = "password"
     password.type = "password"
-    password.placeholder = "password"
+    password.placeholder = window.langProvider.GetAuthHintPass()
     password.addEventListener("keydown", e => e.key === "Enter" && this.loginActionAsync())
 
     const login = document.createElement("input")
     login.id = "login"
     login.type = "text"
-    login.placeholder = "login"
+    login.placeholder = window.langProvider.GetAuthHintLogin()
     login.addEventListener("keydown", e => e.key === "Enter" && this.loginActionAsync())
 
     const text = document.createElement("div")
-    text.textContent = "Specify your credentials below:"
+    text.textContent = window.langProvider.GetAuthTitle()
 
     const group = document.createElement("div")
     group.className = "login-input-group"

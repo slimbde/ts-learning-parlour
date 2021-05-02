@@ -20,11 +20,11 @@ export class GerundsConstructor extends TTrainingConstructor {
   protected constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "training-title"
-    trainingTitle.textContent = "gerunds training"
+    trainingTitle.textContent = window.langProvider.GetPageTitle("title-gerunds")
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "training-task"
-    trainingTask.textContent = "fill in blanks with gerund or infinitive"
+    trainingTask.textContent = window.langProvider.GetPageTask("task-gerunds")
 
     return [trainingTitle, trainingTask]
   }
@@ -44,6 +44,6 @@ export class GerundsConstructor extends TTrainingConstructor {
     for (let ch of menuGerunds)
       !ch.classList.contains("active") && ch.classList.add("active")
 
-    document.querySelector(".location").textContent = "gerunds"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-gerunds")
   }
 }

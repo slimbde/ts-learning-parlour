@@ -1,5 +1,5 @@
-import { TLearnable } from "../../models/TLearnable";
-import { TUser } from "../../models/TUser";
+import { TLearnable } from "../../models/Entities/TLearnable";
+import { TUser } from "../../models/Entities/TUser";
 import { TConstructor } from "../../models/IConstructor";
 import { LoginConstructor } from "../login/LoginConstructor";
 
@@ -26,7 +26,7 @@ export class AccountConstructor extends TConstructor {
   async renderAsync(): Promise<void> {
     this.user = await this.db.getUserAsync()
 
-    document.querySelector(".location").textContent = "account"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-account")
 
     const credentialsField = this.constructCredentialsField()
     const todayWordsField = this.constructTodayWordsField()
@@ -68,11 +68,11 @@ export class AccountConstructor extends TConstructor {
   private constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "account-title"
-    trainingTitle.textContent = "account options"
+    trainingTitle.textContent = window.langProvider.GetPageTitle("title-account")
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "account-task"
-    trainingTask.textContent = "adjust your account settings"
+    trainingTask.textContent = window.langProvider.GetPageTask("task-account")
 
     return [trainingTitle, trainingTask]
   }
@@ -80,7 +80,7 @@ export class AccountConstructor extends TConstructor {
   private constructCredentialsField(): HTMLDivElement {
     /////// name group
     const divName = document.createElement("div")
-    divName.textContent = "User name"
+    divName.textContent = window.langProvider.GetAccountUsername()
 
     const loginInput = document.createElement("input")
     loginInput.value = this.user.login
@@ -95,16 +95,16 @@ export class AccountConstructor extends TConstructor {
     /////// password group
     const anchor = document.createElement("a")
     anchor.addEventListener("click", _ => this.showAlterPasswordFields())
-    anchor.textContent = "Change"
+    anchor.textContent = window.langProvider.GetAccountChangeBtn()
     this.anchorNewPassword = anchor
 
     const inputNewPassword = document.createElement("input")
-    inputNewPassword.placeholder = "new password"
+    inputNewPassword.placeholder = window.langProvider.GetAccountPasswordPlaceholder()
     inputNewPassword.style.display = "none"
     this.newPassword = inputNewPassword
 
     const inputConfirmPassword = document.createElement("input")
-    inputConfirmPassword.placeholder = "confirmation"
+    inputConfirmPassword.placeholder = window.langProvider.GetAccountPasswordConfirm()
     inputConfirmPassword.style.display = "none"
     this.newPasswordConfirm = inputConfirmPassword
 
@@ -115,7 +115,7 @@ export class AccountConstructor extends TConstructor {
     passwordDiv.appendChild(inputConfirmPassword)
 
     const divPassword = document.createElement("div")
-    divPassword.textContent = "Password"
+    divPassword.textContent = window.langProvider.GetAccountPassword()
 
     const group2 = document.createElement("div")
     group2.className = "account-info-group"
@@ -135,12 +135,12 @@ export class AccountConstructor extends TConstructor {
     //////// submit group
     const cancelAnchor = document.createElement("a")
     cancelAnchor.addEventListener("click", _ => window.render("account"))
-    cancelAnchor.textContent = "Cancel"
+    cancelAnchor.textContent = window.langProvider.GetCancelBtn()
     cancelAnchor.style.color = "lightcoral"
 
     const button = document.createElement("button")
     button.className = "btn"
-    button.textContent = "Submit"
+    button.textContent = window.langProvider.GetSubmitBtn()
     button.addEventListener("click", _ => this.alterCredentials())
 
     const group4 = document.createElement("div")
@@ -151,7 +151,7 @@ export class AccountConstructor extends TConstructor {
     ////// frame title
     const ftitle = document.createElement("span") as HTMLSpanElement
     ftitle.className = "frame-title"
-    ftitle.textContent = "user: credentials"
+    ftitle.textContent = window.langProvider.GetAccountCredentialsFrame()
 
     const result = document.createElement("div")
     result.className = "account-info-wrapper"
@@ -332,7 +332,7 @@ export class AccountConstructor extends TConstructor {
   private constructTodayWordsField(): HTMLDivElement {
     const title = document.createElement("div")
     title.className = "account-today-words-title"
-    title.textContent = "THE WORDS FOR TODAY:"
+    title.textContent = window.langProvider.GetAccountTodayWords()
 
     const words = document.createElement("div")
     words.className = "account-today-words"
@@ -349,7 +349,7 @@ export class AccountConstructor extends TConstructor {
     ////// frame title
     const ftitle = document.createElement("span") as HTMLSpanElement
     ftitle.className = "frame-title"
-    ftitle.textContent = "user: today words"
+    ftitle.textContent = window.langProvider.GetAccountTodayFrame()
 
     const result = document.createElement("div")
     result.className = "account-info-wrapper"

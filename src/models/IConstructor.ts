@@ -1,5 +1,5 @@
-import { DBInfo } from "./DBInfo"
-import { IDbHandler } from "./IDbHandler"
+import { DBInfo } from "./Entities/DBInfo"
+import { IDbHandler } from "./Db/IDbHandler"
 
 
 export interface IConstructor {
@@ -25,7 +25,7 @@ export abstract class TConstructor implements IConstructor {
 
         const infoTitle = document.createElement("div")
         infoTitle.className = "info-title"
-        infoTitle.textContent = "DB info:"
+        infoTitle.textContent = `${window.langProvider.GetDbInfo()}:`
         info.appendChild(infoTitle)
 
         Object.keys(dbInfo).forEach((key: string) => {

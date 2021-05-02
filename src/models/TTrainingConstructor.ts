@@ -1,6 +1,6 @@
-import { IDbHandler } from "./IDbHandler";
+import { IDbHandler } from "./Db/IDbHandler";
 import { ISetHandler } from "./ISetHandler";
-import { TLearnable } from "./TLearnable";
+import { TLearnable } from "./Entities/TLearnable";
 import { IConstructor } from "./IConstructor";
 
 
@@ -63,14 +63,14 @@ export abstract class TTrainingConstructor implements IConstructor {
     const quickSearch = this.constructQuickSearch()
 
     const quickSearchToggle = document.createElement("a")
-    quickSearchToggle.textContent = "Show quick search"
+    quickSearchToggle.textContent = window.langProvider.GetShowQuickSearch()
     quickSearchToggle.className = "quick-search-toggle"
     quickSearchToggle.addEventListener("click", _ => {
       quickSearch.classList.toggle("hidden")
-      quickSearchToggle.textContent = "Show quick search"
+      quickSearchToggle.textContent = window.langProvider.GetShowQuickSearch()
 
       if (!quickSearch.classList.contains("hidden")) {
-        quickSearchToggle.textContent = "Hide quick search"
+        quickSearchToggle.textContent = window.langProvider.GetHideQuickSearch()
         this.quickSearchBtn.style.visibility = "visible"
 
         this.quickInput.placeholder = ""
@@ -86,15 +86,15 @@ export abstract class TTrainingConstructor implements IConstructor {
     this.quickSearchLoading = loading
 
     const divCorrect = document.createElement("div")
-    divCorrect.textContent = "Correct: 0"
+    divCorrect.textContent = `${window.langProvider.GetSummaryCorrect()}: 0`
     this.correctDiv = divCorrect
 
     const divWrong = document.createElement("div")
-    divWrong.textContent = "Wrong: 0"
+    divWrong.textContent = `${window.langProvider.GetSummaryWrong()}: 0`
     this.wrongDiv = divWrong
 
     const divSuccess = document.createElement("div")
-    divSuccess.textContent = "Success: 0%"
+    divSuccess.textContent = `${window.langProvider.GetSummarySuccess()}: 0%`
     this.successDiv = divSuccess
 
     const divHint = document.createElement("div")
@@ -102,7 +102,7 @@ export abstract class TTrainingConstructor implements IConstructor {
     this.indicatorDiv = divHint
 
     const anchor = document.createElement("a")
-    anchor.textContent = "pass over"
+    anchor.textContent = window.langProvider.GetSummaryPass()
     anchor.addEventListener("click", _ => this.passOver())
 
     const divPass = document.createElement("div")
@@ -126,12 +126,12 @@ export abstract class TTrainingConstructor implements IConstructor {
   protected constructTrainingFieldTitle(): HTMLDivElement {
     const left = document.createElement("div")
     left.className = "title-left"
-    left.textContent = "Query: 0"
+    left.textContent = `${window.langProvider.GetSummaryQuery()}: 0`
     this.leftDiv = left
 
     const right = document.createElement("div")
     right.className = "title-right"
-    right.textContent = "To go: 0"
+    right.textContent = `${window.langProvider.GetSummaryToGo()}: 0`
     this.rightDiv = right
 
     const result = document.createElement("div")
@@ -161,7 +161,7 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     const btn = document.createElement("button")
     btn.className = "btn"
-    btn.textContent = "Submit"
+    btn.textContent = window.langProvider.GetSubmitBtn()
     btn.addEventListener("click", _ => this.handleSubmit())
 
     const inputDiv = document.createElement("div")
@@ -211,9 +211,11 @@ export abstract class TTrainingConstructor implements IConstructor {
     setTimeout(() => this.applyNewNotionAsync(), 300)
   }
 
-  protected handleSubmit(): void {
-    if (this.setHandler.assess(this.input.value))
+  protected async handleSubmit(): Promise<void> {
+    if (this.setHandler.assess(this.input.value)) {
       this.score()
+      this.blink(true)
+    }
     else {
       this.setHandler.incrementWrong()
       this.setHandler.enqueue()
@@ -228,13 +230,13 @@ export abstract class TTrainingConstructor implements IConstructor {
   protected async applyNewNotionAsync(): Promise<void> {
     await this.setHandler.nextAsync()
 
-    this.correctDiv.textContent = `Correct: ${this.setHandler.Correct}`
-    this.wrongDiv.textContent = `Wrong: ${this.setHandler.Wrong}`
+    this.correctDiv.textContent = `${window.langProvider.GetSummaryCorrect()}: ${this.setHandler.Correct}`
+    this.wrongDiv.textContent = `${window.langProvider.GetSummaryWrong()}: ${this.setHandler.Wrong}`
 
-    this.successDiv.textContent = `Success: ${Math.round(this.setHandler.Rate)}%`
+    this.successDiv.textContent = `${window.langProvider.GetSummarySuccess()}: ${Math.round(this.setHandler.Rate)}%`
 
-    this.leftDiv.textContent = `Query: ${this.setHandler.NotionId}`
-    this.rightDiv.textContent = `To go: ${this.setHandler.Count}`
+    this.leftDiv.textContent = `${window.langProvider.GetSummaryQuery()}: ${this.setHandler.NotionId}`
+    this.rightDiv.textContent = `${window.langProvider.GetSummaryToGo()}: ${this.setHandler.Count}`
 
     this.issueDiv.textContent = this.setHandler.Issue
 
@@ -247,9 +249,9 @@ export abstract class TTrainingConstructor implements IConstructor {
     this.input.focus()
   }
 
-  protected blink(correct: boolean) {
+  protected async blink(correct: boolean): Promise<void> {
     const color = correct ? "darkgoldenrod" : "lightcoral"
-    const str = correct ? "CORRECT" : "WRONG"
+    const str = correct ? window.langProvider.GetSummaryRight() : window.langProvider.GetSummaryFail()
 
     this.indicatorDiv.style.color = color
     this.indicatorDiv.textContent = str
@@ -257,27 +259,31 @@ export abstract class TTrainingConstructor implements IConstructor {
 
     this.input.style.boxShadow = `0 0 10px ${color}`
 
-    setTimeout(() => {
+    const sleep = (time: number) => new Promise(resolve => {
+      setTimeout(() => resolve("done"), time)
+    })
+
+    if (correct)
+      await sleep(1500)
+    else
+      await sleep(300)
+
+    this.indicatorDiv.style.opacity = "0"
+    this.input.style.boxShadow = "unset"
+
+    if (!correct) {
+      await sleep(300)
+      this.indicatorDiv.style.opacity = "1"
+      this.input.style.boxShadow = `0 0 10px ${color}`
+      await sleep(300)
       this.indicatorDiv.style.opacity = "0"
       this.input.style.boxShadow = "unset"
-
-      !correct && setTimeout(() => {
-        this.indicatorDiv.style.opacity = "1"
-        this.input.style.boxShadow = `0 0 10px ${color}`
-
-        setTimeout(() => {
-          this.indicatorDiv.style.opacity = "0"
-          this.input.style.boxShadow = "unset"
-        }, 300)
-      }, 300)
-    }, correct ? 1000 : 300)
+    }
   }
 
   protected score(): void {
     this.setHandler.incrementCorrect()
     this.input.placeholder = ""
-
-    this.blink(true)
 
     this.setHandler.scoreAsync()
   }
@@ -292,7 +298,7 @@ export abstract class TTrainingConstructor implements IConstructor {
     const button = document.createElement("button") as HTMLButtonElement
     button.style.visibility = "hidden"
     button.className = "btn"
-    button.textContent = "FIND"
+    button.textContent = window.langProvider.GetSearchBtn()
     button.addEventListener("click", _ => this.findQuickSearch())
     this.quickSearchBtn = button
 

@@ -124,6 +124,7 @@
 
 .account-today-words-title {
   margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 
 .account-today-words div {

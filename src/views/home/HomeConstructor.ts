@@ -1,11 +1,11 @@
-import { TLearnable } from "../../models/TLearnable";
+import { TLearnable } from "../../models/Entities/TLearnable";
 import { TConstructor } from "../../models/IConstructor";
 
 export class HomeConstructor extends TConstructor {
   private instantSearch: HTMLDivElement
 
   async renderAsync(): Promise<void> {
-    document.querySelector(".location").textContent = "home"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-home")
 
     const title = this.constructTitle()
     const input = this.constructInputField()
@@ -39,10 +39,10 @@ export class HomeConstructor extends TConstructor {
 
   private constructTitle(): HTMLDivElement {
     const h1 = document.createElement("h1")
-    h1.textContent = "Learning parlour"
+    h1.textContent = window.langProvider.GetPageTitle("title-home")
 
     const titleText = document.createElement("div")
-    titleText.innerHTML = `Input English word or a particle of the word.<br /> Use either English or Russian letters.`
+    titleText.innerHTML = window.langProvider.GetPageTask("task-home")
 
     const titleContent = document.createElement("div")
     titleContent.className = "title-content"
@@ -64,7 +64,7 @@ export class HomeConstructor extends TConstructor {
     const input = document.createElement("input")
     input.type = "text"
     input.id = "input"
-    input.placeholder = "input your query"
+    input.placeholder = window.langProvider.GetSearchPlaceholder()
     input.addEventListener("keydown", e => e.key === "Enter" && this.search())
 
     input.addEventListener("input", async (e: InputEvent) => {
@@ -104,7 +104,7 @@ export class HomeConstructor extends TConstructor {
     })
 
     const btn = document.createElement("button")
-    btn.textContent = "Search"
+    btn.textContent = window.langProvider.GetSearchBtn()
     btn.addEventListener("click", _ => this.search())
 
     const inputGroup = document.createElement("div")
@@ -158,7 +158,7 @@ export class HomeConstructor extends TConstructor {
 
       this.db.searchWordsAsync(inputVal)
         .then(words => {
-          summary.textContent = `entries: ${words.length}`
+          summary.textContent = `${window.langProvider.GetSearchEntries()}: ${words.length}`
 
           words.forEach(word => {
             const entry = document.createElement("div")

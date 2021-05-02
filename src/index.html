@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
@@ -17,6 +17,10 @@
         <div class="menu-btn"><i class="material-icons-outlined">menu</i></div>
         <div class="location">Location</div>
       </div>
+      <div style="flex-grow: 1;"></div>
+      <i class="material-icons-outlined lang-icon">language</i>
+      <div class="language" onclick="window.langProvider.SwitchTo('EN')">EN</div>
+      <div class="language" onclick="window.langProvider.SwitchTo('RU')">RU</div>
       <div class="login-wrapper">
         <a href="javascript:;" title="Войти в учетную запись" onclick="render('login')">Login</a>
         <i class="material-icons-outlined">login</i>

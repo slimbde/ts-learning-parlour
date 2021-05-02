@@ -6,6 +6,7 @@
     "target": "ES2015",
     "allowJs": true,
     "moduleResolution": "Node",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   }
 }

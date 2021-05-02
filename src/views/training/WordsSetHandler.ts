@@ -1,6 +1,6 @@
 import * as moment from 'moment'
 import { shuffle, TSetHandler } from "../../models/ISetHandler";
-import { TLearnable } from "../../models/TLearnable";
+import { TLearnable } from "../../models/Entities/TLearnable";
 
 
 export class WordsSetHandler extends TSetHandler {

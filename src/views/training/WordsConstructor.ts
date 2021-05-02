@@ -21,11 +21,11 @@ export class WordsConstructor extends TTrainingConstructor {
   protected constructPageTitles(): HTMLDivElement[] {
     const trainingTitle = document.createElement("div")
     trainingTitle.className = "training-title"
-    trainingTitle.textContent = "words training routine"
+    trainingTitle.textContent = window.langProvider.GetPageTitle("title-training")
 
     const trainingTask = document.createElement("div")
     trainingTask.className = "training-task"
-    trainingTask.textContent = "guess the word"
+    trainingTask.textContent = window.langProvider.GetPageTask("task-training")
 
     return [trainingTitle, trainingTask]
   }
@@ -46,7 +46,7 @@ export class WordsConstructor extends TTrainingConstructor {
     for (let ch of menu)
       !ch.classList.contains("active") && ch.classList.add("active")
 
-    document.querySelector(".location").textContent = "training"
+    document.querySelector(".location").textContent = window.langProvider.GetLocation("location-training")
   }
 
   protected async applyNewNotionAsync(): Promise<void> {
@@ -57,13 +57,13 @@ export class WordsConstructor extends TTrainingConstructor {
       return
     }
 
-    this.correctDiv.textContent = `Correct: ${this.setHandler.Correct}`
-    this.wrongDiv.textContent = `Wrong: ${this.setHandler.Wrong}`
+    this.correctDiv.textContent = `${window.langProvider.GetSummaryCorrect()}: ${this.setHandler.Correct}`
+    this.wrongDiv.textContent = `${window.langProvider.GetSummaryWrong()}: ${this.setHandler.Wrong}`
 
-    this.successDiv.textContent = `Success: ${Math.round(this.setHandler.Rate)}%`
+    this.successDiv.textContent = `${window.langProvider.GetSummarySuccess()}: ${Math.round(this.setHandler.Rate)}%`
 
-    this.leftDiv.textContent = `Query: ${this.setHandler.NotionId} ~ Round: ${this.setHandler.Round}`
-    this.rightDiv.textContent = `To go: ${this.setHandler.Count}`
+    this.leftDiv.textContent = `${window.langProvider.GetSummaryQuery()}: ${this.setHandler.NotionId} ~ ${window.langProvider.GetSummaryRound()}: ${this.setHandler.Round}`
+    this.rightDiv.textContent = `${window.langProvider.GetSummaryToGo()}: ${this.setHandler.Count}`
 
     this.issueDiv.textContent = this.setHandler.Solution
 
@@ -72,7 +72,6 @@ export class WordsConstructor extends TTrainingConstructor {
     this.exampleDiv.textContent = this.setHandler.PreviousExample
 
     this.indicatorDiv.style.backgroundImage = "none"
-    this.indicatorDiv.style.opacity = "0"
 
     this.input.value = ""
     this.input.focus()
